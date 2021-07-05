@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">the-guardian</string>
+    <string name="app_name">The Guardian</string>
+
+    <!--news activity-->
+    <string name="button_readMore">Read more</string>
+    <string name="news_activity_breaking_news">Breaking news</string>
+
 </resources>
