@@ -1,4 +1,4 @@
-package com.javimartd.theguardian.v2.data
+package com.javimartd.theguardian.v2.data.remote
 
 import com.javimartd.theguardian.v2.BuildConfig
 import okhttp3.OkHttpClient

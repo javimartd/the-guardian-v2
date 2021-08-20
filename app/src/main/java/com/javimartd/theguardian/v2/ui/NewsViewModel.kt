@@ -4,14 +4,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.javimartd.theguardian.v2.data.TheGuardianApi
+import com.javimartd.theguardian.v2.data.NewsDataSource
 import com.javimartd.theguardian.v2.ui.model.Section
 import com.javimartd.theguardian.v2.ui.state.NewsViewState
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
 
-class NewsViewModel(private val theGuardianApi: TheGuardianApi): ViewModel() {
+class NewsViewModel(private val newsDataSource: NewsDataSource): ViewModel() {
 
     companion object {
         private const val WORLD_NEWS_SECTION_ID = "world"
@@ -32,8 +32,8 @@ class NewsViewModel(private val theGuardianApi: TheGuardianApi): ViewModel() {
     private fun fetchContent() {
         viewModelScope.launch {
             coroutineScope {
-                val newsDeferred = async { theGuardianApi.getNews(WORLD_NEWS_SECTION_ID) }
-                val sectionsDeferred = async { theGuardianApi.getSections() }
+                val newsDeferred = async { newsDataSource.getNews(WORLD_NEWS_SECTION_ID) }
+                val sectionsDeferred = async { newsDataSource.getSections() }
                 val newsAwait = newsDeferred.await()
                 val sectionsAwait = sectionsDeferred.await()
 
@@ -50,7 +50,7 @@ class NewsViewModel(private val theGuardianApi: TheGuardianApi): ViewModel() {
     fun fetchNews(sectionName: String) {
         val sectionId = sections.single { it.webTitle == sectionName }.id
         viewModelScope.launch {
-            val news = theGuardianApi.getNews(sectionId)
+            val news = newsDataSource.getNews(sectionId)
             _content.value = NewsViewState.ShowNews(news)
         }
     }

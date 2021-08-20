@@ -1,7 +1,7 @@
-package com.javimartd.theguardian.v2.data
+package com.javimartd.theguardian.v2.data.remote
 
-import com.javimartd.theguardian.v2.data.model.NewsResponse
-import com.javimartd.theguardian.v2.data.model.SectionsResponse
+import com.javimartd.theguardian.v2.data.remote.model.NewsResponse
+import com.javimartd.theguardian.v2.data.remote.model.SectionsResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

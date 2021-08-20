@@ -1,4 +1,4 @@
-package com.javimartd.theguardian.v2.data.model
+package com.javimartd.theguardian.v2.data.remote.model
 
 import com.google.gson.annotations.SerializedName
 

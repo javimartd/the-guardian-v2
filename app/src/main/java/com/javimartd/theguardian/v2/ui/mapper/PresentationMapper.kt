@@ -1,7 +1,7 @@
 package com.javimartd.theguardian.v2.ui.mapper
 
-import com.javimartd.theguardian.v2.data.model.NewsResults
-import com.javimartd.theguardian.v2.data.model.SectionsResults
+import com.javimartd.theguardian.v2.data.remote.model.NewsResults
+import com.javimartd.theguardian.v2.data.remote.model.SectionsResults
 import com.javimartd.theguardian.v2.ui.model.News
 import com.javimartd.theguardian.v2.ui.model.Section
 
