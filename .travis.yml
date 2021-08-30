@@ -4,9 +4,14 @@ android:
   licenses:
     - 'android-sdk-arm-dbt-license'
     - 'android-sdk-license'
+
   components:
     - tools
     - build-tools-30.0.3
     - android-30
     - android-23
     - extra
+
+    # Additional components
+    - extra-google-m2repository
+    - extra-android-m2repository
