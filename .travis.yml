@@ -1,7 +1,12 @@
 language: android
 dist: trusty
 android:
+  licenses:
+    - 'android-sdk-preview-license-.+'
+    - 'android-sdk-license-.+'
   components:
+    - tools
     - build-tools-30.0.3
     - android-29
+    - android-23
     - extra
