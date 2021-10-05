@@ -1,4 +1,4 @@
-package com.javimartd.theguardian.v2.data.remote.model
+package com.javimartd.theguardian.v2.data.datasources.model
 
 import com.google.gson.annotations.SerializedName
 
@@ -6,18 +6,18 @@ const val STATUS_OK = "ok"
 
 data class NewsResponse (
     @SerializedName("response")
-    val newsResponse: NewsResults
+    val newsResponse: RawNewsResults?
 )
 
-data class NewsResults(
+data class RawNewsResults(
     @SerializedName("status")
     val status: String,
 
     @SerializedName("results")
-    val results: List<News>?
+    val results: List<RawNews>?
 )
 
-data class News (
+data class RawNews (
     @SerializedName("id")
     val id: String,
 
@@ -37,10 +37,10 @@ data class News (
     val webUrl: String,
 
     @SerializedName("fields")
-    val fields: Fields?
+    val fields: RawFields?
 )
 
-data class Fields (
+data class RawFields (
     @SerializedName("liveBloggingNow")
     val liveBloggingNow: String?,
 
@@ -53,18 +53,18 @@ data class Fields (
 
 data class SectionsResponse (
     @SerializedName("response")
-    val sectionsResponse: SectionsResults
+    val sectionsResponse: RawSectionsResults
 )
 
-data class SectionsResults(
+data class RawSectionsResults(
     @SerializedName("status")
     val status: String,
 
     @SerializedName("results")
-    val results: List<Section>?
+    val results: List<RawSection>?
 )
 
-data class Section (
+data class RawSection (
     @SerializedName("id")
     val id: String,
 

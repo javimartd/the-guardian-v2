@@ -9,6 +9,7 @@ import android.widget.AutoCompleteTextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import com.google.android.material.snackbar.Snackbar
 import com.javimartd.theguardian.v2.databinding.ActivityNewsBinding
 import com.javimartd.theguardian.v2.ui.adapter.NewsAdapter
 import com.javimartd.theguardian.v2.ui.common.DialogActions
@@ -31,14 +32,8 @@ class NewsActivity : AppCompatActivity() {
             is NewsViewState.Loading -> showLoading()
             is NewsViewState.LoadData -> loadData(state.sections, state.news)
             is NewsViewState.ShowNews -> showNews(state.news)
-            is NewsViewState.Error -> TODO()
+            is NewsViewState.Error -> showError()
         }
-    }
-
-    private fun loadData(sections: List<String>, news: List<News>) {
-        hideLoading()
-        showSections(sections)
-        showNews(news)
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,7 +41,7 @@ class NewsActivity : AppCompatActivity() {
         binding = ActivityNewsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModelFactory = NewsViewModelFactory(ServiceLocator.getTheGuardianApi())
+        viewModelFactory = NewsViewModelFactory(ServiceLocator.getRepository())
         viewModel = ViewModelProvider(this, viewModelFactory).get(NewsViewModel::class.java)
 
         viewModel.content.observe(this, contentObserver)
@@ -74,18 +69,28 @@ class NewsActivity : AppCompatActivity() {
         newsAdapter.items = news
     }
 
+    private fun loadData(sections: List<String>, news: List<News>) {
+        hideLoading()
+        showSections(sections)
+        showNews(news)
+    }
+
     private fun showSections(sections: List<String>) {
         val sectionsAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, sections)
         sectionsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         (binding.autoCompleteTextView as? AutoCompleteTextView)?.setAdapter(sectionsAdapter)
         binding.autoCompleteTextView.onItemClickListener =
             AdapterView.OnItemClickListener { _, _, position, _ ->
-                viewModel.fetchNews(sections[position])
+                viewModel.onSelectedSection(sections[position])
             }
     }
 
     private fun openLink(webUrl: String) {
         val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(webUrl))
         startActivity(browserIntent)
+    }
+
+    private fun showError() {
+        Snackbar.make(binding.newsLayout, "There is an error", Snackbar.LENGTH_LONG).show()
     }
 }

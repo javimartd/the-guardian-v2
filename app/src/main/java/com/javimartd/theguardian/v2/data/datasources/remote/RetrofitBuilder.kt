@@ -1,4 +1,4 @@
-package com.javimartd.theguardian.v2.data.remote
+package com.javimartd.theguardian.v2.data.datasources.remote
 
 import com.javimartd.theguardian.v2.BuildConfig
 import okhttp3.OkHttpClient
@@ -22,6 +22,7 @@ object RetrofitBuilder {
                             HttpLoggingInterceptor.Level.NONE
                     }
                 )
+                .addInterceptor(ApiKeyInterceptor())
                 .build()
             )
             .addConverterFactory(GsonConverterFactory.create())
