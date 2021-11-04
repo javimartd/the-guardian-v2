@@ -30,7 +30,7 @@ class NewsViewModel(private val repository: Repository): ViewModel() {
     }
 
     fun fetchContent() {
-        val job = viewModelScope.launch {
+        viewModelScope.launch {
             coroutineScope {
                 val newsDeferred = async { repository.getNews(WORLD_NEWS_SECTION_ID) }
                 val sectionsDeferred = async { repository.getSections() }
@@ -50,7 +50,6 @@ class NewsViewModel(private val repository: Repository): ViewModel() {
                 }
             }
         }
-        job.cancel()
     }
 
     fun fetchNews(sectionId: String) {
