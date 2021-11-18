@@ -1,11 +1,17 @@
 package com.javimartd.theguardian.v2.data.datasources.remote
 
 import com.javimartd.theguardian.v2.data.RepositoryImpl
-import com.javimartd.theguardian.v2.data.datasources.model.*
+import com.javimartd.theguardian.v2.data.datasources.ErrorHandler
+import com.javimartd.theguardian.v2.data.datasources.model.RawNews
+import com.javimartd.theguardian.v2.data.datasources.model.RawSection
+import com.javimartd.theguardian.v2.data.datasources.model.STATUS_OK
+import com.javimartd.theguardian.v2.data.state.ErrorTypes
 import com.javimartd.theguardian.v2.data.state.Resource
+import retrofit2.HttpException
 
 class RemoteDataSourceImpl(
-    private val apiService: ApiService
+    private val apiService: ApiService,
+    private val errorHandler: ErrorHandler
 ): RemoteDataSource {
 
     override suspend fun getNews(sectionId: String): Resource<List<RawNews>> {
@@ -19,13 +25,13 @@ class RemoteDataSourceImpl(
                 if (body?.newsResponse?.status == STATUS_OK) {
                     Resource.Success(body.newsResponse.results ?: emptyList())
                 } else {
-                    Resource.Error(Exception())
+                    Resource.Error(ErrorTypes.RemoteErrors.ApiStatus)
                 }
             } else {
-                Resource.Error(Exception())
+                Resource.Error(errorHandler.getError(HttpException(response)))
             }
-        } catch (e: Exception) {
-            Resource.Error(e)
+        } catch (throwable: Throwable) {
+            Resource.Error(errorHandler.getError(throwable))
         }
     }
 
@@ -37,13 +43,13 @@ class RemoteDataSourceImpl(
                 if (body?.sectionsResponse?.status == STATUS_OK) {
                     Resource.Success(body.sectionsResponse.results ?: emptyList())
                 } else {
-                    Resource.Error(Exception())
+                    Resource.Error(ErrorTypes.RemoteErrors.ApiStatus)
                 }
             } else {
-                Resource.Error(Exception())
+                Resource.Error(errorHandler.getError(HttpException(response)))
             }
-        } catch (e: Exception) {
-            Resource.Error(e)
+        } catch (throwable: Throwable) {
+            Resource.Error(errorHandler.getError(throwable))
         }
     }
 }
