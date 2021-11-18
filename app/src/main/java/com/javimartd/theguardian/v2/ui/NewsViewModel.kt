@@ -5,9 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.javimartd.theguardian.v2.data.Repository
+import com.javimartd.theguardian.v2.data.state.ErrorTypes
 import com.javimartd.theguardian.v2.data.state.Resource
-import com.javimartd.theguardian.v2.ui.mapper.toNewsView
-import com.javimartd.theguardian.v2.ui.mapper.toSectionsView
+import com.javimartd.theguardian.v2.ui.mapper.newsMapToView
+import com.javimartd.theguardian.v2.ui.mapper.sectionsMapToView
+import com.javimartd.theguardian.v2.ui.model.Section
 import com.javimartd.theguardian.v2.ui.state.NewsViewState
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
@@ -41,12 +43,14 @@ class NewsViewModel(private val repository: Repository): ViewModel() {
                     newsResponseAwait is Resource.Success &&
                     sectionsResponseAwait is Resource.Success
                 ) {
-                    _content.value = NewsViewState.LoadData(
-                        newsResponseAwait.data.toNewsView(),
-                        sectionsResponseAwait.data.toSectionsView().flatMap { listOf(it.webTitle) }
+                    _content.value = NewsViewState.ShowNewsAndSections(
+                        newsResponseAwait.data.newsMapToView(),
+                        sectionsResponseAwait.data
+                            .sectionsMapToView()
+                            .flatMap { listOf(it.webTitle) }
                     )
                 } else {
-                    _content.value = NewsViewState.Error
+                    _content.value = NewsViewState.ShowGenericError
                 }
             }
         }
@@ -54,12 +58,19 @@ class NewsViewModel(private val repository: Repository): ViewModel() {
 
     fun fetchNews(sectionId: String) {
         viewModelScope.launch {
-            when(val response = repository.getNews(sectionId)){
+            when(val response = repository.getNews(sectionId)) {
                 is Resource.Success -> {
-                    _content.value = NewsViewState.ShowNews(response.data.toNewsView())
+                    _content.value = NewsViewState.ShowNews(response.data.newsMapToView())
                 }
                 is Resource.Error -> {
-                    _content.value = NewsViewState.Error
+                    when (response.errorTypes) {
+                        is ErrorTypes.RemoteErrors.Network -> {
+                            _content.value = NewsViewState.ShowNetworkError
+                        }
+                        else -> {
+                            _content.value = NewsViewState.ShowGenericError
+                        }
+                    }
                 }
             }
         }
@@ -67,13 +78,25 @@ class NewsViewModel(private val repository: Repository): ViewModel() {
 
     fun onSelectedSection(sectionName: String) {
         viewModelScope.launch {
-            val response = repository.getSections()
-            if (response is Resource.Success) {
-                val sectionId = response.data
-                    .toSectionsView()
-                    .single { sectionName == it.webTitle }.id
-                fetchNews(sectionId)
+            when(val response = repository.getSections()) {
+                is Resource.Success -> {
+                    val sectionId = getSectionId(
+                        response.data.sectionsMapToView(),
+                        sectionName
+                    )
+                    fetchNews(sectionId)
+                }
+                is Resource.Error -> {
+                    _content.value = NewsViewState.ShowGenericError
+                }
             }
         }
+    }
+
+    private fun getSectionId(
+        sections: List<Section>,
+        sectionName: String
+    ): String {
+        return sections.single { sectionName == it.webTitle }.id
     }
 }

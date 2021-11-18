@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
+import com.javimartd.theguardian.v2.R
 import com.javimartd.theguardian.v2.databinding.ActivityNewsBinding
 import com.javimartd.theguardian.v2.ui.adapter.NewsAdapter
 import com.javimartd.theguardian.v2.ui.common.DialogActions
@@ -30,9 +31,22 @@ class NewsActivity : AppCompatActivity() {
     private val contentObserver = Observer<NewsViewState> { state ->
         when (state) {
             is NewsViewState.Loading -> showLoading()
-            is NewsViewState.LoadData -> loadData(state.sections, state.news)
-            is NewsViewState.ShowNews -> showNews(state.news)
-            is NewsViewState.Error -> showError()
+            is NewsViewState.ShowNewsAndSections -> {
+                hideLoading()
+                showNewsAndSections(state.sections, state.news)
+            }
+            is NewsViewState.ShowNews -> {
+                hideLoading()
+                showNews(state.news)
+            }
+            is NewsViewState.ShowNetworkError -> {
+                hideLoading()
+                showError(getString(R.string.network_error))
+            }
+            is NewsViewState.ShowGenericError -> {
+                hideLoading()
+                showError(getString(R.string.generic_error))
+            }
         }
     }
 
@@ -42,7 +56,7 @@ class NewsActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         viewModelFactory = NewsViewModelFactory(ServiceLocator.getRepository())
-        viewModel = ViewModelProvider(this, viewModelFactory).get(NewsViewModel::class.java)
+        viewModel = ViewModelProvider(this, viewModelFactory)[NewsViewModel::class.java]
 
         viewModel.content.observe(this, contentObserver)
 
@@ -69,8 +83,7 @@ class NewsActivity : AppCompatActivity() {
         newsAdapter.items = news
     }
 
-    private fun loadData(sections: List<String>, news: List<News>) {
-        hideLoading()
+    private fun showNewsAndSections(sections: List<String>, news: List<News>) {
         showSections(sections)
         showNews(news)
     }
@@ -90,7 +103,11 @@ class NewsActivity : AppCompatActivity() {
         startActivity(browserIntent)
     }
 
-    private fun showError() {
-        Snackbar.make(binding.newsLayout, "There is an error", Snackbar.LENGTH_LONG).show()
+    private fun showError(message: String) {
+        Snackbar.make(
+            binding.newsLayout,
+            message,
+            Snackbar.LENGTH_LONG
+        ).show()
     }
 }

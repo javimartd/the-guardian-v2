@@ -5,7 +5,7 @@ import com.javimartd.theguardian.v2.data.datasources.model.RawSection
 import com.javimartd.theguardian.v2.ui.model.News
 import com.javimartd.theguardian.v2.ui.model.Section
 
-fun List<RawNews>?.toNewsView(): List<News> {
+fun List<RawNews>?.newsMapToView(): List<News> {
     return this?.map {
         News(
             it.id,
@@ -20,7 +20,7 @@ fun List<RawNews>?.toNewsView(): List<News> {
     } ?: emptyList()
 }
 
-fun List<RawSection>?.toSectionsView(): List<Section> {
+fun List<RawSection>?.sectionsMapToView(): List<Section> {
     return this?.map {
         Section(
             it.id,
