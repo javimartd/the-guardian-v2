@@ -7,8 +7,8 @@ class LocalDataSourceImpl: LocalDataSource {
 
     private var sections = mutableListOf<RawSection>()
 
-    override suspend fun getSections(): Resource<List<RawSection>> {
-        return Resource.Success(sections.toList())
+    override suspend fun getSections(): List<RawSection> {
+        return sections.toList()
     }
 
     override suspend fun saveSections(sections: List<RawSection>) {

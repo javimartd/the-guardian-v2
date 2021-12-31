@@ -3,9 +3,9 @@ package com.javimartd.theguardian.v2.data
 import com.javimartd.theguardian.v2.data.coroutines.DefaultDispatcherProvider
 import com.javimartd.theguardian.v2.data.coroutines.DispatcherProvider
 import com.javimartd.theguardian.v2.data.datasources.local.LocalDataSource
-import com.javimartd.theguardian.v2.data.datasources.remote.RemoteDataSource
 import com.javimartd.theguardian.v2.data.datasources.model.RawNews
 import com.javimartd.theguardian.v2.data.datasources.model.RawSection
+import com.javimartd.theguardian.v2.data.datasources.remote.RemoteDataSource
 import com.javimartd.theguardian.v2.data.state.Resource
 import kotlinx.coroutines.withContext
 
@@ -27,15 +27,15 @@ class RepositoryImpl(
 
     override suspend fun getSections(): Resource<List<RawSection>> {
         return withContext(dispatchers.io()) {
-            val sectionsFromLocal = localDataSource.getSections()
-            if (sectionsFromLocal.data.isNullOrEmpty()) {
-                val sectionsFromRemote = remoteDataSource.getSections()
-                if (sectionsFromRemote is Resource.Success) {
-                    localDataSource.saveSections(sectionsFromRemote.data!!)
+            val sections = localDataSource.getSections()
+            if (sections.isNullOrEmpty()) {
+                val response =  remoteDataSource.getSections()
+                if (response is Resource.Success) {
+                    localDataSource.saveSections(response.data)
                 }
-                sectionsFromRemote
+                response
             } else {
-                sectionsFromLocal
+                Resource.Success(sections)
             }
         }
     }
