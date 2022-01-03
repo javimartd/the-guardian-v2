@@ -47,7 +47,6 @@ class LocalDataSourceImplTest: TestCase() {
             // then
             Assert.assertEquals(2, actual.size)
             MatcherAssert.assertThat(actual[0], IsInstanceOf.instanceOf(RawSection::class.java))
-            Assert.assertEquals("webTitle", actual[0].webTitle)
         }
     }
 }
