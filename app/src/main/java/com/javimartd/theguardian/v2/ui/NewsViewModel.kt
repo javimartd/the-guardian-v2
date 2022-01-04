@@ -28,55 +28,47 @@ class NewsViewModel(private val repository: Repository): ViewModel() {
         get() = _content
 
     init {
-        fetchContent()
+        getNewsAndSections()
     }
 
-    fun fetchContent() {
+    fun getNewsAndSections() {
         viewModelScope.launch {
             coroutineScope {
-                val newsDeferred = async { repository.getNews(WORLD_NEWS_SECTION_ID) }
-                val sectionsDeferred = async { repository.getSections() }
-                val newsResponseAwait = newsDeferred.await()
-                val sectionsResponseAwait = sectionsDeferred.await()
-
+                val deferredNews = async { repository.getNews(WORLD_NEWS_SECTION_ID) }
+                val deferredSections = async { repository.getSections() }
+                val newsResponse = deferredNews.await()
+                val sectionsResponse = deferredSections.await()
                 if (
-                    newsResponseAwait is Resource.Success &&
-                    sectionsResponseAwait is Resource.Success
+                    newsResponse is Resource.Success &&
+                    sectionsResponse is Resource.Success
                 ) {
-                    _content.value = NewsViewState.ShowNewsAndSections(
-                        newsResponseAwait.data.newsMapToView(),
-                        sectionsResponseAwait.data
-                            .sectionsMapToView()
-                            .flatMap { listOf(it.webTitle) }
-                    )
+                    val news = newsResponse.data.newsMapToView()
+                    val sections = getWebTitles(sectionsResponse.data.sectionsMapToView())
+                    _content.value = NewsViewState.ShowNewsAndSections(news, sections)
                 } else {
-                    _content.value = NewsViewState.ShowGenericError
-                }
-            }
-        }
-    }
-
-    fun fetchNews(sectionId: String) {
-        viewModelScope.launch {
-            when(val response = repository.getNews(sectionId)) {
-                is Resource.Success -> {
-                    _content.value = NewsViewState.ShowNews(response.data.newsMapToView())
-                }
-                is Resource.Error -> {
-                    when (response.errorTypes) {
-                        is ErrorTypes.RemoteErrors.Network -> {
-                            _content.value = NewsViewState.ShowNetworkError
-                        }
-                        else -> {
-                            _content.value = NewsViewState.ShowGenericError
-                        }
+                    if (newsResponse is Resource.Error) {
+                        handleError(newsResponse.error)
+                    }
+                    if (sectionsResponse is Resource.Error) {
+                        handleError(sectionsResponse.error)
                     }
                 }
             }
         }
     }
 
-    fun onSelectedSection(sectionName: String) {
+    fun getNews(sectionId: String) {
+        viewModelScope.launch {
+            when(val response = repository.getNews(sectionId)) {
+                is Resource.Success -> {
+                    _content.value = NewsViewState.ShowNews(response.data.newsMapToView())
+                }
+                is Resource.Error -> handleError(response.error)
+            }
+        }
+    }
+
+    fun onSectionSelected(sectionName: String) {
         viewModelScope.launch {
             when(val response = repository.getSections()) {
                 is Resource.Success -> {
@@ -84,11 +76,9 @@ class NewsViewModel(private val repository: Repository): ViewModel() {
                         response.data.sectionsMapToView(),
                         sectionName
                     )
-                    fetchNews(sectionId)
+                    getNews(sectionId)
                 }
-                is Resource.Error -> {
-                    _content.value = NewsViewState.ShowGenericError
-                }
+                is Resource.Error -> handleError(response.error)
             }
         }
     }
@@ -98,5 +88,26 @@ class NewsViewModel(private val repository: Repository): ViewModel() {
         sectionName: String
     ): String {
         return sections.single { sectionName == it.webTitle }.id
+    }
+
+    private fun getWebTitles(sections: List<Section>): List<String> {
+        return sections.flatMap { listOf(it.webTitle) }
+    }
+
+    private fun handleError(error: ErrorTypes) {
+        when (error) {
+            is ErrorTypes.RemoteErrors.Network -> {
+                _content.value = NewsViewState.ShowNetworkError
+            }
+            is ErrorTypes.RemoteErrors.Server -> {
+                _content.value = NewsViewState.ShowServerError
+            }
+            is ErrorTypes.RemoteErrors.AccessDenied -> {
+                _content.value = NewsViewState.ShowAccessDeniedError
+            }
+            else -> {
+                _content.value = NewsViewState.ShowGenericError
+            }
+        }
     }
 }

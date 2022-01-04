@@ -33,7 +33,7 @@ class NewsActivity : AppCompatActivity() {
             is NewsViewState.Loading -> showLoading()
             is NewsViewState.ShowNewsAndSections -> {
                 hideLoading()
-                showNewsAndSections(state.sections, state.news)
+                showNewsAndSections(state.news, state.sections)
             }
             is NewsViewState.ShowNews -> {
                 hideLoading()
@@ -42,6 +42,12 @@ class NewsActivity : AppCompatActivity() {
             is NewsViewState.ShowNetworkError -> {
                 hideLoading()
                 showError(getString(R.string.network_error))
+            }
+            is NewsViewState.ShowServerError -> {
+
+            }
+            is NewsViewState.ShowAccessDeniedError -> {
+
             }
             is NewsViewState.ShowGenericError -> {
                 hideLoading()
@@ -62,7 +68,7 @@ class NewsActivity : AppCompatActivity() {
 
         loading = LoadingDialog(this)
 
-        newsAdapter = NewsAdapter { openLink(it) }
+        newsAdapter = NewsAdapter { openUrl(it) }
         binding.recycler.adapter = newsAdapter
     }
 
@@ -83,7 +89,10 @@ class NewsActivity : AppCompatActivity() {
         newsAdapter.items = news
     }
 
-    private fun showNewsAndSections(sections: List<String>, news: List<News>) {
+    private fun showNewsAndSections(
+        news: List<News>,
+        sections: List<String>
+    ) {
         showSections(sections)
         showNews(news)
     }
@@ -94,11 +103,11 @@ class NewsActivity : AppCompatActivity() {
         (binding.autoCompleteTextView as? AutoCompleteTextView)?.setAdapter(sectionsAdapter)
         binding.autoCompleteTextView.onItemClickListener =
             AdapterView.OnItemClickListener { _, _, position, _ ->
-                viewModel.onSelectedSection(sections[position])
+                viewModel.onSectionSelected(sections[position])
             }
     }
 
-    private fun openLink(webUrl: String) {
+    private fun openUrl(webUrl: String) {
         val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(webUrl))
         startActivity(browserIntent)
     }

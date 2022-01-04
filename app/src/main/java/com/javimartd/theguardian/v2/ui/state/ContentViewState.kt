@@ -10,5 +10,7 @@ sealed class NewsViewState {
         val sections: List<String>
     ): NewsViewState()
     object ShowNetworkError: NewsViewState()
+    object ShowServerError: NewsViewState()
+    object ShowAccessDeniedError: NewsViewState()
     object ShowGenericError: NewsViewState()
 }
