@@ -22,11 +22,13 @@ class CoroutinesTestRule(
         override fun unconfined(): CoroutineDispatcher = testDispatcher
     }
 
+    // Do something before starting your test
     override fun starting(description: Description?) {
         super.starting(description)
         Dispatchers.setMain(testDispatcher)
     }
 
+    // Do something after finishing your test
     override fun finished(description: Description?) {
         super.finished(description)
         Dispatchers.resetMain()

@@ -1,13 +1,14 @@
 package com.javimartd.theguardian.v2.data
 
-import com.javimartd.theguardian.v2.data.coroutines.DefaultDispatcherProvider
 import com.javimartd.theguardian.v2.data.datasources.local.LocalDataSource
 import com.javimartd.theguardian.v2.data.datasources.model.RawNews
 import com.javimartd.theguardian.v2.data.datasources.model.RawSection
 import com.javimartd.theguardian.v2.data.datasources.remote.RemoteDataSource
 import com.javimartd.theguardian.v2.data.state.ErrorTypes
 import com.javimartd.theguardian.v2.data.state.Resource
+import com.javimartd.theguardian.v2.ui.CoroutinesTestRule
 import junit.framework.TestCase
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.MatcherAssert
 import org.hamcrest.core.IsInstanceOf
@@ -20,10 +21,17 @@ import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 
+@ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
 class RepositoryImplTest: TestCase() {
 
+    /**
+     * https://developer.android.com/kotlin/flow/test
+     */
+
     private lateinit var sut : Repository
+
+    private val coroutineDispatcher = CoroutinesTestRule()
 
     @Mock private lateinit var remoteDataSource: RemoteDataSource
     @Mock private lateinit var localDataSource: LocalDataSource
@@ -32,7 +40,7 @@ class RepositoryImplTest: TestCase() {
     fun setup() {
         MockitoAnnotations.openMocks(this)
         sut = RepositoryImpl(
-            DefaultDispatcherProvider(),
+            coroutineDispatcher.testDispatcherProvider,
             remoteDataSource,
             localDataSource
         )
