@@ -39,17 +39,7 @@ class NewsActivity : AppCompatActivity() {
                 hideLoading()
                 showNews(state.news)
             }
-            is NewsViewState.ShowNetworkError -> {
-                hideLoading()
-                showError(getString(R.string.network_error))
-            }
-            is NewsViewState.ShowServerError -> {
-
-            }
-            is NewsViewState.ShowAccessDeniedError -> {
-
-            }
-            is NewsViewState.ShowGenericError -> {
+            else -> {
                 hideLoading()
                 showError(getString(R.string.generic_error))
             }

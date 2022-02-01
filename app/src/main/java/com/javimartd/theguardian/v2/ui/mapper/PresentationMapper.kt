@@ -3,7 +3,6 @@ package com.javimartd.theguardian.v2.ui.mapper
 import com.javimartd.theguardian.v2.data.datasources.model.RawNews
 import com.javimartd.theguardian.v2.data.datasources.model.RawSection
 import com.javimartd.theguardian.v2.ui.model.News
-import com.javimartd.theguardian.v2.ui.model.Section
 
 fun List<RawNews>?.newsMapToView(): List<News> {
     return this?.map {
@@ -20,12 +19,6 @@ fun List<RawNews>?.newsMapToView(): List<News> {
     } ?: emptyList()
 }
 
-fun List<RawSection>?.sectionsMapToView(): List<Section> {
-    return this?.map {
-        Section(
-            it.id,
-            it.webTitle,
-            it.webUrl
-        )
-    } ?: emptyList()
+fun List<RawSection>?.sectionsMapToView(): List<String> {
+    return this?.flatMap { listOf(it.webTitle) } ?: emptyList()
 }

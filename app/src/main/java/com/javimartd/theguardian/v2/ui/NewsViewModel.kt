@@ -5,11 +5,11 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.javimartd.theguardian.v2.data.Repository
+import com.javimartd.theguardian.v2.data.datasources.model.RawSection
 import com.javimartd.theguardian.v2.data.state.ErrorTypes
 import com.javimartd.theguardian.v2.data.state.Resource
 import com.javimartd.theguardian.v2.ui.mapper.newsMapToView
 import com.javimartd.theguardian.v2.ui.mapper.sectionsMapToView
-import com.javimartd.theguardian.v2.ui.model.Section
 import com.javimartd.theguardian.v2.ui.state.NewsViewState
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
@@ -43,7 +43,7 @@ class NewsViewModel(private val repository: Repository): ViewModel() {
                     sectionsResponse is Resource.Success
                 ) {
                     val news = newsResponse.data.newsMapToView()
-                    val sections = getWebTitles(sectionsResponse.data.sectionsMapToView())
+                    val sections = sectionsResponse.data.sectionsMapToView()
                     _content.value = NewsViewState.ShowNewsAndSections(news, sections)
                 } else {
                     if (newsResponse is Resource.Error) {
@@ -72,10 +72,7 @@ class NewsViewModel(private val repository: Repository): ViewModel() {
         viewModelScope.launch {
             when(val response = repository.getSections()) {
                 is Resource.Success -> {
-                    val sectionId = getSectionId(
-                        response.data.sectionsMapToView(),
-                        sectionName
-                    )
+                    val sectionId = getSectionId(response.data, sectionName)
                     getNews(sectionId)
                 }
                 is Resource.Error -> handleError(response.error)
@@ -84,14 +81,10 @@ class NewsViewModel(private val repository: Repository): ViewModel() {
     }
 
     private fun getSectionId(
-        sections: List<Section>,
+        sections: List<RawSection>,
         sectionName: String
     ): String {
         return sections.single { sectionName == it.webTitle }.id
-    }
-
-    private fun getWebTitles(sections: List<Section>): List<String> {
-        return sections.flatMap { listOf(it.webTitle) }
     }
 
     private fun handleError(error: ErrorTypes) {
@@ -101,9 +94,6 @@ class NewsViewModel(private val repository: Repository): ViewModel() {
             }
             is ErrorTypes.RemoteErrors.Server -> {
                 _content.value = NewsViewState.ShowServerError
-            }
-            is ErrorTypes.RemoteErrors.AccessDenied -> {
-                _content.value = NewsViewState.ShowAccessDeniedError
             }
             else -> {
                 _content.value = NewsViewState.ShowGenericError

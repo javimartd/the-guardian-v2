@@ -4,7 +4,6 @@
     <!--news activity-->
     <string name="button_readMore">Read more</string>
     <string name="news_activity_breaking_news">Breaking news</string>
-    <string name="network_error">Please check your Internet connection</string>
     <string name="generic_error">We are unable to provide you with the latest news at this time.</string>
 
 </resources>
