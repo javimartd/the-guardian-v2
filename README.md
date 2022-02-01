@@ -4,6 +4,8 @@
 
 This app allows you to check the latest news in the world thanks to the API provided by the [The Guardian](https://www.theguardian.com/uk). You can check all the information about how to use [here](https://open-platform.theguardian.com/).
 
+<img src = "https://github.com/javimartd/the-guardian-v2/blob/main/screenshots/pixel_4a_home_I.png" width ="200" /> <img src = "https://github.com/javimartd/the-guardian-v2/blob/main/screenshots/pixel_4a_home_II.png" width ="200" />
+
 ### Summary
 - [Kotlin][1]
 - [MVVM][2] Pattern
