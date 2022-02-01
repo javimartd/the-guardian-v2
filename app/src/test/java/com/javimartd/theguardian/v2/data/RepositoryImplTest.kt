@@ -47,94 +47,96 @@ class RepositoryImplTest: TestCase() {
     }
 
     @Test
-    fun `get news when response successful returns success resource with news`() {
+    fun `get news when response successful returns success resource with news`()
+    = runBlocking {
 
-        runBlocking {
-            // given
-            val data = DataFactory.makeNews(2)
-            Mockito
-                .`when`(remoteDataSource.getNews(""))
-                .thenReturn(Resource.Success(data))
+        // given
+        val data = DataFactory.makeNews(2)
+        Mockito
+            .`when`(remoteDataSource.getNews(""))
+            .thenReturn(Resource.Success(data))
 
-            // when
-            val actual = sut.getNews("")
+        // when
+        val actual = sut.getNews("")
 
-            // then
-            MatcherAssert.assertThat(actual, IsInstanceOf.instanceOf(Resource.Success::class.java))
-            actual as Resource.Success
-            Assert.assertEquals(2, actual.data.size)
-            MatcherAssert.assertThat(actual.data[0], IsInstanceOf.instanceOf(RawNews::class.java))
-        }
+        // then
+        MatcherAssert.assertThat(actual, IsInstanceOf.instanceOf(Resource.Success::class.java))
+        actual as Resource.Success
+        Assert.assertEquals(2, actual.data.size)
+        MatcherAssert.assertThat(actual.data[0], IsInstanceOf.instanceOf(RawNews::class.java))
     }
 
     @Test
-    fun `get sections from remote when response successful returns success resource with sections`() {
-        runBlocking {
-            // given
-            val remoteData = DataFactory.makeSections(4)
-            Mockito
-                .`when`(remoteDataSource.getSections())
-                .thenReturn(Resource.Success(remoteData))
+    fun `get sections from remote when response successful returns success resource with sections`()
+    = runBlocking {
 
-            Mockito
-                .`when`(localDataSource.getSections())
-                .thenReturn(emptyList())
+        // given
+        val remoteData = DataFactory.makeSections(5)
+        Mockito
+            .`when`(remoteDataSource.getSections())
+            .thenReturn(Resource.Success(remoteData))
 
-            // when
-            val actual = sut.getSections()
+        Mockito
+            .`when`(localDataSource.getSections())
+            .thenReturn(emptyList())
 
-            // then
-            MatcherAssert.assertThat(actual, IsInstanceOf.instanceOf(Resource.Success::class.java))
-            actual as Resource.Success
-            Mockito.verify(localDataSource, Mockito.times(1)).saveSections(remoteData)
-            Assert.assertEquals(4, actual.data.size)
-            MatcherAssert.assertThat(actual.data[0], IsInstanceOf.instanceOf(RawSection::class.java))
-        }
+        // when
+        val actual = sut.getSections()
+
+        // then
+        MatcherAssert.assertThat(actual, IsInstanceOf.instanceOf(Resource.Success::class.java))
+        actual as Resource.Success
+        Mockito.verify(
+            localDataSource,
+            Mockito.times(1)
+        ).saveSections(remoteData)
+        Assert.assertEquals(5, actual.data.size)
+        MatcherAssert.assertThat(actual.data[0], IsInstanceOf.instanceOf(RawSection::class.java))
     }
 
     @Test
-    fun `get sections from local returns success resource with sections`() {
-        runBlocking {
-            // given
-            val localData = DataFactory.makeSections(10)
+    fun `get sections from local returns success resource with sections`()
+    = runBlocking {
 
-            Mockito
-                .`when`(localDataSource.getSections())
-                .thenReturn(localData)
+        // given
+        val localData = DataFactory.makeSections(10)
 
-            // when
-            val actual = sut.getSections()
+        Mockito
+            .`when`(localDataSource.getSections())
+            .thenReturn(localData)
 
-            // then
-            MatcherAssert.assertThat(actual, IsInstanceOf.instanceOf(Resource.Success::class.java))
-            actual as Resource.Success
-            Assert.assertEquals(10, actual.data.size)
-            MatcherAssert.assertThat(actual.data[0], IsInstanceOf.instanceOf(RawSection::class.java))
-        }
+        // when
+        val actual = sut.getSections()
+
+        // then
+        MatcherAssert.assertThat(actual, IsInstanceOf.instanceOf(Resource.Success::class.java))
+        actual as Resource.Success
+        Assert.assertEquals(10, actual.data.size)
+        MatcherAssert.assertThat(actual.data[0], IsInstanceOf.instanceOf(RawSection::class.java))
     }
 
     @Test
-    fun `get sections from remote when server error returns error resource with a server exception`() {
-        runBlocking {
-            // given
-            Mockito
-                .`when`(remoteDataSource.getSections())
-                .thenReturn(Resource.Error(ErrorTypes.RemoteErrors.Server))
+    fun `get sections from remote when server error returns error resource with a server exception`()
+    = runBlocking {
 
-            Mockito
-                .`when`(localDataSource.getSections())
-                .thenReturn(null)
+        // given
+        Mockito
+            .`when`(remoteDataSource.getSections())
+            .thenReturn(Resource.Error(ErrorTypes.RemoteErrors.Server))
 
-            // when
-            val actual = sut.getSections()
+        Mockito
+            .`when`(localDataSource.getSections())
+            .thenReturn(null)
 
-            // then
-            MatcherAssert.assertThat(actual, IsInstanceOf.instanceOf(Resource.Error::class.java))
-            (actual as Resource.Error)
-            MatcherAssert.assertThat(
-                actual.error,
-                IsInstanceOf.instanceOf(ErrorTypes.RemoteErrors.Server::class.java)
-            )
-        }
+        // when
+        val actual = sut.getSections()
+
+        // then
+        MatcherAssert.assertThat(actual, IsInstanceOf.instanceOf(Resource.Error::class.java))
+        (actual as Resource.Error)
+        MatcherAssert.assertThat(
+            actual.error,
+            IsInstanceOf.instanceOf(ErrorTypes.RemoteErrors.Server::class.java)
+        )
     }
 }

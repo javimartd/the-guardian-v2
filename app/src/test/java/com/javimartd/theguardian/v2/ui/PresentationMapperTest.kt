@@ -6,7 +6,6 @@ import com.javimartd.theguardian.v2.data.datasources.model.RawSection
 import com.javimartd.theguardian.v2.ui.mapper.newsMapToView
 import com.javimartd.theguardian.v2.ui.mapper.sectionsMapToView
 import com.javimartd.theguardian.v2.ui.model.News
-import com.javimartd.theguardian.v2.ui.model.Section
 import org.junit.Assert
 import org.junit.Test
 
@@ -37,9 +36,7 @@ class PresentationMapperTest {
         Assert.assertEquals(data.fields?.bodyText, presentation.description)
     }
 
-    private fun assertEqual(data: RawSection, presentation: Section) {
-        Assert.assertEquals(data.id, presentation.id)
-        Assert.assertEquals(data.webTitle, presentation.webTitle)
-        Assert.assertEquals(data.webUrl, presentation.webUrl)
+    private fun assertEqual(data: RawSection, presentation: String) {
+        Assert.assertEquals(data.webTitle, presentation)
     }
 }

@@ -24,18 +24,19 @@ class LocalDataSourceImplTest: TestCase() {
     }
 
     @Test
-    fun `get sections`() {
-        runBlocking {
-            // when
-            val actual = sut.getSections()
+    fun `get sections`()
+    = runBlocking {
 
-            // then
-            Assert.assertEquals(actual, emptyList<RawSection>())
-        }
+        // when
+        val actual = sut.getSections()
+
+        // then
+        Assert.assertEquals(actual, emptyList<RawSection>())
     }
 
     @Test
     fun `save sections`() {
+
         // given
         val data = DataFactory.makeSections(2)
 
