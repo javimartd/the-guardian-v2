@@ -11,11 +11,9 @@ import com.javimartd.theguardian.v2.ui.mapper.newsMapToView
 import com.javimartd.theguardian.v2.ui.model.News
 import com.javimartd.theguardian.v2.ui.state.NewsViewState
 import junit.framework.TestCase
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.runBlockingTest
 import org.junit.*
 import org.junit.runner.RunWith
 import org.mockito.ArgumentMatchers.isA
@@ -23,7 +21,6 @@ import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
-import java.util.*
 import java.util.concurrent.atomic.AtomicInteger
 
 @RunWith(MockitoJUnitRunner::class)
@@ -71,7 +68,7 @@ class NewsViewModelTest : TestCase() {
             observer,
             Mockito.times(1)
         ).onChanged(isA(NewsViewState.ShowNewsAndSections::class.java))
-        // 2) check sections (and getWebTitles method)
+        // 2) check sections
         Assert.assertEquals("Music", value.sections[0])
         Assert.assertEquals("Life and style", value.sections[1])
         // 3) check news
@@ -152,13 +149,12 @@ class NewsViewModelTest : TestCase() {
         Mockito.verify(
             observer,
             Mockito.times(1)
-        ).onChanged(isA(NewsViewState.ShowAccessDeniedError::class.java))
+        ).onChanged(isA(NewsViewState.ShowGenericError::class.java))
     }
 
-    @ExperimentalCoroutinesApi
     @Test
     fun `get news when response successful returns success resource with news`()
-    = runBlockingTest {
+    = runBlocking {
 
         val data = DataFactory.makeNews(3)
 
