@@ -4,6 +4,21 @@ plugins {
     id 'kotlin-kapt'
 }
 
+static def headCommitCount() {
+    def cmd = "git rev-list HEAD --count"
+    return cmd.execute().text.toInteger()
+}
+
+static def headCommitSha() {
+    def sha = "git rev-parse HEAD --short"
+    return sha.execute().text.trim().take(8)
+}
+
+def versionMajor = 1
+def versionMinor = 0
+def versionPatch = 0
+def versionBuild = headCommitCount()
+
 android {
     compileSdk 31
 
@@ -11,8 +26,11 @@ android {
         applicationId "com.javimartd.theguardian.v2"
         minSdk 23
         targetSdk 31
-        versionCode 1
-        versionName "1.0"
+        versionCode versionMajor * 1000 +
+                versionMinor * 100 +
+                versionPatch * 10  +
+                versionBuild
+        versionName "${versionMajor}.${versionMinor}.${versionPatch}.${headCommitSha()}"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
