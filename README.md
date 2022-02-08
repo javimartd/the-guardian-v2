@@ -1,4 +1,4 @@
-[![Android CI](https://github.com/javimartd/the-guardian-v2/actions/workflows/android.yml/badge.svg)](https://github.com/javimartd/the-guardian-v2/actions/workflows/android.yml)
+[![android CI](https://github.com/javimartd/the-guardian-v2/actions/workflows/android.yml/badge.svg)](https://github.com/javimartd/the-guardian-v2/actions/workflows/android.yml)
 [![Mantained](https://img.shields.io/badge/Maintained%3F-yes-green.svg)]()
 
 ## The Guardian News (v2)
