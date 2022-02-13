@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import com.javimartd.theguardian.v2.R
+import com.javimartd.theguardian.v2.TheGuardianApp
 import com.javimartd.theguardian.v2.databinding.ActivityNewsBinding
 import com.javimartd.theguardian.v2.ui.adapter.NewsAdapter
 import com.javimartd.theguardian.v2.ui.common.DialogActions
@@ -51,7 +52,9 @@ class NewsActivity : AppCompatActivity() {
         binding = ActivityNewsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        viewModelFactory = NewsViewModelFactory(ServiceLocator.getRepository())
+        val serviceLocator = (application as TheGuardianApp).serviceLocator
+
+        viewModelFactory = NewsViewModelFactory(serviceLocator.repository)
         viewModel = ViewModelProvider(this, viewModelFactory)[NewsViewModel::class.java]
 
         viewModel.content.observe(this, contentObserver)
@@ -88,7 +91,11 @@ class NewsActivity : AppCompatActivity() {
     }
 
     private fun showSections(sections: List<String>) {
-        val sectionsAdapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, sections)
+        val sectionsAdapter = ArrayAdapter(
+            this,
+            android.R.layout.simple_spinner_item,
+            sections
+        )
         sectionsAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         (binding.autoCompleteTextView as? AutoCompleteTextView)?.setAdapter(sectionsAdapter)
         binding.autoCompleteTextView.onItemClickListener =
