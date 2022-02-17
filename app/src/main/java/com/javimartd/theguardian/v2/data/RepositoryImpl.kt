@@ -8,8 +8,9 @@ import com.javimartd.theguardian.v2.data.datasources.model.RawSection
 import com.javimartd.theguardian.v2.data.datasources.remote.RemoteDataSource
 import com.javimartd.theguardian.v2.data.state.Resource
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class RepositoryImpl(
+class RepositoryImpl @Inject constructor(
     private val dispatchers: DispatcherProvider = DefaultDispatcherProvider(),
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource,

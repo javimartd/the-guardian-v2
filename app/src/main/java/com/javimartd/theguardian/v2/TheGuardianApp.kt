@@ -1,8 +1,7 @@
 package com.javimartd.theguardian.v2
 
 import android.app.Application
-import com.javimartd.theguardian.v2.ui.di.ServiceLocator
+import dagger.hilt.android.HiltAndroidApp
 
-class TheGuardianApp: Application() {
-    val serviceLocator = ServiceLocator()
-}
+@HiltAndroidApp
+class TheGuardianApp: Application()

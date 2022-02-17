@@ -11,11 +11,16 @@ import com.javimartd.theguardian.v2.data.state.Resource
 import com.javimartd.theguardian.v2.ui.mapper.newsMapToView
 import com.javimartd.theguardian.v2.ui.mapper.sectionsMapToView
 import com.javimartd.theguardian.v2.ui.state.NewsViewState
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class NewsViewModel(private val repository: Repository): ViewModel() {
+@HiltViewModel
+class NewsViewModel @Inject constructor(
+    private val repository: Repository
+): ViewModel() {
 
     companion object {
         private const val WORLD_NEWS_SECTION_ID = "world"

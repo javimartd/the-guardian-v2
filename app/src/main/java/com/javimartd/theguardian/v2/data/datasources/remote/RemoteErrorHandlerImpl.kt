@@ -5,8 +5,9 @@ import com.javimartd.theguardian.v2.data.state.ErrorTypes
 import retrofit2.HttpException
 import java.io.IOException
 import java.net.HttpURLConnection
+import javax.inject.Inject
 
-class RemoteErrorHandlerImpl: ErrorHandler {
+class RemoteErrorHandlerImpl @Inject constructor(): ErrorHandler {
 
     override fun getError(throwable: Throwable): ErrorTypes {
         return when(throwable) {

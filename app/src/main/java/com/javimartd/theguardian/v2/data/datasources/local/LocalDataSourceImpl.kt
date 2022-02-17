@@ -1,9 +1,9 @@
 package com.javimartd.theguardian.v2.data.datasources.local
 
 import com.javimartd.theguardian.v2.data.datasources.model.RawSection
-import com.javimartd.theguardian.v2.data.state.Resource
+import javax.inject.Inject
 
-class LocalDataSourceImpl: LocalDataSource {
+class LocalDataSourceImpl @Inject constructor(): LocalDataSource {
 
     private var sections = mutableListOf<RawSection>()
 

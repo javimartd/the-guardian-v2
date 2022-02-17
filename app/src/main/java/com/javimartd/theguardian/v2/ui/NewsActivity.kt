@@ -11,23 +11,22 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
 import com.javimartd.theguardian.v2.R
-import com.javimartd.theguardian.v2.TheGuardianApp
 import com.javimartd.theguardian.v2.databinding.ActivityNewsBinding
 import com.javimartd.theguardian.v2.ui.adapter.NewsAdapter
 import com.javimartd.theguardian.v2.ui.common.DialogActions
 import com.javimartd.theguardian.v2.ui.common.LoadingDialog
-import com.javimartd.theguardian.v2.ui.factory.NewsViewModelFactory
 import com.javimartd.theguardian.v2.ui.model.News
 import com.javimartd.theguardian.v2.ui.state.NewsViewState
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class NewsActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityNewsBinding
-    private lateinit var viewModelFactory: NewsViewModelFactory
     private lateinit var viewModel: NewsViewModel
-    private lateinit var newsAdapter: NewsAdapter
+    //private val viewModel: NewsViewModel by viewModels()
     private lateinit var loading: DialogActions
+    private lateinit var newsAdapter: NewsAdapter
 
     private val contentObserver = Observer<NewsViewState> { state ->
         when (state) {
@@ -52,10 +51,7 @@ class NewsActivity : AppCompatActivity() {
         binding = ActivityNewsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val serviceLocator = (application as TheGuardianApp).serviceLocator
-
-        viewModelFactory = NewsViewModelFactory(serviceLocator.repository)
-        viewModel = ViewModelProvider(this, viewModelFactory)[NewsViewModel::class.java]
+        viewModel = ViewModelProvider(this)[NewsViewModel::class.java]
 
         viewModel.content.observe(this, contentObserver)
 

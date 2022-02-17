@@ -8,8 +8,9 @@ import com.javimartd.theguardian.v2.data.datasources.model.STATUS_OK
 import com.javimartd.theguardian.v2.data.state.ErrorTypes
 import com.javimartd.theguardian.v2.data.state.Resource
 import retrofit2.HttpException
+import javax.inject.Inject
 
-class RemoteDataSourceImpl(
+class RemoteDataSourceImpl @Inject constructor(
     private val apiService: ApiService,
     private val errorHandler: ErrorHandler
 ): RemoteDataSource {
