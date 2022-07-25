@@ -1,11 +1,11 @@
 package com.javimartd.theguardian.v2.ui
 
 import com.javimartd.theguardian.v2.data.DataFactory
-import com.javimartd.theguardian.v2.data.datasources.model.RawNews
-import com.javimartd.theguardian.v2.data.datasources.model.RawSection
+import com.javimartd.theguardian.v2.data.datasources.remote.NewsRaw
+import com.javimartd.theguardian.v2.data.datasources.remote.SectionRaw
 import com.javimartd.theguardian.v2.ui.mapper.newsMapToView
 import com.javimartd.theguardian.v2.ui.mapper.sectionsMapToView
-import com.javimartd.theguardian.v2.ui.model.News
+import com.javimartd.theguardian.v2.ui.model.NewsUi
 import org.junit.Assert
 import org.junit.Test
 
@@ -25,10 +25,7 @@ class PresentationMapperTest {
         assertEqual(data[0], presentation[0])
     }
 
-    private fun assertEqual(data: RawNews, presentation: News) {
-        Assert.assertEquals(data.id, presentation.id)
-        Assert.assertEquals(data.sectionId, presentation.sectionId)
-        Assert.assertEquals(data.sectionName, presentation.sectionName)
+    private fun assertEqual(data: NewsRaw, presentation: NewsUi) {
         Assert.assertEquals(data.webPublicationDate, presentation.date)
         Assert.assertEquals(data.webTitle, presentation.title)
         Assert.assertEquals(data.webUrl, presentation.webUrl)
@@ -36,7 +33,7 @@ class PresentationMapperTest {
         Assert.assertEquals(data.fields?.bodyText, presentation.description)
     }
 
-    private fun assertEqual(data: RawSection, presentation: String) {
+    private fun assertEqual(data: SectionRaw, presentation: String) {
         Assert.assertEquals(data.webTitle, presentation)
     }
 }

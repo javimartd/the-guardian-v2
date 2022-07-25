@@ -1,8 +1,8 @@
 package com.javimartd.theguardian.v2.data
 
-import com.javimartd.theguardian.v2.data.datasources.local.LocalDataSource
-import com.javimartd.theguardian.v2.data.datasources.local.LocalDataSourceImpl
-import com.javimartd.theguardian.v2.data.datasources.model.RawSection
+import com.javimartd.theguardian.v2.data.datasources.local.NewsLocalDataSource
+import com.javimartd.theguardian.v2.data.datasources.local.NewsLocalDataSourceImpl
+import com.javimartd.theguardian.v2.data.datasources.remote.SectionRaw
 import junit.framework.TestCase
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.MatcherAssert
@@ -14,13 +14,13 @@ import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
-class LocalDataSourceImplTest: TestCase() {
+class NewsLocalDataSourceImplTest: TestCase() {
 
-    private lateinit var sut : LocalDataSource
+    private lateinit var sut : NewsLocalDataSource
 
     @Before
     fun setup() {
-        sut = LocalDataSourceImpl()
+        sut = NewsLocalDataSourceImpl()
     }
 
     @Test
@@ -31,7 +31,7 @@ class LocalDataSourceImplTest: TestCase() {
         val actual = sut.getSections()
 
         // then
-        Assert.assertEquals(actual, emptyList<RawSection>())
+        Assert.assertEquals(actual, emptyList<SectionRaw>())
     }
 
     @Test
@@ -47,7 +47,7 @@ class LocalDataSourceImplTest: TestCase() {
 
             // then
             Assert.assertEquals(2, actual.size)
-            MatcherAssert.assertThat(actual[0], IsInstanceOf.instanceOf(RawSection::class.java))
+            MatcherAssert.assertThat(actual[0], IsInstanceOf.instanceOf(SectionRaw::class.java))
         }
     }
 }

@@ -1,22 +1,22 @@
 package com.javimartd.theguardian.v2.data
 
-import com.javimartd.theguardian.v2.data.datasources.model.RawFields
-import com.javimartd.theguardian.v2.data.datasources.model.RawNews
-import com.javimartd.theguardian.v2.data.datasources.model.RawSection
+import com.javimartd.theguardian.v2.data.datasources.remote.FieldsRaw
+import com.javimartd.theguardian.v2.data.datasources.remote.NewsRaw
+import com.javimartd.theguardian.v2.data.datasources.remote.SectionRaw
 import java.util.*
 
 object DataFactory {
 
-    fun makeNews(count: Int): List<RawNews> {
-        val data = mutableListOf<RawNews>()
+    fun makeNews(count: Int): List<NewsRaw> {
+        val data = mutableListOf<NewsRaw>()
         repeat(count) {
             data.add(makeNews())
         }
         return data
     }
 
-    fun makeSections(count: Int): List<RawSection> {
-        val data = mutableListOf<RawSection>()
+    fun makeSections(count: Int): List<SectionRaw> {
+        val data = mutableListOf<SectionRaw>()
         repeat(count) {
             data.add(makeSection())
         }
@@ -27,15 +27,15 @@ object DataFactory {
         return UUID.randomUUID().toString()
     }
 
-    private fun makeNews(): RawNews {
-        return RawNews(
+    private fun makeNews(): NewsRaw {
+        return NewsRaw(
             id = randomString(),
             sectionId = randomString(),
             sectionName = randomString(),
             webPublicationDate = "2021-11-08T16:22:34Z",
             webTitle = randomString(),
             webUrl = randomString(),
-            fields = RawFields(
+            fields = FieldsRaw(
                 liveBloggingNow = "false",
                 thumbnail = randomString(),
                 bodyText = randomString()
@@ -43,8 +43,8 @@ object DataFactory {
         )
     }
 
-    private fun makeSection(): RawSection {
-        return RawSection(
+    private fun makeSection(): SectionRaw {
+        return SectionRaw(
             id = randomString(),
             webTitle = randomString(),
             webUrl = randomString()

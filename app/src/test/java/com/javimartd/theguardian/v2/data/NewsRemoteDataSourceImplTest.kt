@@ -2,14 +2,9 @@ package com.javimartd.theguardian.v2.data
 
 import com.javimartd.theguardian.v2.FileReader
 import com.javimartd.theguardian.v2.data.datasources.ErrorHandler
-import com.javimartd.theguardian.v2.data.datasources.model.RawNews
-import com.javimartd.theguardian.v2.data.datasources.model.RawSection
-import com.javimartd.theguardian.v2.data.datasources.remote.ApiService
-import com.javimartd.theguardian.v2.data.datasources.remote.RemoteDataSource
-import com.javimartd.theguardian.v2.data.datasources.remote.RemoteDataSourceImpl
-import com.javimartd.theguardian.v2.data.datasources.remote.RemoteErrorHandlerImpl
+import com.javimartd.theguardian.v2.data.datasources.remote.*
 import com.javimartd.theguardian.v2.data.state.ErrorTypes
-import com.javimartd.theguardian.v2.data.state.Resource
+import com.javimartd.theguardian.v2.data.state.Result
 import junit.framework.TestCase
 import kotlinx.coroutines.runBlocking
 import okhttp3.OkHttpClient
@@ -29,9 +24,9 @@ import java.util.concurrent.TimeUnit
 
 
 @RunWith(MockitoJUnitRunner::class)
-class RemoteDataSourceImplTest : TestCase() {
+class NewsRemoteDataSourceImplTest : TestCase() {
 
-    private lateinit var sut : RemoteDataSource
+    private lateinit var sut : NewsRemoteDataSource
     private lateinit var server: MockWebServer
 
     private val client = OkHttpClient.Builder()
@@ -47,7 +42,7 @@ class RemoteDataSourceImplTest : TestCase() {
         server = MockWebServer()
         server.start()
 
-        sut = RemoteDataSourceImpl(getApiService(server), remoteErrorHandler)
+        sut = NewsRemoteDataSourceImpl(getApiService(server), remoteErrorHandler)
     }
 
     @After
@@ -67,11 +62,11 @@ class RemoteDataSourceImplTest : TestCase() {
 
         runBlocking {
             // when
-            val actual = sut.getNews("")
+            val actual = sut.getNews("", "")
 
             // then
-            MatcherAssert.assertThat(actual, instanceOf(Resource.Success::class.java))
-            (actual as Resource.Success)
+            MatcherAssert.assertThat(actual, instanceOf(Result.Success::class.java))
+            (actual as Result.Success)
             Assert.assertEquals(5, actual.data.size)
         }
     }
@@ -88,12 +83,12 @@ class RemoteDataSourceImplTest : TestCase() {
 
         runBlocking {
             // when
-            val actual = sut.getNews("")
+            val actual = sut.getNews("", "")
 
             // then
-            MatcherAssert.assertThat(actual, instanceOf(Resource.Success::class.java))
-            (actual as Resource.Success)
-            Assert.assertEquals(actual.data, emptyList<RawNews>())
+            MatcherAssert.assertThat(actual, instanceOf(Result.Success::class.java))
+            (actual as Result.Success)
+            Assert.assertEquals(actual.data, emptyList<NewsRaw>())
         }
     }
 
@@ -109,12 +104,12 @@ class RemoteDataSourceImplTest : TestCase() {
 
         runBlocking {
             // when
-            val actual = sut.getNews("")
+            val actual = sut.getNews("", "")
 
             // then
-            MatcherAssert.assertThat(actual, instanceOf(Resource.Success::class.java))
-            (actual as Resource.Success)
-            Assert.assertEquals(actual.data, emptyList<RawNews>())
+            MatcherAssert.assertThat(actual, instanceOf(Result.Success::class.java))
+            (actual as Result.Success)
+            Assert.assertEquals(actual.data, emptyList<NewsRaw>())
         }
     }
 
@@ -129,11 +124,11 @@ class RemoteDataSourceImplTest : TestCase() {
 
         runBlocking {
             // when
-            val actual = sut.getNews("")
+            val actual = sut.getNews("", "")
 
             // then
-            MatcherAssert.assertThat(actual, instanceOf(Resource.Error::class.java))
-            (actual as Resource.Error)
+            MatcherAssert.assertThat(actual, instanceOf(Result.Error::class.java))
+            (actual as Result.Error)
             MatcherAssert.assertThat(
                 actual.error,
                 instanceOf(ErrorTypes.RemoteErrors.Server::class.java)
@@ -151,11 +146,11 @@ class RemoteDataSourceImplTest : TestCase() {
 
         runBlocking {
             // when
-            val actual = sut.getNews("")
+            val actual = sut.getNews("", "")
 
             // then
-            MatcherAssert.assertThat(actual, instanceOf(Resource.Error::class.java))
-            (actual as Resource.Error)
+            MatcherAssert.assertThat(actual, instanceOf(Result.Error::class.java))
+            (actual as Result.Error)
             MatcherAssert.assertThat(
                 actual.error,
                 instanceOf(ErrorTypes.RemoteErrors.ApiStatus::class.java)
@@ -176,11 +171,11 @@ class RemoteDataSourceImplTest : TestCase() {
 
         runBlocking {
             // when
-            val actual = sut.getNews("")
+            val actual = sut.getNews("", "")
 
             // then
-            MatcherAssert.assertThat(actual, instanceOf(Resource.Error::class.java))
-            (actual as Resource.Error)
+            MatcherAssert.assertThat(actual, instanceOf(Result.Error::class.java))
+            (actual as Result.Error)
             MatcherAssert.assertThat(
                 actual.error,
                 instanceOf(ErrorTypes.RemoteErrors.Network::class.java)
@@ -203,8 +198,8 @@ class RemoteDataSourceImplTest : TestCase() {
             val actual = sut.getSections()
 
             // then
-            MatcherAssert.assertThat(actual, instanceOf(Resource.Success::class.java))
-            (actual as Resource.Success)
+            MatcherAssert.assertThat(actual, instanceOf(Result.Success::class.java))
+            (actual as Result.Success)
             Assert.assertEquals(22, actual.data.size)
         }
     }
@@ -224,9 +219,9 @@ class RemoteDataSourceImplTest : TestCase() {
             val actual = sut.getSections()
 
             // then
-            MatcherAssert.assertThat(actual, instanceOf(Resource.Success::class.java))
-            (actual as Resource.Success)
-            Assert.assertEquals(actual.data, emptyList<RawSection>())
+            MatcherAssert.assertThat(actual, instanceOf(Result.Success::class.java))
+            (actual as Result.Success)
+            Assert.assertEquals(actual.data, emptyList<SectionRaw>())
         }
     }
 
@@ -245,9 +240,9 @@ class RemoteDataSourceImplTest : TestCase() {
             val actual = sut.getSections()
 
             // then
-            MatcherAssert.assertThat(actual, instanceOf(Resource.Success::class.java))
-            (actual as Resource.Success)
-            Assert.assertEquals(actual.data, emptyList<RawSection>())
+            MatcherAssert.assertThat(actual, instanceOf(Result.Success::class.java))
+            (actual as Result.Success)
+            Assert.assertEquals(actual.data, emptyList<SectionRaw>())
         }
     }
 
@@ -265,8 +260,8 @@ class RemoteDataSourceImplTest : TestCase() {
             val actual = sut.getSections()
 
             // then
-            MatcherAssert.assertThat(actual, instanceOf(Resource.Error::class.java))
-            (actual as Resource.Error)
+            MatcherAssert.assertThat(actual, instanceOf(Result.Error::class.java))
+            (actual as Result.Error)
             MatcherAssert.assertThat(
                 actual.error,
                 instanceOf(ErrorTypes.RemoteErrors.Server::class.java)
@@ -287,8 +282,8 @@ class RemoteDataSourceImplTest : TestCase() {
             val actual = sut.getSections()
 
             // then
-            MatcherAssert.assertThat(actual, instanceOf(Resource.Error::class.java))
-            (actual as Resource.Error)
+            MatcherAssert.assertThat(actual, instanceOf(Result.Error::class.java))
+            (actual as Result.Error)
             MatcherAssert.assertThat(
                 actual.error,
                 instanceOf(ErrorTypes.RemoteErrors.ApiStatus::class.java)
@@ -312,8 +307,8 @@ class RemoteDataSourceImplTest : TestCase() {
             val actual = sut.getSections()
 
             // then
-            MatcherAssert.assertThat(actual, instanceOf(Resource.Error::class.java))
-            (actual as Resource.Error)
+            MatcherAssert.assertThat(actual, instanceOf(Result.Error::class.java))
+            (actual as Result.Error)
             MatcherAssert.assertThat(
                 actual.error,
                 instanceOf(ErrorTypes.RemoteErrors.Network::class.java)
