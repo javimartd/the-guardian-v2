@@ -10,13 +10,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.snackbar.Snackbar
-import com.javimartd.theguardian.v2.R
 import com.javimartd.theguardian.v2.databinding.ActivityNewsBinding
 import com.javimartd.theguardian.v2.ui.adapter.NewsAdapter
 import com.javimartd.theguardian.v2.ui.common.DialogActions
 import com.javimartd.theguardian.v2.ui.common.LoadingDialog
-import com.javimartd.theguardian.v2.ui.model.News
-import com.javimartd.theguardian.v2.ui.state.NewsViewState
+import com.javimartd.theguardian.v2.ui.model.NewsUi
+import com.javimartd.theguardian.v2.ui.model.NewsUiState
+import com.javimartd.theguardian.v2.ui.viewmodel.NewsUiEvent
+import com.javimartd.theguardian.v2.ui.viewmodel.NewsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -28,20 +29,20 @@ class NewsActivity : AppCompatActivity() {
     private lateinit var loading: DialogActions
     private lateinit var newsAdapter: NewsAdapter
 
-    private val contentObserver = Observer<NewsViewState> { state ->
-        when (state) {
-            is NewsViewState.Loading -> showLoading()
-            is NewsViewState.ShowNewsAndSections -> {
+    private val contentObserver = Observer<NewsUiState> { uiState ->
+        when (uiState) {
+            is NewsUiState.Loading -> showLoading()
+            is NewsUiState.ShowSections -> {
                 hideLoading()
-                showNewsAndSections(state.news, state.sections)
+                showSections(uiState.sections)
             }
-            is NewsViewState.ShowNews -> {
+            is NewsUiState.ShowNews -> {
                 hideLoading()
-                showNews(state.news)
+                showNews(uiState.news)
             }
-            else -> {
+            is NewsUiState.ShowError -> {
                 hideLoading()
-                showError(getString(R.string.generic_error))
+                showError(getString(uiState.message))
             }
         }
     }
@@ -53,7 +54,7 @@ class NewsActivity : AppCompatActivity() {
 
         viewModel = ViewModelProvider(this)[NewsViewModel::class.java]
 
-        viewModel.content.observe(this, contentObserver)
+        viewModel.uiState.observe(this, contentObserver)
 
         loading = LoadingDialog(this)
 
@@ -74,16 +75,8 @@ class NewsActivity : AppCompatActivity() {
         loading.hideDialog()
     }
 
-    private fun showNews(news: List<News>) {
+    private fun showNews(news: List<NewsUi>) {
         newsAdapter.items = news
-    }
-
-    private fun showNewsAndSections(
-        news: List<News>,
-        sections: List<String>
-    ) {
-        showSections(sections)
-        showNews(news)
     }
 
     private fun showSections(sections: List<String>) {
@@ -96,7 +89,7 @@ class NewsActivity : AppCompatActivity() {
         (binding.autoCompleteTextView as? AutoCompleteTextView)?.setAdapter(sectionsAdapter)
         binding.autoCompleteTextView.onItemClickListener =
             AdapterView.OnItemClickListener { _, _, position, _ ->
-                viewModel.onSectionSelected(sections[position])
+                viewModel.onEvent(NewsUiEvent.SectionSelected(sections[position]))
             }
     }
 

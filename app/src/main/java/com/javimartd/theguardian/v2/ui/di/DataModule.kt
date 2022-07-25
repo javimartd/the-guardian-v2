@@ -2,8 +2,8 @@ package com.javimartd.theguardian.v2.ui.di
 
 import com.javimartd.theguardian.v2.BuildConfig
 import com.javimartd.theguardian.v2.data.datasources.ErrorHandler
-import com.javimartd.theguardian.v2.data.datasources.local.LocalDataSource
-import com.javimartd.theguardian.v2.data.datasources.local.LocalDataSourceImpl
+import com.javimartd.theguardian.v2.data.datasources.local.NewsLocalDataSource
+import com.javimartd.theguardian.v2.data.datasources.local.NewsLocalDataSourceImpl
 import com.javimartd.theguardian.v2.data.datasources.remote.*
 import dagger.Module
 import dagger.Provides
@@ -27,8 +27,8 @@ class DataModule {
     fun providesRemoteDataSource(
         apiService: ApiService,
         errorHandler: ErrorHandler
-    ): RemoteDataSource {
-        return RemoteDataSourceImpl(
+    ): NewsRemoteDataSource {
+        return NewsRemoteDataSourceImpl(
             apiService,
             errorHandler
         )
@@ -36,8 +36,8 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun providesLocalDataSource(): LocalDataSource {
-        return LocalDataSourceImpl()
+    fun providesLocalDataSource(): NewsLocalDataSource {
+        return NewsLocalDataSourceImpl()
     }
 
     @Provides

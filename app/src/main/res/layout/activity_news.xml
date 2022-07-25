@@ -20,7 +20,7 @@
             android:id="@+id/autoCompleteTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/news_activity_breaking_news"
+            android:hint="@string/news_activity_title"
             android:inputType="none"
             android:labelFor="@null" />
 

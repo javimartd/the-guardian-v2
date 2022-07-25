@@ -1,15 +1,12 @@
 package com.javimartd.theguardian.v2.ui.mapper
 
-import com.javimartd.theguardian.v2.data.datasources.model.RawNews
-import com.javimartd.theguardian.v2.data.datasources.model.RawSection
-import com.javimartd.theguardian.v2.ui.model.News
+import com.javimartd.theguardian.v2.data.datasources.remote.NewsRaw
+import com.javimartd.theguardian.v2.data.datasources.remote.SectionRaw
+import com.javimartd.theguardian.v2.ui.model.NewsUi
 
-fun List<RawNews>?.newsMapToView(): List<News> {
+fun List<NewsRaw>?.newsMapToView(): List<NewsUi> {
     return this?.map {
-        News(
-            it.id,
-            it.sectionId,
-            it.sectionName,
+        NewsUi(
             it.webTitle,
             it.webPublicationDate,
             it.webUrl,
@@ -19,6 +16,6 @@ fun List<RawNews>?.newsMapToView(): List<News> {
     } ?: emptyList()
 }
 
-fun List<RawSection>?.sectionsMapToView(): List<String> {
+fun List<SectionRaw>?.sectionsMapToView(): List<String> {
     return this?.flatMap { listOf(it.webTitle) } ?: emptyList()
 }
