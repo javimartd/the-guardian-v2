@@ -2,7 +2,7 @@ name: android CI
 
 on:
   push:
-    branches: [ main, feat/live_data, feat/flow ]
+    branches: [ main, feat/liveData, feat/flow ]
     tags:
       - 'v*'
   pull_request:
