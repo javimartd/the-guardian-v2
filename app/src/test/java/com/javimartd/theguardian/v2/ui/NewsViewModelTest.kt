@@ -51,7 +51,7 @@ class NewsViewModelTest : TestCase() {
         sections.add(SectionRaw("", "Life and style", ""))
 
         Mockito
-            .`when`(repository.getNews("world"))
+            .`when`(repository.getNews())
             .thenReturn(Result.Success(emptyList()))
 
         Mockito
@@ -82,12 +82,12 @@ class NewsViewModelTest : TestCase() {
     }
 
     @Test
-    fun `get content when server error (sections) returns error resource`()
+    fun `get all when server error (sections) returns error resource`()
     = runBlocking {
 
         // given
         Mockito
-            .`when`(repository.getNews("world"))
+            .`when`(repository.getNews())
             .thenReturn(Result.Success(emptyList()))
 
         Mockito
@@ -110,12 +110,12 @@ class NewsViewModelTest : TestCase() {
     }
 
     @Test
-    fun `get content when server error (both) returns error resource`()
+    fun `get all when server error (both) returns error resource`()
     = runBlocking {
 
         // given
         Mockito
-            .`when`(repository.getNews("world"))
+            .`when`(repository.getNews())
             .thenReturn(Result.Error(ErrorTypes.RemoteErrors.Server))
 
         Mockito
