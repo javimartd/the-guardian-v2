@@ -22,10 +22,6 @@ class NewsViewModel @Inject constructor(
     private val repository: NewsRepository
 ): ViewModel() {
 
-    companion object {
-        private const val WORLD_NEWS_SECTION_ID = "world"
-    }
-
     private val _uiState = MutableLiveData<NewsUiState>().apply {
         this.value = NewsUiState.Loading
     }
@@ -47,7 +43,7 @@ class NewsViewModel @Inject constructor(
     fun getAll() {
         viewModelScope.launch {
             coroutineScope {
-                val deferredNews = async { repository.getNews(WORLD_NEWS_SECTION_ID) }
+                val deferredNews = async { repository.getNews() }
                 val deferredSections = async { repository.getSections() }
                 val newsResponse = deferredNews.await()
                 val sectionsResponse = deferredSections.await()
