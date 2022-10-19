@@ -2,14 +2,25 @@ package com.javimartd.theguardian.v2.ui
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.javimartd.theguardian.v2.domain.NewsRepository
+import com.javimartd.theguardian.v2.R
+import com.javimartd.theguardian.v2.data.state.ErrorTypes
+import com.javimartd.theguardian.v2.domain.model.SectionEntity
+import com.javimartd.theguardian.v2.domain.usecases.GetNewsUseCase
+import com.javimartd.theguardian.v2.domain.usecases.GetSectionsUseCase
+import com.javimartd.theguardian.v2.factory.DomainFactory
+import com.javimartd.theguardian.v2.ui.mapper.toPresentation
 import com.javimartd.theguardian.v2.ui.model.NewsUiState
 import com.javimartd.theguardian.v2.ui.viewmodel.NewsViewModel
 import junit.framework.TestCase
+import kotlinx.coroutines.runBlocking
+import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
+import org.junit.Test
 import org.junit.runner.RunWith
+import org.mockito.ArgumentMatchers.isA
 import org.mockito.Mock
+import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 
@@ -19,7 +30,8 @@ class NewsViewModelTest : TestCase() {
     @get:Rule
     val rule = InstantTaskExecutorRule()
 
-    @Mock private lateinit var repository: NewsRepository
+    @Mock private lateinit var getNewsUseCase: GetNewsUseCase
+    @Mock private lateinit var getSectionsUseCase: GetSectionsUseCase
     @Mock private lateinit var observer: Observer<NewsUiState>
 
     private lateinit var sut : NewsViewModel
@@ -27,25 +39,25 @@ class NewsViewModelTest : TestCase() {
     @Before
     fun setup() {
         MockitoAnnotations.openMocks(this)
-        sut = NewsViewModel(repository)
+        sut = NewsViewModel(getNewsUseCase, getSectionsUseCase)
     }
 
-    /*@Test
-    fun `get all when response successful returns success resource with news and sections`()
+    @Test
+    fun `get all when response successful returns success result with news and sections`()
     = runBlocking {
 
         // given
-        val sections = mutableListOf<SectionRaw>()
-        sections.add(SectionRaw("", "Music", ""))
-        sections.add(SectionRaw("", "Life and style", ""))
+        val sections = mutableListOf<SectionEntity>()
+        sections.add(SectionEntity("", "Music", ""))
+        sections.add(SectionEntity("", "Life and style", ""))
 
         Mockito
-            .`when`(repository.getNews())
-            .thenReturn(Result.Success(emptyList()))
+            .`when`(getNewsUseCase(""))
+            .thenReturn(Result.success(emptyList()))
 
         Mockito
-            .`when`(repository.getSections())
-            .thenReturn(Result.Success(sections))
+            .`when`(getSectionsUseCase())
+            .thenReturn(Result.success(sections))
 
         // when
         sut.uiState.observeForever(observer)
@@ -71,17 +83,17 @@ class NewsViewModelTest : TestCase() {
     }
 
     @Test
-    fun `get all when server error (sections) returns error resource`()
+    fun `get all when server error (sections) returns error result`()
     = runBlocking {
 
         // given
         Mockito
-            .`when`(repository.getNews())
-            .thenReturn(Result.Success(emptyList()))
+            .`when`(getNewsUseCase(""))
+            .thenReturn(Result.success(emptyList()))
 
         Mockito
-            .`when`(repository.getSections())
-            .thenReturn(Result.Error(ErrorTypes.RemoteErrors.Server))
+            .`when`(getSectionsUseCase())
+            .thenReturn(Result.failure(ErrorTypes.RemoteErrors.Server))
 
         // when
         sut.uiState.observeForever(observer)
@@ -99,17 +111,17 @@ class NewsViewModelTest : TestCase() {
     }
 
     @Test
-    fun `get all when server error (both) returns error resource`()
+    fun `get all when server error (both) returns error result`()
     = runBlocking {
 
         // given
         Mockito
-            .`when`(repository.getNews())
-            .thenReturn(Result.Error(ErrorTypes.RemoteErrors.Server))
+            .`when`(getNewsUseCase(""))
+            .thenReturn(Result.failure(ErrorTypes.RemoteErrors.Server))
 
         Mockito
-            .`when`(repository.getSections())
-            .thenReturn(Result.Error(ErrorTypes.RemoteErrors.AccessDenied))
+            .`when`(getSectionsUseCase())
+            .thenReturn(Result.failure(ErrorTypes.RemoteErrors.AccessDenied))
 
         // when
         sut.uiState.observeForever(observer)
@@ -123,15 +135,15 @@ class NewsViewModelTest : TestCase() {
     }
 
     @Test
-    fun `get news when response successful returns success resource with news`()
+    fun `get news when response successful returns success result with news`()
     = runBlocking {
 
-        val data = DataFactory.makeNews(3)
+        val data = DomainFactory.getSomeNews(3)
 
         // given
         Mockito
-            .`when`(repository.getNews(""))
-            .thenReturn(Result.Success(data))
+            .`when`(getNewsUseCase(""))
+            .thenReturn(Result.success(data))
 
         // when
         sut.uiState.observeForever(observer)
@@ -145,17 +157,17 @@ class NewsViewModelTest : TestCase() {
             Mockito.times(1)
         ).onChanged(isA(NewsUiState.ShowNews::class.java))
         // 2) check news
-        Assert.assertEquals(value.news, data.newsMapToView())
+        Assert.assertEquals(value.news, data.map { it.toPresentation() })
     }
 
     @Test
-    fun `get news when unknown error returns error resource`()
+    fun `get news when unknown error returns error result`()
     = runBlocking {
 
         // given
         Mockito
-            .`when`(repository.getNews(""))
-            .thenReturn(Result.Error(ErrorTypes.RemoteErrors.Unknown))
+            .`when`(getNewsUseCase(""))
+            .thenReturn(Result.failure(ErrorTypes.RemoteErrors.Unknown))
 
         // when
         sut.uiState.observeForever(observer)
@@ -170,5 +182,5 @@ class NewsViewModelTest : TestCase() {
         // 2) check error
         val value = sut.uiState.value as NewsUiState.ShowError
         Assert.assertEquals(value.message, R.string.generic_error_message)
-    }*/
+    }
 }

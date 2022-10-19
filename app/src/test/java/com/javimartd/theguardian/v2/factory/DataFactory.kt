@@ -1,4 +1,4 @@
-package com.javimartd.theguardian.v2.data
+package com.javimartd.theguardian.v2.factory
 
 import com.javimartd.theguardian.v2.data.datasources.remote.FieldsRaw
 import com.javimartd.theguardian.v2.data.datasources.remote.NewsRaw
