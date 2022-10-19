@@ -1,8 +1,8 @@
 package com.javimartd.theguardian.v2.ui.di
 
-import com.javimartd.theguardian.v2.data.NewsRepository
+import com.javimartd.theguardian.v2.domain.NewsRepository
 import com.javimartd.theguardian.v2.data.NewsRepositoryImpl
-import com.javimartd.theguardian.v2.data.datasources.local.NewsLocalDataSource
+import com.javimartd.theguardian.v2.data.datasources.cache.NewsCacheDataSource
 import com.javimartd.theguardian.v2.data.datasources.remote.NewsRemoteDataSource
 import dagger.Module
 import dagger.Provides
@@ -18,7 +18,7 @@ class NewsViewModelModule {
     @ViewModelScoped
     fun providesRepository(
         remoteDataSource: NewsRemoteDataSource,
-        localDataSource: NewsLocalDataSource
+        localDataSource: NewsCacheDataSource
     ): NewsRepository {
         return NewsRepositoryImpl(
             remoteDataSource = remoteDataSource,

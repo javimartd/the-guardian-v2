@@ -1,4 +1,4 @@
-package com.javimartd.theguardian.v2.data.datasources.remote
+package com.javimartd.theguardian.v2.data.datasources.remote.common
 
 import com.javimartd.theguardian.v2.BuildConfig
 import okhttp3.Interceptor

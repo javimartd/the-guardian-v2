@@ -1,6 +1,6 @@
 package com.javimartd.theguardian.v2.data.state
 
-sealed class ErrorTypes {
+sealed class ErrorTypes: Throwable() {
     sealed class RemoteErrors: ErrorTypes() {
         object ApiStatus: RemoteErrors()
         object Network: RemoteErrors()

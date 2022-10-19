@@ -1,9 +1,9 @@
-package com.javimartd.theguardian.v2.data.datasources.remote
+package com.javimartd.theguardian.v2.domain
 
 import com.javimartd.theguardian.v2.domain.model.NewsEntity
 import com.javimartd.theguardian.v2.domain.model.SectionEntity
 
-interface NewsRemoteDataSource {
+interface NewsRepository {
     suspend fun getNews(
         showFieldsAll: String,
         sectionId: String

@@ -2,9 +2,10 @@ package com.javimartd.theguardian.v2.ui.di
 
 import com.javimartd.theguardian.v2.BuildConfig
 import com.javimartd.theguardian.v2.data.datasources.ErrorHandler
-import com.javimartd.theguardian.v2.data.datasources.local.NewsLocalDataSource
-import com.javimartd.theguardian.v2.data.datasources.local.NewsLocalDataSourceImpl
+import com.javimartd.theguardian.v2.data.datasources.cache.NewsCacheDataSource
+import com.javimartd.theguardian.v2.data.datasources.cache.NewsCacheDataSourceImpl
 import com.javimartd.theguardian.v2.data.datasources.remote.*
+import com.javimartd.theguardian.v2.data.datasources.remote.common.ApiKeyInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -25,19 +26,19 @@ class DataModule {
     @Provides
     @Singleton
     fun providesRemoteDataSource(
-        apiService: ApiService,
+        newsApiService: NewsApiService,
         errorHandler: ErrorHandler
     ): NewsRemoteDataSource {
         return NewsRemoteDataSourceImpl(
-            apiService,
+            newsApiService,
             errorHandler
         )
     }
 
     @Provides
     @Singleton
-    fun providesLocalDataSource(): NewsLocalDataSource {
-        return NewsLocalDataSourceImpl()
+    fun providesLocalDataSource(): NewsCacheDataSource {
+        return NewsCacheDataSourceImpl()
     }
 
     @Provides
@@ -74,7 +75,7 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun providesApiService(retrofit: Retrofit): ApiService {
-        return retrofit.create(ApiService::class.java)
+    fun providesApiService(retrofit: Retrofit): NewsApiService {
+        return retrofit.create(NewsApiService::class.java)
     }
 }

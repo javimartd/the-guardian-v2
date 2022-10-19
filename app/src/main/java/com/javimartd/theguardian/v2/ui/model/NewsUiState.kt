@@ -8,9 +8,9 @@ sealed class NewsUiState {
 }
 
 data class NewsUi(
-    val title: String,
+    val body: String,
     val date: String,
-    val webUrl: String,
     val thumbnail: String,
-    val description: String
+    val title: String,
+    val webUrl: String,
 )

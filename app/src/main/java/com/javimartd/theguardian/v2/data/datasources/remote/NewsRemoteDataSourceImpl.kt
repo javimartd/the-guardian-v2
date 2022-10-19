@@ -1,56 +1,64 @@
 package com.javimartd.theguardian.v2.data.datasources.remote
 
-import com.javimartd.theguardian.v2.data.NewsRepositoryImpl
 import com.javimartd.theguardian.v2.data.datasources.ErrorHandler
+import com.javimartd.theguardian.v2.data.datasources.remote.common.safeApiCall
+import com.javimartd.theguardian.v2.data.mapper.toDomain
 import com.javimartd.theguardian.v2.data.state.ErrorTypes
-import com.javimartd.theguardian.v2.data.state.Result
-import retrofit2.HttpException
+import com.javimartd.theguardian.v2.domain.model.NewsEntity
+import com.javimartd.theguardian.v2.domain.model.SectionEntity
 import javax.inject.Inject
 
 class NewsRemoteDataSourceImpl @Inject constructor(
-    private val apiService: ApiService,
+    private val newsApiService: NewsApiService,
     private val errorHandler: ErrorHandler
 ): NewsRemoteDataSource {
 
     override suspend fun getNews(
         showFieldsAll: String,
         sectionId: String
-    ): Result<List<NewsRaw>> {
-        return try {
-            val response = apiService.getNews(
+    ): Result<List<NewsEntity>> {
+        val result = safeApiCall {
+            newsApiService.getNews(
                 showFieldsAll,
                 sectionId
             )
-            if (response.isSuccessful) {
-                val body = response.body()
-                if (body?.newsResponse?.status == STATUS_OK) {
-                    Result.Success(body.newsResponse.results ?: emptyList())
-                } else {
-                    Result.Error(ErrorTypes.RemoteErrors.ApiStatus)
-                }
-            } else {
-                Result.Error(errorHandler.getError(HttpException(response)))
-            }
-        } catch (throwable: Throwable) {
-            Result.Error(errorHandler.getError(throwable))
         }
+        return result.fold(
+            onSuccess = { response ->
+                if (response.newsResponse?.status == STATUS_OK) {
+                    Result.success(
+                        response.newsResponse.results?.map {
+                            it.toDomain()
+                        } ?: emptyList()
+                    )
+                } else {
+                    Result.failure(ErrorTypes.RemoteErrors.ApiStatus)
+                }
+            },
+            onFailure = {
+                Result.failure(errorHandler.getError(it))
+            }
+        )
     }
 
-    override suspend fun getSections(): Result<List<SectionRaw>> {
-        return try {
-            val response = apiService.getSections()
-            if (response.isSuccessful) {
-                val body = response.body()
-                if (body?.sectionsResponse?.status == STATUS_OK) {
-                    Result.Success(body.sectionsResponse.results ?: emptyList())
+    override suspend fun getSections(): Result<List<SectionEntity>> {
+        val result = safeApiCall { newsApiService.getSections() }
+
+        return result.fold(
+            onSuccess = { response ->
+                if (response.sectionsResponse.status == STATUS_OK) {
+                    Result.success(
+                        response.sectionsResponse.results?.map {
+                            it.toDomain()
+                        } ?: emptyList()
+                    )
                 } else {
-                    Result.Error(ErrorTypes.RemoteErrors.ApiStatus)
+                    Result.failure(ErrorTypes.RemoteErrors.ApiStatus)
                 }
-            } else {
-                Result.Error(errorHandler.getError(HttpException(response)))
+            },
+            onFailure = {
+                Result.failure(errorHandler.getError(it))
             }
-        } catch (throwable: Throwable) {
-            Result.Error(errorHandler.getError(throwable))
-        }
+        )
     }
 }

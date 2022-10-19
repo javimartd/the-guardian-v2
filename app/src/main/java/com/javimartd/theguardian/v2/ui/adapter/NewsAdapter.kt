@@ -57,7 +57,7 @@ class NewsAdapter(private val onReadMoreClickListener: (String) -> Unit)
                 .into(image)
             textTitle.text = item.title
             textDate.text = item.date.toLong(FORMAT_DATE_TIME_API).toDateString()
-            textDescription.text = item.description
+            textDescription.text = item.body
             buttonReadMore.setOnClickListener {
                 onReadMoreClickListener(item.webUrl)
             }
