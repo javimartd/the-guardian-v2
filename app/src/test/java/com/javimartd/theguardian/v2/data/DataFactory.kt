@@ -7,7 +7,7 @@ import java.util.*
 
 object DataFactory {
 
-    fun makeNews(count: Int): List<NewsRaw> {
+    fun getSomeNews(count: Int): List<NewsRaw> {
         val data = mutableListOf<NewsRaw>()
         repeat(count) {
             data.add(makeNews())
@@ -15,7 +15,7 @@ object DataFactory {
         return data
     }
 
-    fun makeSections(count: Int): List<SectionRaw> {
+    fun getSomeSections(count: Int): List<SectionRaw> {
         val data = mutableListOf<SectionRaw>()
         repeat(count) {
             data.add(makeSection())

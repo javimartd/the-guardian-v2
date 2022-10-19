@@ -1,7 +1,7 @@
 package com.javimartd.theguardian.v2.data
 
-import com.javimartd.theguardian.v2.data.datasources.local.NewsLocalDataSource
-import com.javimartd.theguardian.v2.data.datasources.local.NewsLocalDataSourceImpl
+import com.javimartd.theguardian.v2.data.datasources.cache.NewsCacheDataSource
+import com.javimartd.theguardian.v2.data.datasources.cache.NewsCacheDataSourceImpl
 import com.javimartd.theguardian.v2.data.datasources.remote.SectionRaw
 import junit.framework.TestCase
 import kotlinx.coroutines.runBlocking
@@ -14,13 +14,13 @@ import org.junit.runner.RunWith
 import org.mockito.junit.MockitoJUnitRunner
 
 @RunWith(MockitoJUnitRunner::class)
-class NewsLocalDataSourceImplTest: TestCase() {
+class NewsCacheDataSourceImplTest: TestCase() {
 
-    private lateinit var sut : NewsLocalDataSource
+    private lateinit var sut : NewsCacheDataSource
 
     @Before
     fun setup() {
-        sut = NewsLocalDataSourceImpl()
+        sut = NewsCacheDataSourceImpl()
     }
 
     @Test
@@ -38,7 +38,7 @@ class NewsLocalDataSourceImplTest: TestCase() {
     fun `save sections`() {
 
         // given
-        val data = DataFactory.makeSections(2)
+        val data = DataFactory.getSomeSections(2)
 
         runBlocking {
             // when

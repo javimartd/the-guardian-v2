@@ -3,7 +3,6 @@ package com.javimartd.theguardian.v2.ui
 import com.javimartd.theguardian.v2.data.DataFactory
 import com.javimartd.theguardian.v2.data.datasources.remote.NewsRaw
 import com.javimartd.theguardian.v2.data.datasources.remote.SectionRaw
-import com.javimartd.theguardian.v2.ui.mapper.newsMapToView
 import com.javimartd.theguardian.v2.ui.mapper.sectionsMapToView
 import com.javimartd.theguardian.v2.ui.model.NewsUi
 import org.junit.Assert
@@ -12,14 +11,14 @@ import org.junit.Test
 class PresentationMapperTest {
 
     @Test
-    fun newsMapToPresentation() {
-        val data = DataFactory.makeNews(5)
-        val presentation = data.newsMapToView()
+    fun newsToPresentation() {
+        val data = DataFactory.getSomeNews(5)
+        val presentation = data.()
         assertEqual(data[0], presentation[0])
     }
 
     @Test
-    fun sectionsMapToPresentation() {
+    fun sectionsToPresentation() {
         val data = DataFactory.makeSections(5)
         val presentation = data.sectionsMapToView()
         assertEqual(data[0], presentation[0])
