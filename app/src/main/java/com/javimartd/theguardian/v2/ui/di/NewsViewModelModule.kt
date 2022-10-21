@@ -18,11 +18,11 @@ class NewsViewModelModule {
     @ViewModelScoped
     fun providesRepository(
         remoteDataSource: NewsRemoteDataSource,
-        localDataSource: NewsCacheDataSource
+        cacheDataSource: NewsCacheDataSource
     ): NewsRepository {
         return NewsRepositoryImpl(
             remoteDataSource = remoteDataSource,
-            localDataSource = localDataSource
+            cacheDataSource = cacheDataSource
         )
     }
 }

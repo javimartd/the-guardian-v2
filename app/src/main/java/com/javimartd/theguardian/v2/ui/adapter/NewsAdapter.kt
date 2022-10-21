@@ -10,12 +10,12 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.javimartd.theguardian.v2.R
 import com.javimartd.theguardian.v2.ui.extensions.*
-import com.javimartd.theguardian.v2.ui.model.NewsUi
+import com.javimartd.theguardian.v2.ui.model.NewsItemUiState
 
 class NewsAdapter(private val onReadMoreClickListener: (String) -> Unit)
     : RecyclerView.Adapter<NewsAdapter.ViewHolder>() {
 
-    var items = listOf<NewsUi>()
+    var items = listOf<NewsItemUiState>()
         set(value) {
             field = value
             notifyDataSetChanged()
@@ -48,7 +48,7 @@ class NewsAdapter(private val onReadMoreClickListener: (String) -> Unit)
         private val image: ImageView = itemView.findViewById(R.id.imageView)
 
         fun bind(
-            item: NewsUi,
+            item: NewsItemUiState,
             onReadMoreClickListener: (String) -> Unit
         ) {
             Glide.with(image.ctx)

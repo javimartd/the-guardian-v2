@@ -13,7 +13,7 @@ import javax.inject.Inject
 class NewsRepositoryImpl @Inject constructor(
     private val dispatchers: DispatcherProvider = DefaultDispatcherProvider(),
     private val remoteDataSource: NewsRemoteDataSource,
-    private val localDataSource: NewsCacheDataSource,
+    private val cacheDataSource: NewsCacheDataSource,
 ): NewsRepository {
 
     override suspend fun getNews(
@@ -30,10 +30,10 @@ class NewsRepositoryImpl @Inject constructor(
 
     override suspend fun getSections(): Result<List<SectionEntity>> {
         return withContext(dispatchers.io()) {
-            val sections = localDataSource.getSections()
+            val sections = cacheDataSource.getSections()
             if (sections.isEmpty()) {
                 val response =  remoteDataSource.getSections()
-                response.onSuccess { localDataSource.saveSections(it) }
+                response.onSuccess { cacheDataSource.saveSections(it) }
                 response
             } else {
                 Result.success(sections)

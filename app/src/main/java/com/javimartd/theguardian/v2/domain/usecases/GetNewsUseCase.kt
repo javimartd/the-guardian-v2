@@ -4,7 +4,7 @@ import com.javimartd.theguardian.v2.domain.NewsRepository
 import com.javimartd.theguardian.v2.domain.model.NewsEntity
 import javax.inject.Inject
 
-class GetNewsUseCase @Inject constructor(private val newsRepository: NewsRepository) {
+open class GetNewsUseCase @Inject constructor(private val newsRepository: NewsRepository) {
 
     companion object {
         const val SHOW_FIELDS_LEVEL = "all"

@@ -14,7 +14,7 @@ import com.javimartd.theguardian.v2.databinding.ActivityNewsBinding
 import com.javimartd.theguardian.v2.ui.adapter.NewsAdapter
 import com.javimartd.theguardian.v2.ui.common.DialogActions
 import com.javimartd.theguardian.v2.ui.common.LoadingDialog
-import com.javimartd.theguardian.v2.ui.model.NewsUi
+import com.javimartd.theguardian.v2.ui.model.NewsItemUiState
 import com.javimartd.theguardian.v2.ui.model.NewsUiState
 import com.javimartd.theguardian.v2.ui.viewmodel.NewsUiEvent
 import com.javimartd.theguardian.v2.ui.viewmodel.NewsViewModel
@@ -75,7 +75,7 @@ class NewsActivity : AppCompatActivity() {
         loading.hideDialog()
     }
 
-    private fun showNews(news: List<NewsUi>) {
+    private fun showNews(news: List<NewsItemUiState>) {
         newsAdapter.items = news
     }
 
