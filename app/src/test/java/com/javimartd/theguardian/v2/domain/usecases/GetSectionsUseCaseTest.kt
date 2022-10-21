@@ -1,7 +1,7 @@
-package com.javimartd.theguardian.v2.domain
+package com.javimartd.theguardian.v2.domain.usecases
 
+import com.javimartd.theguardian.v2.domain.NewsRepository
 import com.javimartd.theguardian.v2.domain.model.SectionEntity
-import com.javimartd.theguardian.v2.domain.usecases.GetSectionsUseCase
 import com.javimartd.theguardian.v2.factory.DomainFactory
 import kotlinx.coroutines.runBlocking
 import org.hamcrest.MatcherAssert
@@ -65,6 +65,7 @@ class GetSectionsUseCaseTest {
                 newsRepository,
                 Mockito.times(1)
             ).getSections()
+
 
 
         }
