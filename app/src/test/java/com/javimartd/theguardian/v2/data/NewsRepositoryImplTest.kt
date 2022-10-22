@@ -7,7 +7,7 @@ import com.javimartd.theguardian.v2.domain.NewsRepository
 import com.javimartd.theguardian.v2.domain.model.NewsEntity
 import com.javimartd.theguardian.v2.domain.model.SectionEntity
 import com.javimartd.theguardian.v2.factory.DomainFactory
-import com.javimartd.theguardian.v2.ui.CoroutinesTestRule
+import com.javimartd.theguardian.v2.utils.TestDefaultDispatcher
 import junit.framework.TestCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
@@ -28,8 +28,6 @@ class NewsRepositoryImplTest: TestCase() {
 
     private lateinit var sut : NewsRepository
 
-    private val coroutineDispatcher = CoroutinesTestRule()
-
     @Mock private lateinit var remoteDataSource: NewsRemoteDataSource
     @Mock private lateinit var cacheDataSource: NewsCacheDataSource
 
@@ -37,7 +35,7 @@ class NewsRepositoryImplTest: TestCase() {
     fun setup() {
         MockitoAnnotations.openMocks(this)
         sut = NewsRepositoryImpl(
-            coroutineDispatcher.testDispatcherProvider,
+            TestDefaultDispatcher(),
             remoteDataSource,
             cacheDataSource
         )
