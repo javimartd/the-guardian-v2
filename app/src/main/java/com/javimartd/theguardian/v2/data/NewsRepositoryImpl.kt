@@ -3,6 +3,7 @@ package com.javimartd.theguardian.v2.data
 import com.javimartd.theguardian.v2.data.coroutines.DefaultDispatcherProvider
 import com.javimartd.theguardian.v2.data.coroutines.DispatcherProvider
 import com.javimartd.theguardian.v2.data.datasources.cache.NewsCacheDataSource
+import com.javimartd.theguardian.v2.data.datasources.local.NewsLocalDataSource
 import com.javimartd.theguardian.v2.data.datasources.remote.NewsRemoteDataSource
 import com.javimartd.theguardian.v2.domain.NewsRepository
 import com.javimartd.theguardian.v2.domain.model.NewsEntity
@@ -14,6 +15,7 @@ class NewsRepositoryImpl @Inject constructor(
     private val dispatchers: DispatcherProvider = DefaultDispatcherProvider(),
     private val remoteDataSource: NewsRemoteDataSource,
     private val cacheDataSource: NewsCacheDataSource,
+    private val localDataStore: NewsLocalDataSource
 ): NewsRepository {
 
     override suspend fun getNews(
