@@ -1,19 +1,21 @@
-package com.javimartd.theguardian.v2.ui.viewmodel
+package com.javimartd.theguardian.v2.ui.news
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.javimartd.theguardian.v2.R
 import com.javimartd.theguardian.v2.data.state.ErrorTypes
 import com.javimartd.theguardian.v2.domain.usecases.GetNewsUseCase
 import com.javimartd.theguardian.v2.domain.usecases.GetSectionsUseCase
-import com.javimartd.theguardian.v2.ui.mapper.toPresentation
-import com.javimartd.theguardian.v2.ui.model.NewsUiState
+import com.javimartd.theguardian.v2.ui.news.model.NewsUiEvent
+import com.javimartd.theguardian.v2.ui.news.model.NewsUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.launch
+import toPresentation
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,11 +24,8 @@ class NewsViewModel @Inject constructor(
     private val getSectionsUseCase: GetSectionsUseCase
 ): ViewModel() {
 
-    private val _uiState = MutableLiveData<NewsUiState>().apply {
-        this.value = NewsUiState.Loading
-    }
-    val uiState: LiveData<NewsUiState>
-        get() = _uiState
+    var uiState by mutableStateOf(NewsUiState())
+        private set
 
     init {
         getAll()
@@ -34,13 +33,12 @@ class NewsViewModel @Inject constructor(
 
     fun onEvent(event: NewsUiEvent) {
         when (event) {
-            is NewsUiEvent.SectionSelected -> {
-                getNews(event.sectionName)
-            }
+            is NewsUiEvent.OnGetNews -> getNews(event.sectionName)
         }
     }
 
     fun getAll() {
+        uiState = uiState.copy(isRefreshing = true)
         viewModelScope.launch {
             coroutineScope {
                 val deferredNews = async { getNewsUseCase.invoke("") }
@@ -49,7 +47,10 @@ class NewsViewModel @Inject constructor(
                 val sectionsResponse = deferredSections.await()
                 newsResponse.fold(
                     onSuccess = { data ->
-                        _uiState.value = NewsUiState.ShowNews(data.map { it.toPresentation() })
+                        uiState = uiState.copy(
+                            isRefreshing = false,
+                            news = data.map { it.toPresentation() }
+                        )
                     },
                     onFailure = {
                         handleError(it)
@@ -57,7 +58,10 @@ class NewsViewModel @Inject constructor(
                 )
                 sectionsResponse.fold(
                     onSuccess = { data ->
-                        _uiState.value = NewsUiState.ShowSections(data.map { it.webTitle})
+                        uiState = uiState.copy(
+                            isRefreshing = false,
+                            sections = data.map { it.webTitle }
+                        )
                     },
                     onFailure = {
                         handleError(it)
@@ -68,11 +72,16 @@ class NewsViewModel @Inject constructor(
     }
 
     fun getNews(sectionName: String) {
+        uiState = uiState.copy(isRefreshing = true)
         viewModelScope.launch {
             val response = getNewsUseCase(sectionName)
             response.fold(
                 onSuccess = { data ->
-                    _uiState.value = NewsUiState.ShowNews(data.map { it.toPresentation() })
+                    uiState = uiState.copy(
+                        isRefreshing = false,
+                        sectionSelected = sectionName,
+                        news = data.map { it.toPresentation() }
+                    )
                 },
                 onFailure = {
                     handleError(it)
@@ -87,6 +96,9 @@ class NewsViewModel @Inject constructor(
             is ErrorTypes.RemoteErrors.Server -> R.string.server_error_message
             else -> R.string.generic_error_message
         }
-        _uiState.value = NewsUiState.ShowError(errorMessage)
+        uiState = uiState.copy(
+            isRefreshing = false,
+            errorMessage = errorMessage
+        )
     }
 }

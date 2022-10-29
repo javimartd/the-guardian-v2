@@ -1,9 +1,21 @@
 <resources>
     <string name="app_name">The Guardian</string>
 
-    <!--news activity-->
-    <string name="news_activity_title">Breaking news</string>
-    <string name="news_activity_item_button">Read more</string>
+    <!-- Navigation -->
+    <string name="news_screen">news_screen</string>
+
+    <!-- App -->
+    <string name="top_app_bar_newspaper_icon_content_description">Latest News</string>
+    <string name="sections_dropdown_icon_content_description">Expand or close the section menu</string>
+    <string name="sections_dropdown_default_value">Choose a section of interest</string>
+    <string name="image_content_description">Image</string>
+
+    <string name="snackbar_button">Dismiss</string>
+
+    <!--news screen-->
+    <string name="news_screen_item_button">READ MORE</string>
+
+    <!-- Errors -->
     <string name="network_error_message">We are unable to provide you with the latest news at this time. Please check your internet connection.</string>
     <string name="server_error_message">We are unable to provide you with the latest news at this time. Please try again in a few minutes.</string>
     <string name="generic_error_message">We are unable to provide you with the latest news at this time.</string>

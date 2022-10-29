@@ -1,23 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">@color/the_guardian</color>
-    <color name="colorPrimaryDark">@color/the_guardian_status_bar</color>
-    <color name="colorAccent">@color/vivid_blue</color>
-
-    <color name="the_guardian">#E9EEF1</color>
-    <color name="the_guardian_toolbar">#052962</color>
-    <color name="the_guardian_status_bar">#d9e2e7</color>
-
-    <color name="vivid_blue">#1e90ff</color>
-    <color name="chip_text">@color/white</color>
-    <color name="news_background">@color/white</color>
-
-    <color name="white">#ffffff</color>
-
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
+    <color name="blue_700">#FF052962</color>
+    <color name="blue_500">#FF1e90ff</color>
+    <color name="gray_200">#FFd9e2e7</color>
+    <color name="yellow">#FFE6E600</color>
     <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
 </resources>

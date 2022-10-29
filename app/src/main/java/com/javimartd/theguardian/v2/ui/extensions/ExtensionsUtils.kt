@@ -4,9 +4,9 @@ import java.text.DateFormat
 import java.text.SimpleDateFormat
 import java.util.*
 
-const val FORMAT_DATE_TIME_API = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+const val DATE_TIME_API_FORMAT = "yyyy-MM-dd'T'HH:mm:ss'Z'"
 
-fun Long.toDateString(dateFormat: Int = DateFormat.MEDIUM): String {
+fun Long.toDate(dateFormat: Int = DateFormat.MEDIUM): String {
     val df = DateFormat.getDateInstance(dateFormat, Locale.getDefault())
     return df.format(this)
 }

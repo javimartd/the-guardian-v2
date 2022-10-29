@@ -1,14 +1,20 @@
 package com.javimartd.theguardian.v2.ui.di
 
+import android.content.Context
+import androidx.room.Room
 import com.javimartd.theguardian.v2.BuildConfig
 import com.javimartd.theguardian.v2.data.datasources.ErrorHandler
 import com.javimartd.theguardian.v2.data.datasources.cache.NewsCacheDataSource
 import com.javimartd.theguardian.v2.data.datasources.cache.NewsCacheDataSourceImpl
+import com.javimartd.theguardian.v2.data.datasources.local.NewsLocalDataSource
+import com.javimartd.theguardian.v2.data.datasources.local.NewsLocalDataSourceImpl
+import com.javimartd.theguardian.v2.data.datasources.local.db.AppDatabase
 import com.javimartd.theguardian.v2.data.datasources.remote.*
 import com.javimartd.theguardian.v2.data.datasources.remote.common.ApiKeyInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -21,7 +27,10 @@ import javax.inject.Singleton
 @Module
 class DataModule {
 
-    private val baseUrl = "https://content.guardianapis.com"
+    companion object {
+        private const val BASE_URL = "https://content.guardianapis.com"
+        private const val DATA_BASE = "the_guardian_db"
+    }
 
     @Provides
     @Singleton
@@ -37,8 +46,14 @@ class DataModule {
 
     @Provides
     @Singleton
-    fun providesLocalDataSource(): NewsCacheDataSource {
+    fun providesCacheDataSource(): NewsCacheDataSource {
         return NewsCacheDataSourceImpl()
+    }
+
+    @Provides
+    @Singleton
+    fun providesLocalDataSource(appDatabase: AppDatabase): NewsLocalDataSource {
+        return NewsLocalDataSourceImpl(appDatabase)
     }
 
     @Provides
@@ -47,11 +62,21 @@ class DataModule {
         return RemoteErrorHandlerImpl()
     }
 
+    @Singleton
+    @Provides
+    fun providesDatabase(@ApplicationContext appContext: Context): AppDatabase {
+        return Room.databaseBuilder(
+            appContext,
+            AppDatabase::class.java,
+            DATA_BASE
+        ).build()
+    }
+
     @Provides
     @Singleton
     fun providesRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(baseUrl)
+            .baseUrl(BASE_URL)
             .client(
                 OkHttpClient()
                 .newBuilder()
