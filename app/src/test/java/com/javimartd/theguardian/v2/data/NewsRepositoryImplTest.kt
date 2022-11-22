@@ -1,6 +1,7 @@
 package com.javimartd.theguardian.v2.data
 
 import com.javimartd.theguardian.v2.data.datasources.cache.NewsCacheDataSource
+import com.javimartd.theguardian.v2.data.datasources.local.NewsLocalDataSource
 import com.javimartd.theguardian.v2.data.datasources.remote.NewsRemoteDataSource
 import com.javimartd.theguardian.v2.data.state.ErrorTypes
 import com.javimartd.theguardian.v2.domain.NewsRepository
@@ -30,6 +31,7 @@ class NewsRepositoryImplTest: TestCase() {
 
     @Mock private lateinit var remoteDataSource: NewsRemoteDataSource
     @Mock private lateinit var cacheDataSource: NewsCacheDataSource
+    @Mock private lateinit var localDataSource: NewsLocalDataSource
 
     @Before
     fun setup() {
@@ -37,7 +39,8 @@ class NewsRepositoryImplTest: TestCase() {
         sut = NewsRepositoryImpl(
             TestDefaultDispatcher(),
             remoteDataSource,
-            cacheDataSource
+            cacheDataSource,
+            localDataSource
         )
     }
 
