@@ -3,6 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
 static def headCommitCount() {
@@ -14,6 +15,7 @@ static def headCommitSha() {
     def sha = "git rev-parse HEAD --short"
     return sha.execute().text.trim().take(8)
 }
+
 
 def versionMajor = 1
 def versionMinor = 0
@@ -35,7 +37,7 @@ android {
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField "String", "THE_GUARDIAN_API_KEY", '"04082740-0fa7-4b3c-a45c-2f9769b2357f"'
+        //buildConfigField "String", "THE_GUARDIAN_API_KEY", '"04082740-0fa7-4b3c-a45c-2f9769b2357f"'
     }
 
     testOptions {
