@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.dimensionResource
-import androidx.compose.ui.unit.dp
 import com.javimartd.theguardian.v2.R
 import com.javimartd.theguardian.v2.ui.news.model.NewsItemUiState
 

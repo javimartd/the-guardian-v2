@@ -9,6 +9,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -16,20 +17,39 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
+import androidx.navigation.NavHostController
 import com.javimartd.theguardian.v2.R
 import com.javimartd.theguardian.v2.ui.components.TheGuardianSnackbarHost
+import com.javimartd.theguardian.v2.ui.navigation.TheGuardianDestinations
 import com.javimartd.theguardian.v2.ui.news.components.NewsItemLandscape
 import com.javimartd.theguardian.v2.ui.news.components.NewsItemPortrait
 import com.javimartd.theguardian.v2.ui.news.model.NewsItemUiState
-import com.javimartd.theguardian.v2.ui.news.model.NewsUiEvent
+import com.javimartd.theguardian.v2.ui.news.model.NewsUiContract
 import com.javimartd.theguardian.v2.ui.news.model.NewsUiState
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.onEach
 
 @Composable
-fun NewsScreen(viewModel: NewsViewModel) {
+fun NewsScreen(
+    navController: NavHostController,
+    viewModel: NewsViewModel
+) {
 
     val uiState = viewModel.uiState
 
     val scaffoldState = rememberScaffoldState()
+
+    LaunchedEffect(Unit) {
+        viewModel.effect
+            .onEach {
+                when (it) {
+                    NewsUiContract.NewsUiEffect.NavigateToSettings -> {
+                        navController.navigate(TheGuardianDestinations.SETTINGS_ROUTE)
+                    }
+                }
+            }
+            .collect()
+    }
 
     Scaffold(
         scaffoldState = scaffoldState,
@@ -37,14 +57,28 @@ fun NewsScreen(viewModel: NewsViewModel) {
         topBar = {
             TopAppBar(
                 title = { Text(stringResource(R.string.app_name)) },
+                actions = {
+                    IconButton(
+                        onClick = { viewModel.onEvent(NewsUiContract.NewsUiEvent.NavigateToSettings) }
+                    ) {
+                        Icon(
+                            contentDescription = stringResource(id = R.string.news_screen_settings_icon_content_description),
+                            imageVector = Icons.Default.Settings,
+                            tint = colorResource(id = R.color.white)
+                        )
+                    }
+                }
             )
-        }
+        },
+
     ) { contentPadding ->
         Column {
             DropdownContent(
                 defaultValue = uiState.sectionSelected,
                 sections = uiState.sections
-            ) { sectionName -> viewModel.onEvent(NewsUiEvent.OnGetNews(sectionName = sectionName)) }
+            ) { sectionName ->
+                viewModel.onEvent(NewsUiContract.NewsUiEvent.GetNews(sectionName = sectionName))
+            }
             NewsContent(
                 modifier = Modifier.padding(contentPadding),
                 news = uiState.news

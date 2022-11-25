@@ -36,8 +36,6 @@ android {
         versionName "${versionMajor}.${versionMinor}.${versionPatch}.${headCommitSha()}"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-
-        //buildConfigField "String", "THE_GUARDIAN_API_KEY", '"04082740-0fa7-4b3c-a45c-2f9769b2357f"'
     }
 
     testOptions {

@@ -9,11 +9,13 @@ import com.javimartd.theguardian.v2.R
 import com.javimartd.theguardian.v2.data.state.ErrorTypes
 import com.javimartd.theguardian.v2.domain.usecases.GetNewsUseCase
 import com.javimartd.theguardian.v2.domain.usecases.GetSectionsUseCase
-import com.javimartd.theguardian.v2.ui.news.model.NewsUiEvent
+import com.javimartd.theguardian.v2.ui.news.model.NewsUiContract
 import com.javimartd.theguardian.v2.ui.news.model.NewsUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
+import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import toPresentation
 import javax.inject.Inject
@@ -27,13 +29,22 @@ class NewsViewModel @Inject constructor(
     var uiState by mutableStateOf(NewsUiState())
         private set
 
+    private val _effect = Channel<NewsUiContract.NewsUiEffect>(Channel.BUFFERED)
+    val effect = _effect.receiveAsFlow()
+
     init {
         getAll()
     }
 
-    fun onEvent(event: NewsUiEvent) {
+    fun onEvent(event: NewsUiContract.NewsUiEvent) {
         when (event) {
-            is NewsUiEvent.OnGetNews -> getNews(event.sectionName)
+            is NewsUiContract.NewsUiEvent.GetNews -> getNews(event.sectionName)
+            is NewsUiContract.NewsUiEvent.ReadNews -> {}
+            is NewsUiContract.NewsUiEvent.NavigateToSettings -> {
+                viewModelScope.launch {
+                    _effect.send(NewsUiContract.NewsUiEffect.NavigateToSettings)
+                }
+            }
         }
     }
 

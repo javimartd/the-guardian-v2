@@ -13,7 +13,12 @@
     <string name="snackbar_button">Dismiss</string>
 
     <!--news screen-->
+    <string name="news_screen_settings_icon_content_description">Settings button</string>
     <string name="news_screen_item_button">READ MORE</string>
+
+    <!-- settings screen -->
+    <string name="settings_screen_toolbar">Settings</string>
+    <string name="settings_screen_first_option">Random option</string>
 
     <!-- Errors -->
     <string name="network_error_message">We are unable to provide you with the latest news at this time. Please check your internet connection.</string>
