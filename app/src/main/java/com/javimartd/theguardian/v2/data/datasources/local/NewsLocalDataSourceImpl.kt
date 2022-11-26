@@ -16,11 +16,11 @@ class NewsLocalDataSourceImpl @Inject constructor(
         return appDatabase.newsDao().getAll().map { news -> news.map { it.toDomain() } }
     }
 
-    override fun removeAll() {
+    override suspend fun removeAll() {
         appDatabase.newsDao().removeAll()
     }
 
-    override fun insertAll(entities: List<NewsEntity>) {
+    override suspend fun insertAll(entities: List<NewsEntity>) {
         appDatabase.newsDao().insertAll(entities.map { it.toData() })
     }
 }

@@ -17,7 +17,7 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import toPresentation
+import com.javimartd.theguardian.v2.ui.mapper.toPresentation
 import javax.inject.Inject
 
 @HiltViewModel

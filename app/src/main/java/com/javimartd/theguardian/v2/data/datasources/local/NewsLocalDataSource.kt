@@ -5,6 +5,6 @@ import kotlinx.coroutines.flow.Flow
 
 interface NewsLocalDataSource {
     fun getNews(): Flow<List<NewsEntity>>
-    fun insertAll(entities: List<NewsEntity>)
-    fun removeAll()
+    suspend fun insertAll(entities: List<NewsEntity>)
+    suspend fun removeAll()
 }
