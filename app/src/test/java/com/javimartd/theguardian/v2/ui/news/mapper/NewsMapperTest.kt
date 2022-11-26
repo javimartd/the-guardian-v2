@@ -1,12 +1,8 @@
-package com.javimartd.theguardian.v2.ui
+package com.javimartd.theguardian.v2.ui.news.mapper
 
 import com.javimartd.theguardian.v2.domain.model.NewsEntity
 import com.javimartd.theguardian.v2.domain.model.SectionEntity
 import com.javimartd.theguardian.v2.factory.DomainFactory
-import com.javimartd.theguardian.v2.ui.extensions.DATE_TIME_API_FORMAT
-import com.javimartd.theguardian.v2.ui.extensions.toDate
-import com.javimartd.theguardian.v2.ui.extensions.toLong
-import com.javimartd.theguardian.v2.ui.mapper.toPresentation
 import com.javimartd.theguardian.v2.ui.news.model.NewsItemUiState
 import org.junit.Assert
 import org.junit.Test
