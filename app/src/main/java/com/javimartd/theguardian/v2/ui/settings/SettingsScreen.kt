@@ -1,4 +1,4 @@
-package com.javimartd.theguardian.v2.ui
+package com.javimartd.theguardian.v2.ui.settings
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth

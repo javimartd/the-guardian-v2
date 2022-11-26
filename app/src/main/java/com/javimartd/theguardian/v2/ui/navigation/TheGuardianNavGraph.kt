@@ -5,7 +5,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.javimartd.theguardian.v2.ui.SettingsScreen
+import com.javimartd.theguardian.v2.ui.settings.SettingsScreen
 import com.javimartd.theguardian.v2.ui.news.NewsScreen
 import com.javimartd.theguardian.v2.ui.news.NewsViewModel
 

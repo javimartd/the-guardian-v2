@@ -9,6 +9,7 @@ import com.javimartd.theguardian.v2.R
 import com.javimartd.theguardian.v2.data.state.ErrorTypes
 import com.javimartd.theguardian.v2.domain.usecases.GetNewsUseCase
 import com.javimartd.theguardian.v2.domain.usecases.GetSectionsUseCase
+import com.javimartd.theguardian.v2.ui.news.mapper.toPresentation
 import com.javimartd.theguardian.v2.ui.news.model.NewsUiContract
 import com.javimartd.theguardian.v2.ui.news.model.NewsUiState
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -17,7 +18,6 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
-import com.javimartd.theguardian.v2.ui.mapper.toPresentation
 import javax.inject.Inject
 
 @HiltViewModel

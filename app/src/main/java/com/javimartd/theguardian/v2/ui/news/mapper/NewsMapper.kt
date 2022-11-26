@@ -1,4 +1,4 @@
-package com.javimartd.theguardian.v2.ui.mapper
+package com.javimartd.theguardian.v2.ui.news.mapper
 
 import com.javimartd.theguardian.v2.domain.model.NewsEntity
 import com.javimartd.theguardian.v2.ui.extensions.DATE_TIME_API_FORMAT
