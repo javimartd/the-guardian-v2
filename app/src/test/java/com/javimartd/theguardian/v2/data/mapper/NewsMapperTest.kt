@@ -4,7 +4,7 @@ import com.javimartd.theguardian.v2.data.datasources.remote.NewsRaw
 import com.javimartd.theguardian.v2.data.datasources.remote.SectionRaw
 import com.javimartd.theguardian.v2.domain.model.NewsEntity
 import com.javimartd.theguardian.v2.domain.model.SectionEntity
-import com.javimartd.theguardian.v2.factory.DataFactory
+import com.javimartd.theguardian.v2.factory.RemoteDataSourceFactory
 import org.junit.Assert
 import org.junit.Test
 
@@ -12,14 +12,14 @@ class NewsMapperTest {
 
     @Test
     fun newsToDomain() {
-        val data = DataFactory.getSomeNews(5)
+        val data = RemoteDataSourceFactory.getSomeNews(5)
         val domain = data.map { it.toDomain() }
         assertEqual(data[0], domain[0])
     }
 
     @Test
     fun sectionsToDomain() {
-        val data = DataFactory.getSomeSections(5)
+        val data = RemoteDataSourceFactory.getSomeSections(5)
         val domain = data.map { it.toDomain() }
         assertEqual(data[0], domain[0])
     }

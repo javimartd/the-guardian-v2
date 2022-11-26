@@ -3,9 +3,9 @@ package com.javimartd.theguardian.v2.factory
 import com.javimartd.theguardian.v2.data.datasources.remote.FieldsRaw
 import com.javimartd.theguardian.v2.data.datasources.remote.NewsRaw
 import com.javimartd.theguardian.v2.data.datasources.remote.SectionRaw
-import java.util.*
+import com.javimartd.theguardian.v2.utils.randomString
 
-object DataFactory {
+object RemoteDataSourceFactory {
 
     fun getSomeNews(count: Int): List<NewsRaw> {
         val data = mutableListOf<NewsRaw>()
@@ -21,10 +21,6 @@ object DataFactory {
             data.add(makeSection())
         }
         return data
-    }
-
-    private fun randomString(): String {
-        return UUID.randomUUID().toString()
     }
 
     private fun makeNews(): NewsRaw {
