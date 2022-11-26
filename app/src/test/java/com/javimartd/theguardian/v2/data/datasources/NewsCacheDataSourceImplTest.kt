@@ -1,4 +1,4 @@
-package com.javimartd.theguardian.v2.data
+package com.javimartd.theguardian.v2.data.datasources
 
 import com.javimartd.theguardian.v2.data.datasources.cache.NewsCacheDataSource
 import com.javimartd.theguardian.v2.data.datasources.cache.NewsCacheDataSourceImpl

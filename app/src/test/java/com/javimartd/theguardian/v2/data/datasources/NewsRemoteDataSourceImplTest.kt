@@ -1,6 +1,5 @@
-package com.javimartd.theguardian.v2.data
+package com.javimartd.theguardian.v2.data.datasources
 
-import com.javimartd.theguardian.v2.data.datasources.ErrorHandler
 import com.javimartd.theguardian.v2.data.datasources.remote.*
 import com.javimartd.theguardian.v2.data.state.ErrorTypes
 import com.javimartd.theguardian.v2.domain.model.NewsEntity

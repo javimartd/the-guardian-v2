@@ -154,7 +154,7 @@ class NewsViewModelTest : TestCase() {
             Mockito.times(1)
         ).onChanged(isA(NewsUiState.ShowNews::class.java))
         // 2) check news
-        Assert.assertEquals(value.news, data.map { it.toPresentation() })
+        Assert.assertEquals(value.news, data.map { it.com.javimartd.theguardian.v2.ui.mapper.toPresentation() })
     }
 
     @Test

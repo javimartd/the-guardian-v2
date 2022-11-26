@@ -1,8 +1,7 @@
-package com.javimartd.theguardian.v2.data
+package com.javimartd.theguardian.v2.data.mapper
 
 import com.javimartd.theguardian.v2.data.datasources.remote.NewsRaw
 import com.javimartd.theguardian.v2.data.datasources.remote.SectionRaw
-import com.javimartd.theguardian.v2.data.mapper.toDomain
 import com.javimartd.theguardian.v2.domain.model.NewsEntity
 import com.javimartd.theguardian.v2.domain.model.SectionEntity
 import com.javimartd.theguardian.v2.factory.DataFactory

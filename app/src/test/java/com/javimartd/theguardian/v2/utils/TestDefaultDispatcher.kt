@@ -3,12 +3,12 @@ package com.javimartd.theguardian.v2.utils
 import com.javimartd.theguardian.v2.data.coroutines.DispatcherProvider
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.TestCoroutineDispatcher
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
 
 @OptIn(ExperimentalCoroutinesApi::class)
 class TestDefaultDispatcher: DispatcherProvider {
 
-    private val testDispatcher = TestCoroutineDispatcher()
+    private val testDispatcher = UnconfinedTestDispatcher()
 
     override fun main(): CoroutineDispatcher = testDispatcher
     override fun default(): CoroutineDispatcher = testDispatcher
