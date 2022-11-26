@@ -12,7 +12,6 @@ This app allows you to read the latest news in the world thanks to the API provi
 - [Unidirectional Data Flow][13] pattern
 - [MVVM][2] pattern
 - [Kotlin Coroutines][4]
-- [Flow][12]
 - DI setup with [Hilt][3]
 - CI setup with [GitHub Actions][5]
 - Unit tests for presentation and data layers using JUnit, [Hamcrest][11], [Mockito][6] and [MockWebServer][7]
@@ -28,7 +27,6 @@ This app allows you to read the latest news in the world thanks to the API provi
 [9]: https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html
 [10]: https://github.com/javimartd/The-Guardian
 [11]: http://hamcrest.org/
-[12]: https://kotlin.github.io/kotlinx.coroutines/kotlinx-coroutines-core/kotlinx.coroutines.flow/-flow/
 [13]: https://developer.android.com/jetpack/guide/ui-layer#udf
 
 If you would like to use [RxJava][8] take a look at this other [version of the app][10] built with [Clean Architecture][9]
