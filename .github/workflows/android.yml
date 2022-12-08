@@ -33,7 +33,7 @@ jobs:
           distribution: 'adopt'
           cache: gradle
 
-      name: Access THE_GUARDIAN_API_KEY
+      - name: Access THE_GUARDIAN_API_KEY
         env:
           THE_GUARDIAN_API_KEY: ${{ secrets.THE_GUARDIAN_API_KEY }}
         run: echo THE_GUARDIAN_API_KEY=\"$THE_GUARDIAN_API_KEY\" > ./local.properties
