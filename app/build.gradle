@@ -3,7 +3,7 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
-    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+    //id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
 static def headCommitCount() {
@@ -22,6 +22,13 @@ def versionMinor = 0
 def versionPatch = 0
 def versionBuild = headCommitCount()
 
+String getApiKey() {
+    def propFile = rootProject.file("./local.properties")
+    def properties = new Properties()
+    properties.load(new FileInputStream(propFile))
+    return properties['THE_GUARDIAN_API_KEY']
+}
+
 android {
     compileSdk 32
 
@@ -36,16 +43,48 @@ android {
         versionName "${versionMajor}.${versionMinor}.${versionPatch}.${headCommitSha()}"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "THE_GUARDIAN_API_KEY", getApiKey()
     }
 
     testOptions {
         unitTests.returnDefaultValues = true
     }
 
+    signingConfigs {
+        create("release") {
+            try {
+                /*storeFile = file(project.property("THE_GUARDIAN_STORE_FILE"))
+                storePassword = project.property("THE_GUARDIAN_STORE_PASSWORD")
+                keyAlias = project.property("THE_GUARDIAN_APP_KEY_ALIAS")
+                keyPassword = project.property("THE_GUARDIAN_APP_KEY_PASSWORD")*/
+            } catch (e) {
+                throw new InvalidUserDataException("You should define THE_GUARDIAN_STORE and THE_GUARDIAN_APP_KEY in gradle.properties. " + e.getMessage())
+            }
+        }
+    }
+
+    flavorDimensions += "mode"
+
+    productFlavors {
+        create("pro") {
+            dimension = "mode"
+        }
+        create("mock") {
+            dimension = "mode"
+            applicationIdSuffix ".mock"
+            versionNameSuffix "-mock"
+        }
+    }
     buildTypes {
-        release {
-            minifyEnabled false
+        getByName("debug") {
+            debuggable true
+            applicationIdSuffix ".debug"
+        }
+        getByName("release") {
+            minifyEnabled = true
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            signingConfig = signingConfigs.getByName("release")
         }
     }
     compileOptions {
@@ -116,6 +155,8 @@ dependencies {
 
     // testing
     androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    //androidTestImplementation 'androidx.compose.ui:ui-test-junit4:1.3.1'
+    //debugImplementation 'androidx.compose.ui:ui-test-manifest:1.3.1'
     androidTestImplementation 'app.cash.turbine:turbine:0.9.0'
     androidTestImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4"
     androidTestImplementation 'androidx.test:runner:1.5.1'

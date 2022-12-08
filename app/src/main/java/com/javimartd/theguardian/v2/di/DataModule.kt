@@ -1,4 +1,4 @@
-package com.javimartd.theguardian.v2.ui.di
+package com.javimartd.theguardian.v2.di
 
 import android.content.Context
 import androidx.room.Room

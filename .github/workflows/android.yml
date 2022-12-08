@@ -2,11 +2,11 @@ name: android CI
 
 on:
   push:
-    branches: [ main, feat/liveData, feat/flow ]
+    branches: [ main, develop, feat/live_data, chore/api_key ]
     tags:
       - 'v*'
   pull_request:
-    branches: [ main, feat/live_data, feat/flow ]
+    branches: [ main, develop, feat/live_data ]
 
   workflow_dispatch:
 
@@ -32,6 +32,11 @@ jobs:
           java-version: '11'
           distribution: 'adopt'
           cache: gradle
+
+      name: Access THE_GUARDIAN_API_KEY
+        env:
+          THE_GUARDIAN_API_KEY: ${{ secrets.THE_GUARDIAN_API_KEY }}
+        run: echo THE_GUARDIAN_API_KEY=\"$THE_GUARDIAN_API_KEY\" > ./local.properties
 
       - name: starts a debug build
         run: ./gradlew assembleDebug
