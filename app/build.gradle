@@ -3,7 +3,6 @@ plugins {
     id 'org.jetbrains.kotlin.android'
     id 'kotlin-kapt'
     id 'dagger.hilt.android.plugin'
-    //id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 }
 
 static def headCommitCount() {
@@ -64,18 +63,6 @@ android {
         }
     }
 
-    flavorDimensions += "mode"
-
-    productFlavors {
-        create("pro") {
-            dimension = "mode"
-        }
-        create("mock") {
-            dimension = "mode"
-            applicationIdSuffix ".mock"
-            versionNameSuffix "-mock"
-        }
-    }
     buildTypes {
         getByName("debug") {
             debuggable true
@@ -87,6 +74,7 @@ android {
             signingConfig = signingConfigs.getByName("release")
         }
     }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
