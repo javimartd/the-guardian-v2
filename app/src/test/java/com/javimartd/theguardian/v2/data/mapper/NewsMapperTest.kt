@@ -10,7 +10,7 @@ import org.junit.Test
 
 class NewsMapperTest {
 
-    @Test
+    /*@Test
     fun newsToDomain() {
         val data = RemoteDataSourceFactory.getSomeNews(5)
         val domain = data.map { it.toDomain() }
@@ -39,5 +39,5 @@ class NewsMapperTest {
         Assert.assertEquals(data.id, domain.id)
         Assert.assertEquals(data.webTitle, domain.webTitle)
         Assert.assertEquals(data.webUrl, domain.webUrl)
-    }
+    }*/
 }
