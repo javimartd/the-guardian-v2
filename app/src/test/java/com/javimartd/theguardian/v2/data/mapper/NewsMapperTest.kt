@@ -7,10 +7,13 @@ import com.javimartd.theguardian.v2.domain.model.SectionEntity
 import com.javimartd.theguardian.v2.factory.RemoteDataSourceFactory
 import org.junit.Assert
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.junit.runners.JUnit4
 
+@RunWith(JUnit4::class)
 class NewsMapperTest {
 
-    /*@Test
+    @Test
     fun newsToDomain() {
         val data = RemoteDataSourceFactory.getSomeNews(5)
         val domain = data.map { it.toDomain() }
@@ -39,5 +42,5 @@ class NewsMapperTest {
         Assert.assertEquals(data.id, domain.id)
         Assert.assertEquals(data.webTitle, domain.webTitle)
         Assert.assertEquals(data.webUrl, domain.webUrl)
-    }*/
+    }
 }
