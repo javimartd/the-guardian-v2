@@ -14,7 +14,7 @@ This app allows you to read the latest news in the world thanks to the API provi
 - [Kotlin Coroutines][4]
 - DI setup with [Hilt][3]
 - CI setup with [GitHub Actions][5]
-- Unit tests for presentation and data layers using JUnit, [Hamcrest][11], [Mockito][6] and [MockWebServer][7]
+- Unit tests for presentation and data layers using JUnit, [Truth][14], [Turbine][15], [Hamcrest][11], [Mockito][6] and [MockWebServer][7]
 
 [1]: https://kotlinlang.org/docs/reference/
 [2]: https://upday.github.io/blog/model-view-viewmodel/
@@ -28,6 +28,8 @@ This app allows you to read the latest news in the world thanks to the API provi
 [10]: https://github.com/javimartd/The-Guardian
 [11]: http://hamcrest.org/
 [13]: https://developer.android.com/jetpack/guide/ui-layer#udf
+[14]: https://truth.dev/
+[15]: https://github.com/cashapp/turbine
 
 If you would like to use [RxJava][8] take a look at this other [version of the app][10] built with [Clean Architecture][9]
 
