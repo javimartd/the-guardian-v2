@@ -4,9 +4,7 @@ import com.javimartd.theguardian.v2.domain.model.NewsEntity
 import com.javimartd.theguardian.v2.domain.model.SectionEntity
 import javax.inject.Inject
 
-class NewsRemoteFakeDataSourceImpl @Inject constructor(
-    private val apiService: NewsApiService
-): NewsRemoteDataSource {
+class NewsFakeRemoteDataSourceImpl @Inject constructor(): NewsRemoteDataSource {
     override suspend fun getNews(
         showFieldsAll: String,
         sectionId: String
@@ -17,5 +15,4 @@ class NewsRemoteFakeDataSourceImpl @Inject constructor(
     override suspend fun getSections(): Result<List<SectionEntity>> {
         return Result.success(emptyList())
     }
-
 }
