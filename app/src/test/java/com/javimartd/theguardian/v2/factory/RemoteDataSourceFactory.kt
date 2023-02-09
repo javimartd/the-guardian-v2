@@ -1,8 +1,8 @@
 package com.javimartd.theguardian.v2.factory
 
-import com.javimartd.theguardian.v2.data.datasources.remote.FieldsRaw
-import com.javimartd.theguardian.v2.data.datasources.remote.NewsRaw
-import com.javimartd.theguardian.v2.data.datasources.remote.SectionRaw
+import com.javimartd.theguardian.v2.data.datasources.remote.news.model.FieldsRaw
+import com.javimartd.theguardian.v2.data.datasources.remote.news.model.NewsRaw
+import com.javimartd.theguardian.v2.data.datasources.remote.news.model.SectionRaw
 import com.javimartd.theguardian.v2.utils.randomString
 
 object RemoteDataSourceFactory {

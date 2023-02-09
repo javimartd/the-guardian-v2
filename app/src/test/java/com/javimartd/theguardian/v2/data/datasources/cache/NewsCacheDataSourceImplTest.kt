@@ -1,33 +1,24 @@
-package com.javimartd.theguardian.v2.data.datasources
+package com.javimartd.theguardian.v2.data.datasources.cache
 
-import com.javimartd.theguardian.v2.data.datasources.cache.NewsCacheDataSource
-import com.javimartd.theguardian.v2.data.datasources.cache.NewsCacheDataSourceImpl
-import com.javimartd.theguardian.v2.data.datasources.remote.SectionRaw
+import com.javimartd.theguardian.v2.data.datasources.remote.news.model.SectionRaw
 import com.javimartd.theguardian.v2.domain.model.SectionEntity
 import com.javimartd.theguardian.v2.factory.DomainFactory
 import junit.framework.TestCase
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.test.runTest
 import org.hamcrest.MatcherAssert
 import org.hamcrest.core.IsInstanceOf
 import org.junit.Assert
-import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.junit.MockitoJUnitRunner
 
-@RunWith(MockitoJUnitRunner::class)
-class NewsCacheDataSourceImplTest: TestCase() {
+@OptIn(ExperimentalCoroutinesApi::class)
+internal class NewsCacheDataSourceImplTest {
 
-    private lateinit var sut : NewsCacheDataSource
-
-    @Before
-    fun setup() {
-        sut = NewsCacheDataSourceImpl()
-    }
+    private val sut = NewsCacheDataSourceImpl()
 
     @Test
     fun `get sections`()
-    = runBlocking {
+    = runTest {
 
         // when
         val actual = sut.getSections()
@@ -42,7 +33,7 @@ class NewsCacheDataSourceImplTest: TestCase() {
         // given
         val data = DomainFactory.getSomeSections(2)
 
-        runBlocking {
+        runTest {
 
             // when
             sut.saveSections(data)

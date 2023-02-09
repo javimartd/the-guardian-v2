@@ -1,7 +1,7 @@
 package com.javimartd.theguardian.v2.data.mapper
 
-import com.javimartd.theguardian.v2.data.datasources.remote.NewsRaw
-import com.javimartd.theguardian.v2.data.datasources.remote.SectionRaw
+import com.javimartd.theguardian.v2.data.datasources.remote.news.model.NewsRaw
+import com.javimartd.theguardian.v2.data.datasources.remote.news.model.SectionRaw
 import com.javimartd.theguardian.v2.domain.model.NewsEntity
 import com.javimartd.theguardian.v2.domain.model.SectionEntity
 import com.javimartd.theguardian.v2.factory.RemoteDataSourceFactory
@@ -10,7 +10,7 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.junit.runners.JUnit4
 
-@RunWith(JUnit4::class)
+//@RunWith(JUnit4::class)
 class NewsMapperTest {
 
     @Test

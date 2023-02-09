@@ -2,13 +2,13 @@ package com.javimartd.theguardian.v2.ui
 
 import com.google.common.truth.Truth
 import com.javimartd.theguardian.v2.R
-import com.javimartd.theguardian.v2.data.state.ErrorTypes
+import com.javimartd.theguardian.v2.data.common.ErrorTypes
 import com.javimartd.theguardian.v2.domain.model.SectionEntity
 import com.javimartd.theguardian.v2.domain.usecases.GetNewsUseCase
 import com.javimartd.theguardian.v2.domain.usecases.GetSectionsUseCase
 import com.javimartd.theguardian.v2.factory.DomainFactory
-import com.javimartd.theguardian.v2.ui.news.mapper.toPresentation
-import com.javimartd.theguardian.v2.ui.news.NewsViewModel
+import com.javimartd.theguardian.v2.features.news.mapper.toPresentation
+import com.javimartd.theguardian.v2.features.news.model.NewsViewModel
 import com.javimartd.theguardian.v2.utils.TestDispatcherRule
 import junit.framework.TestCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi

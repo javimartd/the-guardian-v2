@@ -1,6 +1,6 @@
 package com.javimartd.theguardian.v2.utils
 
-import com.javimartd.theguardian.v2.data.coroutines.DispatcherProvider
+import com.javimartd.theguardian.v2.features.common.DispatcherProvider
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.UnconfinedTestDispatcher

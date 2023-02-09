@@ -1,12 +1,16 @@
-package com.javimartd.theguardian.v2.data.datasources
+package com.javimartd.theguardian.v2.data.datasources.remote
 
-import com.javimartd.theguardian.v2.data.datasources.remote.*
-import com.javimartd.theguardian.v2.data.state.ErrorTypes
+import com.javimartd.theguardian.v2.data.common.ErrorTypes
+import com.javimartd.theguardian.v2.data.datasources.ErrorHandler
+import com.javimartd.theguardian.v2.data.datasources.NewsRemoteDataSource
+import com.javimartd.theguardian.v2.data.datasources.remote.common.RemoteErrorHandlerImpl
+import com.javimartd.theguardian.v2.data.datasources.remote.news.NewsApiService
+import com.javimartd.theguardian.v2.data.datasources.remote.news.NewsRemoteDataSourceImpl
+import com.javimartd.theguardian.v2.data.datasources.remote.news.model.SectionRaw
 import com.javimartd.theguardian.v2.domain.model.NewsEntity
 import com.javimartd.theguardian.v2.domain.model.SectionEntity
 import com.javimartd.theguardian.v2.utils.FileReader
-import junit.framework.TestCase
-import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
 import okhttp3.mockwebserver.MockWebServer
@@ -16,15 +20,11 @@ import org.junit.After
 import org.junit.Assert
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
-import org.mockito.junit.MockitoJUnitRunner
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-
-@RunWith(MockitoJUnitRunner::class)
-class NewsRemoteDataSourceImplTest : TestCase() {
+internal class NewsRemoteDataSourceImplTest {
 
     private lateinit var sut : NewsRemoteDataSource
     private lateinit var server: MockWebServer
@@ -60,13 +60,13 @@ class NewsRemoteDataSourceImplTest : TestCase() {
 
         server.enqueue(response)
 
-        runBlocking {
+        runTest {
 
             // when
             val actual = sut.getNews("", "")
 
             // then
-            assertTrue(actual.isSuccess)
+            Assert.assertTrue(actual.isSuccess)
             actual.fold(
                 onSuccess = {
                     Assert.assertEquals(5, it.size)
@@ -87,13 +87,13 @@ class NewsRemoteDataSourceImplTest : TestCase() {
 
         server.enqueue(response)
 
-        runBlocking {
+        runTest {
 
             // when
             val actual = sut.getNews("", "")
 
             // then
-            assertTrue(actual.isSuccess)
+            Assert.assertTrue(actual.isSuccess)
             actual.fold(
                 onSuccess = {
                     Assert.assertEquals(it, emptyList<NewsEntity>())
@@ -113,13 +113,13 @@ class NewsRemoteDataSourceImplTest : TestCase() {
 
         server.enqueue(response)
 
-        runBlocking {
+        runTest {
 
             // when
             val actual = sut.getNews("", "")
 
             // then
-            assertTrue(actual.isSuccess)
+            Assert.assertTrue(actual.isSuccess)
             actual.fold(
                 onSuccess = {
                     Assert.assertEquals(it, emptyList<NewsEntity>())
@@ -137,13 +137,13 @@ class NewsRemoteDataSourceImplTest : TestCase() {
         response.setBody(FileReader.readFileWithoutNewLineFromResources("news_error.json"))
         server.enqueue(response)
 
-        runBlocking {
+        runTest {
 
             // when
             val actual = sut.getNews("", "")
 
             // then
-            assertTrue(actual.isFailure)
+            Assert.assertTrue(actual.isFailure)
             actual.fold(
                 onSuccess = { /* nothing expected */ },
                 onFailure = {
@@ -165,13 +165,13 @@ class NewsRemoteDataSourceImplTest : TestCase() {
 
         server.enqueue(response)
 
-        runBlocking {
+        runTest {
 
             // when
             val actual = sut.getNews("", "")
 
             // then
-            assertTrue(actual.isFailure)
+            Assert.assertTrue(actual.isFailure)
             actual.fold(
                 onSuccess = { /* nothing expected */ },
                 onFailure = {
@@ -195,13 +195,13 @@ class NewsRemoteDataSourceImplTest : TestCase() {
 
         server.enqueue(response)
 
-        runBlocking {
+        runTest {
 
             // when
             val actual = sut.getNews("", "")
 
             // then
-            assertTrue(actual.isFailure)
+            Assert.assertTrue(actual.isFailure)
             actual.fold(
                 onSuccess = { /* nothing expected */ },
                 onFailure = {
@@ -224,13 +224,13 @@ class NewsRemoteDataSourceImplTest : TestCase() {
 
         server.enqueue(response)
 
-        runBlocking {
+        runTest {
 
             // when
             val actual = sut.getSections()
 
             // then
-            assertTrue(actual.isSuccess)
+            Assert.assertTrue(actual.isSuccess)
             actual.fold(
                 onSuccess = {
                     Assert.assertEquals(22, it.size)
@@ -251,13 +251,13 @@ class NewsRemoteDataSourceImplTest : TestCase() {
 
         server.enqueue(response)
 
-        runBlocking {
+        runTest {
 
             // when
             val actual = sut.getSections()
 
             // then
-            assertTrue(actual.isSuccess)
+            Assert.assertTrue(actual.isSuccess)
             actual.fold(
                 onSuccess = {
                     Assert.assertEquals(it, emptyList<SectionRaw>())
@@ -277,13 +277,13 @@ class NewsRemoteDataSourceImplTest : TestCase() {
 
         server.enqueue(response)
 
-        runBlocking {
+        runTest {
 
             // when
             val actual = sut.getSections()
 
             // then
-            assertTrue(actual.isSuccess)
+            Assert.assertTrue(actual.isSuccess)
             actual.fold(
                 onSuccess = {
                     Assert.assertEquals(it, emptyList<SectionRaw>())
@@ -301,13 +301,13 @@ class NewsRemoteDataSourceImplTest : TestCase() {
         response.setBody(FileReader.readFileWithoutNewLineFromResources("sections_error.json"))
         server.enqueue(response)
 
-        runBlocking {
+        runTest {
 
             // when
             val actual = sut.getSections()
 
             // then
-            assertTrue(actual.isFailure)
+            Assert.assertTrue(actual.isFailure)
             actual.fold(
                 onSuccess = { /* nothing expected */ },
                 onFailure = {
@@ -329,13 +329,13 @@ class NewsRemoteDataSourceImplTest : TestCase() {
 
         server.enqueue(response)
 
-        runBlocking {
+        runTest {
 
             // when
             val actual = sut.getSections()
 
             // then
-            assertTrue(actual.isFailure)
+            Assert.assertTrue(actual.isFailure)
             actual.fold(
                 onSuccess = { /* nothing expected */ },
                 onFailure = {
@@ -359,13 +359,13 @@ class NewsRemoteDataSourceImplTest : TestCase() {
 
         server.enqueue(response)
 
-        runBlocking {
+        runTest {
 
             // when
             val actual = sut.getSections()
 
             // then
-            assertTrue(actual.isFailure)
+            Assert.assertTrue(actual.isFailure)
             actual.fold(
                 onSuccess = { /* nothing expected */ },
                 onFailure = {

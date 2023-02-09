@@ -1,17 +1,18 @@
 package com.javimartd.theguardian.v2.data
 
-import com.javimartd.theguardian.v2.data.datasources.cache.NewsCacheDataSource
-import com.javimartd.theguardian.v2.data.datasources.local.NewsLocalDataSource
-import com.javimartd.theguardian.v2.data.datasources.remote.NewsRemoteDataSource
-import com.javimartd.theguardian.v2.data.state.ErrorTypes
+import com.javimartd.theguardian.v2.data.common.ErrorTypes
+import com.javimartd.theguardian.v2.data.datasources.NewsCacheDataSource
+import com.javimartd.theguardian.v2.data.datasources.NewsLocalDataSource
+import com.javimartd.theguardian.v2.data.datasources.NewsRemoteDataSource
+import com.javimartd.theguardian.v2.data.repository.NewsRepositoryImpl
 import com.javimartd.theguardian.v2.domain.NewsRepository
 import com.javimartd.theguardian.v2.domain.model.NewsEntity
 import com.javimartd.theguardian.v2.domain.model.SectionEntity
 import com.javimartd.theguardian.v2.factory.DomainFactory
 import com.javimartd.theguardian.v2.utils.TestDefaultDispatcher
-import junit.framework.TestCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.hamcrest.MatcherAssert
 import org.hamcrest.core.IsInstanceOf
 import org.junit.Assert
@@ -20,12 +21,11 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito
-import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 
 @ExperimentalCoroutinesApi
 @RunWith(MockitoJUnitRunner::class)
-class NewsRepositoryImplTest: TestCase() {
+internal class NewsRepositoryImplTest {
 
     private lateinit var sut : NewsRepository
 
@@ -35,7 +35,7 @@ class NewsRepositoryImplTest: TestCase() {
 
     @Before
     fun setup() {
-        MockitoAnnotations.openMocks(this)
+        //MockitoAnnotations.openMocks(this)
         sut = NewsRepositoryImpl(
             TestDefaultDispatcher(),
             remoteDataSource,
@@ -46,7 +46,7 @@ class NewsRepositoryImplTest: TestCase() {
 
     @Test
     fun `get news when response successful returns success result with news`()
-    = runBlocking {
+    = runTest {
 
         // given
         val data = DomainFactory.getSomeNews(2)
@@ -59,7 +59,7 @@ class NewsRepositoryImplTest: TestCase() {
         val actual = sut.getNews("", "")
 
         // then
-        assertTrue(actual.isSuccess)
+        Assert.assertTrue(actual.isSuccess)
         actual.fold(
             onSuccess = {
                 Assert.assertEquals(2, it.size)
@@ -71,7 +71,7 @@ class NewsRepositoryImplTest: TestCase() {
 
     @Test
     fun `get remote sections when response successful returns success result with sections`()
-    = runBlocking {
+    = runTest {
 
         // given
         val remoteData = DomainFactory.getSomeSections(5)
@@ -88,7 +88,7 @@ class NewsRepositoryImplTest: TestCase() {
         val actual = sut.getSections()
 
         // then
-        assertTrue(actual.isSuccess)
+        Assert.assertTrue(actual.isSuccess)
         actual.fold(
             onSuccess = {
                 Mockito.verify(
@@ -104,7 +104,7 @@ class NewsRepositoryImplTest: TestCase() {
 
     @Test
     fun `get cached sections returns success result with sections`()
-    = runBlocking {
+    = runTest {
 
         // given
         val localData = DomainFactory.getSomeSections(10)
@@ -117,7 +117,7 @@ class NewsRepositoryImplTest: TestCase() {
         val actual = sut.getSections()
 
         // then
-        assertTrue(actual.isSuccess)
+        Assert.assertTrue(actual.isSuccess)
         actual.fold(
             onSuccess = {
                 Assert.assertEquals(10, it.size)
@@ -129,7 +129,7 @@ class NewsRepositoryImplTest: TestCase() {
 
     @Test
     fun `get remote sections when server error exception returns error result`()
-    = runBlocking {
+    = runTest {
 
         // given
         Mockito
@@ -144,7 +144,7 @@ class NewsRepositoryImplTest: TestCase() {
         val actual = sut.getSections()
 
         // then
-        assertTrue(actual.isFailure)
+        Assert.assertTrue(actual.isFailure)
         actual.fold(
             onSuccess = { /* nothing expected */ },
             onFailure = {

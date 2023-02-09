@@ -3,7 +3,9 @@ package com.javimartd.theguardian.v2.domain.usecases
 import com.javimartd.theguardian.v2.domain.NewsRepository
 import com.javimartd.theguardian.v2.domain.model.SectionEntity
 import com.javimartd.theguardian.v2.factory.DomainFactory
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.runTest
 import org.hamcrest.MatcherAssert
 import org.hamcrest.core.IsInstanceOf
 import org.junit.Before
@@ -11,10 +13,11 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito
+import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 
-@RunWith(MockitoJUnitRunner::class)
-class GetSectionsUseCaseTest {
+@OptIn(ExperimentalCoroutinesApi::class)
+internal class GetSectionsUseCaseTest {
 
     private lateinit var sut : GetSectionsUseCase
 
@@ -23,12 +26,12 @@ class GetSectionsUseCaseTest {
 
     @Before
     fun setup() {
+        MockitoAnnotations.openMocks(this)
         sut = GetSectionsUseCase(newsRepository)
     }
 
     @Test
-    fun invoke() {
-        runBlocking {
+    fun invoke() = runTest {
 
             // when
             sut.invoke()
@@ -37,12 +40,10 @@ class GetSectionsUseCaseTest {
                 newsRepository,
                 Mockito.times(1)
             ).getSections()
-        }
     }
 
     @Test
-    fun invoke2() {
-        runBlocking {
+    fun invoke2() = runTest {
 
             // given
             val remoteData = DomainFactory.getSomeSections(5)
@@ -66,8 +67,5 @@ class GetSectionsUseCaseTest {
                 Mockito.times(1)
             ).getSections()
 
-
-
-        }
     }
 }

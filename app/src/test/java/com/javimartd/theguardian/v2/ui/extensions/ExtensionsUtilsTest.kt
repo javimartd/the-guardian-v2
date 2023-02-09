@@ -1,5 +1,8 @@
 package com.javimartd.theguardian.v2.ui.extensions
 
+import com.javimartd.theguardian.v2.features.extensions.DATE_TIME_API_FORMAT
+import com.javimartd.theguardian.v2.features.extensions.toDate
+import com.javimartd.theguardian.v2.features.extensions.toLong
 import org.junit.Assert
 import org.junit.Test
 import org.junit.runner.RunWith

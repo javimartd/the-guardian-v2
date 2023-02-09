@@ -3,7 +3,8 @@ package com.javimartd.theguardian.v2.ui.news.mapper
 import com.javimartd.theguardian.v2.domain.model.NewsEntity
 import com.javimartd.theguardian.v2.domain.model.SectionEntity
 import com.javimartd.theguardian.v2.factory.DomainFactory
-import com.javimartd.theguardian.v2.ui.news.model.NewsItemUiState
+import com.javimartd.theguardian.v2.features.news.mapper.toPresentation
+import com.javimartd.theguardian.v2.features.news.model.NewsItemUiState
 import org.junit.Assert
 import org.junit.Test
 
