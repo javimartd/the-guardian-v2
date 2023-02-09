@@ -1,8 +1,10 @@
 package com.javimartd.theguardian.v2.di
 
 import com.javimartd.theguardian.v2.BuildConfig
-import com.javimartd.theguardian.v2.data.datasources.remote.NewsApiService
-import com.javimartd.theguardian.v2.data.datasources.remote.common.ApiKeyInterceptor
+import com.javimartd.theguardian.v2.data.datasources.remote.news.NewsApiService
+import com.javimartd.theguardian.v2.data.datasources.remote.common.interceptor.ApiKeyInterceptor
+import com.javimartd.theguardian.v2.data.datasources.remote.common.interceptor.CacheInterceptor
+import com.javimartd.theguardian.v2.data.datasources.remote.common.interceptor.ResponseSourceInterceptor
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,6 +24,13 @@ class NetworkModule {
         private const val BASE_URL = "https://content.guardianapis.com"
     }
 
+    private val loggingInterceptor = HttpLoggingInterceptor().apply {
+        level = if (BuildConfig.DEBUG)
+            HttpLoggingInterceptor.Level.BODY
+        else
+            HttpLoggingInterceptor.Level.NONE
+    }
+
     @Provides
     @Singleton
     fun providesRetrofit(): Retrofit {
@@ -33,15 +42,10 @@ class NetworkModule {
                     .connectTimeout(20, TimeUnit.SECONDS)
                     .readTimeout(20, TimeUnit.SECONDS)
                     .writeTimeout(20, TimeUnit.SECONDS)
-                    .addInterceptor(
-                        HttpLoggingInterceptor().apply {
-                            level = if (BuildConfig.DEBUG)
-                                HttpLoggingInterceptor.Level.BODY
-                            else
-                                HttpLoggingInterceptor.Level.NONE
-                        }
-                    )
+                    .addInterceptor(loggingInterceptor)
                     .addInterceptor(ApiKeyInterceptor())
+                    .addInterceptor(ResponseSourceInterceptor())
+                    .addNetworkInterceptor(CacheInterceptor())
                     .build()
             )
             .addConverterFactory(GsonConverterFactory.create())

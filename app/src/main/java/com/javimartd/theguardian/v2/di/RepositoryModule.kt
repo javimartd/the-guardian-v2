@@ -1,10 +1,10 @@
 package com.javimartd.theguardian.v2.di
 
 import com.javimartd.theguardian.v2.domain.NewsRepository
-import com.javimartd.theguardian.v2.data.NewsRepositoryImpl
-import com.javimartd.theguardian.v2.data.datasources.cache.NewsCacheDataSource
-import com.javimartd.theguardian.v2.data.datasources.local.NewsLocalDataSource
-import com.javimartd.theguardian.v2.data.datasources.remote.NewsRemoteDataSource
+import com.javimartd.theguardian.v2.data.repository.NewsRepositoryImpl
+import com.javimartd.theguardian.v2.data.datasources.NewsCacheDataSource
+import com.javimartd.theguardian.v2.data.datasources.NewsLocalDataSource
+import com.javimartd.theguardian.v2.data.datasources.NewsRemoteDataSource
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
