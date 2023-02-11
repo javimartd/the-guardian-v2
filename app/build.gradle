@@ -115,6 +115,7 @@ android {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
+    namespace 'com.javimartd.theguardian.v2'
 }
 
 dependencies {

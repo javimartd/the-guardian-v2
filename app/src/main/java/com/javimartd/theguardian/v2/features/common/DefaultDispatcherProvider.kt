@@ -1,3 +1,3 @@
-package com.javimartd.theguardian.v2.data.coroutines
+package com.javimartd.theguardian.v2.features.common
 
 class DefaultDispatcherProvider : DispatcherProvider
