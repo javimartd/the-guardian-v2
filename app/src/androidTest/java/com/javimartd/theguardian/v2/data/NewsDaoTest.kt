@@ -5,6 +5,7 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
+import androidx.test.platform.app.InstrumentationRegistry
 import app.cash.turbine.test
 import com.javimartd.theguardian.v2.LocalDataSourceFactory
 import com.javimartd.theguardian.v2.TestDispatcherRule
@@ -27,9 +28,10 @@ import org.junit.runner.RunWith
 @SmallTest
 class NewsDaoTest {
 
+    val ctx = InstrumentationRegistry.getInstrumentation().context
 
-    @get: Rule
-    val dispatcherRule = TestDispatcherRule()
+    /*@get: Rule
+    val dispatcherRule = TestDispatcherRule()*/
 
     private lateinit var itemDao: NewsDao
     private lateinit var itemDb: AppDatabase
