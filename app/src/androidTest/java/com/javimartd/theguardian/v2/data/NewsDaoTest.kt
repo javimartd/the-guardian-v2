@@ -8,16 +8,14 @@ import androidx.test.filters.SmallTest
 import androidx.test.platform.app.InstrumentationRegistry
 import app.cash.turbine.test
 import com.javimartd.theguardian.v2.LocalDataSourceFactory
-import com.javimartd.theguardian.v2.TestDispatcherRule
-import com.javimartd.theguardian.v2.data.datasources.local.db.AppDatabase
-import com.javimartd.theguardian.v2.data.datasources.local.db.NewsDao
-import com.javimartd.theguardian.v2.data.datasources.local.model.NewsLocalData
+import com.javimartd.theguardian.v2.data.datasources.local.AppDatabase
+import com.javimartd.theguardian.v2.data.datasources.local.news.NewsDao
+import com.javimartd.theguardian.v2.data.datasources.local.news.db.NewsEntity
 import com.javimartd.theguardian.v2.randomString
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.After
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
 
@@ -74,7 +72,7 @@ class NewsDaoTest {
         // given
         val news = LocalDataSourceFactory.getSomeNews(3)
 
-        val item = NewsLocalData(
+        val item = NewsEntity(
             newsId = news[0].newsId,
             body = randomString(),
             date = "2022-11-26T16:22:34Z",
