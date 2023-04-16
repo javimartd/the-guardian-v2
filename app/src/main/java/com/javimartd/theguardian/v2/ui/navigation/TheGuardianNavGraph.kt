@@ -6,7 +6,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.javimartd.theguardian.v2.features.settings.view.SettingsScreen
-import com.javimartd.theguardian.v2.features.news.NewsScreen
+import com.javimartd.theguardian.v2.features.news.view.NewsScreen
 import com.javimartd.theguardian.v2.features.news.model.NewsViewModel
 
 @Composable

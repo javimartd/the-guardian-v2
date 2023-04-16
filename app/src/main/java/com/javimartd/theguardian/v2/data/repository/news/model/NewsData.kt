@@ -1,4 +1,4 @@
-package com.javimartd.theguardian.v2.data.model
+package com.javimartd.theguardian.v2.data.repository.news.model
 
 data class NewsData(
     val body: String?,
@@ -8,5 +8,11 @@ data class NewsData(
     val sectionName: String,
     val thumbnail: String?,
     val title: String,
+    val webUrl: String
+)
+
+data class SectionData(
+    val id: String,
+    val webTitle: String,
     val webUrl: String
 )

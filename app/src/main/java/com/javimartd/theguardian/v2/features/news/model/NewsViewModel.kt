@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.javimartd.theguardian.v2.R
 import com.javimartd.theguardian.v2.data.common.ErrorTypes
-import com.javimartd.theguardian.v2.domain.usecases.GetNewsUseCase
-import com.javimartd.theguardian.v2.domain.usecases.GetSectionsUseCase
+import com.javimartd.theguardian.v2.domain.news.usecases.GetNewsUseCase
+import com.javimartd.theguardian.v2.domain.news.usecases.GetSectionsUseCase
 import com.javimartd.theguardian.v2.features.news.NewsUiContract
 import com.javimartd.theguardian.v2.features.news.mapper.toPresentation
 import dagger.hilt.android.lifecycle.HiltViewModel

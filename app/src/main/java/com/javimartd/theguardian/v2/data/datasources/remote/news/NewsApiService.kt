@@ -1,6 +1,6 @@
 package com.javimartd.theguardian.v2.data.datasources.remote.news
 
-import com.javimartd.theguardian.v2.data.datasources.remote.news.model.NewsResponseRaw
+import com.javimartd.theguardian.v2.data.datasources.remote.news.model.NewsRemoteRaw
 import com.javimartd.theguardian.v2.data.datasources.remote.news.model.SectionsResponseRaw
 import retrofit2.Response
 import retrofit2.http.GET
@@ -11,7 +11,7 @@ interface NewsApiService {
     suspend fun getNews(
         @Query("show-fields") showFields: String,
         @Query("section") section: String
-    ): Response<NewsResponseRaw>
+    ): Response<NewsRemoteRaw>
 
     @GET("/sections")
     suspend fun getSections(): Response<SectionsResponseRaw>

@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 const val STATUS_OK = "ok"
 
-data class NewsResponseRaw (
+data class NewsRemoteRaw (
     @SerializedName("response")
     val newsResponse: NewsResultsRaw?
 )

@@ -1,11 +1,11 @@
-package com.javimartd.theguardian.v2.data.datasources.local.model
+package com.javimartd.theguardian.v2.data.datasources.local.news.db
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "news")
-data class NewsLocalData (
+data class NewsEntity (
     @PrimaryKey(autoGenerate = false) @ColumnInfo(name = "newsId") var newsId: String,
     @ColumnInfo(name = "body") var body: String,
     @ColumnInfo(name = "date") var date: String,

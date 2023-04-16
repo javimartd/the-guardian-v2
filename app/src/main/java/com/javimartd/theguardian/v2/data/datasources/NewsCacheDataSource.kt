@@ -1,8 +1,8 @@
 package com.javimartd.theguardian.v2.data.datasources
 
-import com.javimartd.theguardian.v2.domain.model.SectionEntity
+import com.javimartd.theguardian.v2.data.repository.news.model.SectionData
 
 interface NewsCacheDataSource {
-    suspend fun getSections(): List<SectionEntity>
-    suspend fun saveSections(sections: List<SectionEntity>)
+    suspend fun getSections(): List<SectionData>
+    suspend fun saveSections(sections: List<SectionData>)
 }

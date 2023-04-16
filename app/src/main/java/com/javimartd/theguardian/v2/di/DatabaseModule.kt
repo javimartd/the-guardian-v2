@@ -2,7 +2,7 @@ package com.javimartd.theguardian.v2.di
 
 import android.content.Context
 import androidx.room.Room
-import com.javimartd.theguardian.v2.data.datasources.local.db.AppDatabase
+import com.javimartd.theguardian.v2.data.datasources.local.AppDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

@@ -1,4 +1,4 @@
-package com.javimartd.theguardian.v2.features.news
+package com.javimartd.theguardian.v2.features.news.view
 
 import android.content.res.Configuration
 import androidx.compose.foundation.background
@@ -19,6 +19,7 @@ import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import com.javimartd.theguardian.v2.R
+import com.javimartd.theguardian.v2.features.news.NewsUiContract
 import com.javimartd.theguardian.v2.ui.components.TheGuardianSnackbarHost
 import com.javimartd.theguardian.v2.ui.navigation.TheGuardianDestinations
 import com.javimartd.theguardian.v2.features.news.components.NewsItemLandscape

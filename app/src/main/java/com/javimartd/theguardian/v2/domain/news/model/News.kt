@@ -1,6 +1,6 @@
-package com.javimartd.theguardian.v2.domain.model
+package com.javimartd.theguardian.v2.domain.news.model
 
-data class NewsEntity(
+data class News(
     val body: String?,
     val date: String,
     val id: String,

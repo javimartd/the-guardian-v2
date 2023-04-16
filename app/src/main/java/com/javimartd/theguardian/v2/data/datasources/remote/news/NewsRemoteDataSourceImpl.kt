@@ -1,24 +1,26 @@
 package com.javimartd.theguardian.v2.data.datasources.remote.news
 
+import com.javimartd.theguardian.v2.data.common.ErrorTypes
 import com.javimartd.theguardian.v2.data.datasources.ErrorHandler
 import com.javimartd.theguardian.v2.data.datasources.NewsRemoteDataSource
+import com.javimartd.theguardian.v2.data.datasources.remote.RemoteMapper
 import com.javimartd.theguardian.v2.data.datasources.remote.common.safeApiCall
-import com.javimartd.theguardian.v2.data.mapper.toDomain
-import com.javimartd.theguardian.v2.data.common.ErrorTypes
+import com.javimartd.theguardian.v2.data.datasources.remote.news.model.NewsRemoteRaw
 import com.javimartd.theguardian.v2.data.datasources.remote.news.model.STATUS_OK
-import com.javimartd.theguardian.v2.domain.model.NewsEntity
-import com.javimartd.theguardian.v2.domain.model.SectionEntity
+import com.javimartd.theguardian.v2.data.repository.news.model.NewsData
+import com.javimartd.theguardian.v2.data.repository.news.model.SectionData
 import javax.inject.Inject
 
 class NewsRemoteDataSourceImpl @Inject constructor(
     private val newsApiService: NewsApiService,
+    private val mapper: RemoteMapper<NewsRemoteRaw, List<NewsData>>,
     private val errorHandler: ErrorHandler
 ): NewsRemoteDataSource {
 
     override suspend fun getNews(
         showFieldsAll: String,
         sectionId: String
-    ): Result<List<NewsEntity>> {
+    ): Result<List<NewsData>> {
         val result = safeApiCall {
             newsApiService.getNews(
                 showFieldsAll,
@@ -28,11 +30,7 @@ class NewsRemoteDataSourceImpl @Inject constructor(
         return result.fold(
             onSuccess = { response ->
                 if (response.newsResponse?.status == STATUS_OK) {
-                    Result.success(
-                        response.newsResponse.results?.map {
-                            it.toDomain()
-                        } ?: emptyList()
-                    )
+                    Result.success(mapper.mapFromRemote(response))
                 } else {
                     Result.failure(ErrorTypes.RemoteErrors.ApiStatus)
                 }
@@ -43,7 +41,7 @@ class NewsRemoteDataSourceImpl @Inject constructor(
         )
     }
 
-    override suspend fun getSections(): Result<List<SectionEntity>> {
+    override suspend fun getSections(): Result<List<SectionData>> {
         val result = safeApiCall { newsApiService.getSections() }
 
         return result.fold(
@@ -51,7 +49,11 @@ class NewsRemoteDataSourceImpl @Inject constructor(
                 if (response.sectionsResponse.status == STATUS_OK) {
                     Result.success(
                         response.sectionsResponse.results?.map {
-                            it.toDomain()
+                            SectionData(
+                                id = it.id,
+                                webTitle = it.webTitle,
+                                webUrl = it.webUrl
+                            )
                         } ?: emptyList()
                     )
                 } else {

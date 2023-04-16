@@ -1,11 +1,11 @@
-package com.javimartd.theguardian.v2.data.extensions
+package com.javimartd.theguardian.v2.data.datasources.framework
 
 import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 import kotlin.reflect.KProperty
 
-object DelegatesExt {
+object SharedPreferencesDelegatesExt {
     fun <T> preference(
         context: Context,
         name: String,

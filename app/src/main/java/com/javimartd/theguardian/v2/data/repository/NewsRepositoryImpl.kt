@@ -1,13 +1,14 @@
 package com.javimartd.theguardian.v2.data.repository
 
-import com.javimartd.theguardian.v2.features.common.DefaultDispatcherProvider
-import com.javimartd.theguardian.v2.features.common.DispatcherProvider
 import com.javimartd.theguardian.v2.data.datasources.NewsCacheDataSource
 import com.javimartd.theguardian.v2.data.datasources.NewsLocalDataSource
 import com.javimartd.theguardian.v2.data.datasources.NewsRemoteDataSource
+import com.javimartd.theguardian.v2.data.repository.news.mapper.toDomain
 import com.javimartd.theguardian.v2.domain.NewsRepository
-import com.javimartd.theguardian.v2.domain.model.NewsEntity
-import com.javimartd.theguardian.v2.domain.model.SectionEntity
+import com.javimartd.theguardian.v2.domain.news.model.News
+import com.javimartd.theguardian.v2.domain.news.model.Section
+import com.javimartd.theguardian.v2.features.common.DefaultDispatcherProvider
+import com.javimartd.theguardian.v2.features.common.DispatcherProvider
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -21,24 +22,33 @@ class NewsRepositoryImpl @Inject constructor(
     override suspend fun getNews(
         showFieldsAll: String,
         sectionId: String
-    ): Result<List<NewsEntity>> {
+    ): Result<List<News>> {
         return withContext(dispatchers.io()) {
-            remoteDataSource.getNews(
+            val data = remoteDataSource.getNews(
                 showFieldsAll,
                 sectionId
+            )
+            data.fold(
+                onSuccess = { Result.success(it.map { newsData -> newsData.toDomain() }) },
+                onFailure = { Result.failure(it) }
             )
         }
     }
 
-    override suspend fun getSections(): Result<List<SectionEntity>> {
+    override suspend fun getSections(): Result<List<Section>> {
         return withContext(dispatchers.io()) {
             val sections = cacheDataSource.getSections()
             if (sections.isEmpty()) {
                 val response =  remoteDataSource.getSections()
-                response.onSuccess { cacheDataSource.saveSections(it) }
-                response
+                response.fold(
+                    onSuccess = {
+                        cacheDataSource.saveSections(it)
+                        Result.success(it.map { sectionData -> sectionData.toDomain() })
+                    },
+                    onFailure = { Result.failure(it) }
+                )
             } else {
-                Result.success(sections)
+                Result.success(sections.map { it.toDomain() })
             }
         }
     }

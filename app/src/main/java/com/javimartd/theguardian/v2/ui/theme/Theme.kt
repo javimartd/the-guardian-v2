@@ -22,7 +22,8 @@ fun TheGuardianTheme(
     content: @Composable () -> Unit
 ) {
     val colors = if (darkTheme) {
-        DarkColorPalette
+        //DarkColorPalette
+        LightColorPalette
     } else {
         LightColorPalette
     }

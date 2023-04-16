@@ -1,10 +1,10 @@
 package com.javimartd.theguardian.v2.data.datasources
 
-import com.javimartd.theguardian.v2.domain.model.NewsEntity
+import com.javimartd.theguardian.v2.domain.news.model.News
 import kotlinx.coroutines.flow.Flow
 
 interface NewsLocalDataSource {
-    fun getNews(): Flow<List<NewsEntity>>
-    suspend fun insertAll(entities: List<NewsEntity>)
+    fun getNews(): Flow<List<News>>
+    suspend fun insertAll(entities: List<News>)
     suspend fun removeAll()
 }
