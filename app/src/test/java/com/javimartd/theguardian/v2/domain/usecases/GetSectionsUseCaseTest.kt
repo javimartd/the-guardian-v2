@@ -1,20 +1,18 @@
 package com.javimartd.theguardian.v2.domain.usecases
 
 import com.javimartd.theguardian.v2.domain.NewsRepository
-import com.javimartd.theguardian.v2.domain.model.SectionEntity
+import com.javimartd.theguardian.v2.domain.news.model.Section
+import com.javimartd.theguardian.v2.domain.news.usecases.GetSectionsUseCase
 import com.javimartd.theguardian.v2.factory.DomainFactory
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.hamcrest.MatcherAssert
 import org.hamcrest.core.IsInstanceOf
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
-import org.mockito.junit.MockitoJUnitRunner
 
 @OptIn(ExperimentalCoroutinesApi::class)
 internal class GetSectionsUseCaseTest {
@@ -57,7 +55,7 @@ internal class GetSectionsUseCaseTest {
 
             actual.fold(
                 onSuccess = {
-                    MatcherAssert.assertThat(it[0], IsInstanceOf.instanceOf(SectionEntity::class.java))
+                    MatcherAssert.assertThat(it[0], IsInstanceOf.instanceOf(Section::class.java))
                 },
                 onFailure = {}
             )

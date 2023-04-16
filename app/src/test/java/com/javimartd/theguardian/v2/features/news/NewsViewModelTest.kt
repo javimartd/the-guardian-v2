@@ -1,11 +1,11 @@
-package com.javimartd.theguardian.v2.ui
+package com.javimartd.theguardian.v2.features.news
 
 import com.google.common.truth.Truth
 import com.javimartd.theguardian.v2.R
 import com.javimartd.theguardian.v2.data.common.ErrorTypes
-import com.javimartd.theguardian.v2.domain.model.SectionEntity
-import com.javimartd.theguardian.v2.domain.usecases.GetNewsUseCase
-import com.javimartd.theguardian.v2.domain.usecases.GetSectionsUseCase
+import com.javimartd.theguardian.v2.domain.news.model.Section
+import com.javimartd.theguardian.v2.domain.news.usecases.GetNewsUseCase
+import com.javimartd.theguardian.v2.domain.news.usecases.GetSectionsUseCase
 import com.javimartd.theguardian.v2.factory.DomainFactory
 import com.javimartd.theguardian.v2.features.news.mapper.toPresentation
 import com.javimartd.theguardian.v2.features.news.model.NewsViewModel
@@ -57,9 +57,9 @@ class NewsViewModelTest : TestCase() {
         // given
         val news = DomainFactory.getSomeNews(3)
 
-        val sections = mutableListOf<SectionEntity>()
-        sections.add(SectionEntity("", "Music", ""))
-        sections.add(SectionEntity("", "Life and style", ""))
+        val sections = mutableListOf<Section>()
+        sections.add(Section("", "Music", ""))
+        sections.add(Section("", "Life and style", ""))
 
         Mockito
             .`when`(getNewsUseCase(""))

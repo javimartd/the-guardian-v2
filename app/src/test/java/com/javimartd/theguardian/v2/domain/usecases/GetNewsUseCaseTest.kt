@@ -1,18 +1,16 @@
 package com.javimartd.theguardian.v2.domain.usecases
 
 import com.javimartd.theguardian.v2.domain.NewsRepository
-import com.javimartd.theguardian.v2.domain.model.SectionEntity
+import com.javimartd.theguardian.v2.domain.news.model.Section
+import com.javimartd.theguardian.v2.domain.news.usecases.GetNewsUseCase
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.junit.Before
 import org.junit.Test
-import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.Mockito.times
 import org.mockito.MockitoAnnotations
-import org.mockito.junit.MockitoJUnitRunner
 
 @OptIn(ExperimentalCoroutinesApi::class)
 internal class GetNewsUseCaseTest {
@@ -48,8 +46,8 @@ internal class GetNewsUseCaseTest {
 
             // given
             val sections = listOf(
-                SectionEntity(id = "books", webTitle = "Books", webUrl = ""),
-                SectionEntity(id = "education", webTitle = "Education", webUrl = "")
+                Section(id = "books", webTitle = "Books", webUrl = ""),
+                Section(id = "education", webTitle = "Education", webUrl = "")
             )
 
             Mockito

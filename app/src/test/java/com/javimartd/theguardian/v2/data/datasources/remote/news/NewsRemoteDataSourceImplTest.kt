@@ -1,15 +1,14 @@
-package com.javimartd.theguardian.v2.data.datasources.remote
+package com.javimartd.theguardian.v2.data.datasources.remote.news
 
 import com.javimartd.theguardian.v2.data.common.ErrorTypes
 import com.javimartd.theguardian.v2.data.datasources.ErrorHandler
 import com.javimartd.theguardian.v2.data.datasources.NewsRemoteDataSource
 import com.javimartd.theguardian.v2.data.datasources.remote.common.RemoteErrorHandlerImpl
-import com.javimartd.theguardian.v2.data.datasources.remote.news.NewsApiService
-import com.javimartd.theguardian.v2.data.datasources.remote.news.NewsRemoteDataSourceImpl
-import com.javimartd.theguardian.v2.data.datasources.remote.news.model.SectionRaw
-import com.javimartd.theguardian.v2.domain.model.NewsEntity
-import com.javimartd.theguardian.v2.domain.model.SectionEntity
+import com.javimartd.theguardian.v2.data.datasources.remote.news.mapper.NewsRemoteMapper
+import com.javimartd.theguardian.v2.data.repository.news.model.NewsData
+import com.javimartd.theguardian.v2.data.repository.news.model.SectionData
 import com.javimartd.theguardian.v2.utils.FileReader
+import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import okhttp3.OkHttpClient
 import okhttp3.mockwebserver.MockResponse
@@ -24,6 +23,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
+@OptIn(ExperimentalCoroutinesApi::class)
 internal class NewsRemoteDataSourceImplTest {
 
     private lateinit var sut : NewsRemoteDataSource
@@ -42,7 +42,11 @@ internal class NewsRemoteDataSourceImplTest {
         server = MockWebServer()
         server.start()
 
-        sut = NewsRemoteDataSourceImpl(getApiService(server), remoteErrorHandler)
+        sut = NewsRemoteDataSourceImpl(
+            getApiService(server),
+            NewsRemoteMapper(),
+            remoteErrorHandler
+        )
     }
 
     @After
@@ -51,7 +55,7 @@ internal class NewsRemoteDataSourceImplTest {
     }
 
     @Test
-    fun `get news when response successful returns success result with news`() {
+    fun `GIVEN successful response WHEN get news THEN returns success with repository data model`() {
 
         // given
         val response = MockResponse()
@@ -70,7 +74,7 @@ internal class NewsRemoteDataSourceImplTest {
             actual.fold(
                 onSuccess = {
                     Assert.assertEquals(5, it.size)
-                    MatcherAssert.assertThat(it[0], IsInstanceOf.instanceOf(NewsEntity::class.java))
+                    MatcherAssert.assertThat(it[0], IsInstanceOf.instanceOf(NewsData::class.java))
                 },
                 onFailure = { /* nothing expected */ }
             )
@@ -78,7 +82,7 @@ internal class NewsRemoteDataSourceImplTest {
     }
 
     @Test
-    fun `get news when response with empty data returns success result with empty data`() {
+    fun `GIVEN response with empty data WHEN get news THEN returns success with empty data`() {
 
         // given
         val response = MockResponse()
@@ -96,7 +100,7 @@ internal class NewsRemoteDataSourceImplTest {
             Assert.assertTrue(actual.isSuccess)
             actual.fold(
                 onSuccess = {
-                    Assert.assertEquals(it, emptyList<NewsEntity>())
+                    Assert.assertEquals(it, emptyList<NewsData>())
                 },
                 onFailure = { /* nothing expected */ }
             )
@@ -104,7 +108,7 @@ internal class NewsRemoteDataSourceImplTest {
     }
 
     @Test
-    fun `get news when response with null data returns success result with empty data`() {
+    fun `GIVEN response with null data WHEN get news THEN returns success with empty data`() {
 
         // given
         val response = MockResponse()
@@ -122,7 +126,7 @@ internal class NewsRemoteDataSourceImplTest {
             Assert.assertTrue(actual.isSuccess)
             actual.fold(
                 onSuccess = {
-                    Assert.assertEquals(it, emptyList<NewsEntity>())
+                    Assert.assertEquals(it, emptyList<NewsData>())
                 },
                 onFailure = { /* nothing expected */ }
             )
@@ -130,7 +134,7 @@ internal class NewsRemoteDataSourceImplTest {
     }
 
     @Test
-    fun `get news when response with status error returns error result with a status exception`() {
+    fun `GIVEN response with status error WHEN get news THEN returns error with a status exception`() {
 
         // given
         val response = MockResponse()
@@ -157,7 +161,7 @@ internal class NewsRemoteDataSourceImplTest {
     }
 
     @Test
-    fun `get news when internal server error returns error result with a server exception`() {
+    fun `GIVEN internal server error WHEN get news THEN returns error with a server exception`() {
 
         // given
         val response = MockResponse()
@@ -185,7 +189,7 @@ internal class NewsRemoteDataSourceImplTest {
     }
 
     @Test
-    fun `get news when timeout error returns error result with a network exception`() {
+    fun `GIVEN timeout error WHEN get news THEN returns error with a network exception`() {
 
         // given
         val response = MockResponse()
@@ -215,7 +219,7 @@ internal class NewsRemoteDataSourceImplTest {
     }
 
     @Test
-    fun `get sections when response successful returns success result with sections`() {
+    fun `GIVEN successful response WHEN get sections THEN returns success with repository data model`() {
 
         // given
         val response = MockResponse()
@@ -234,7 +238,7 @@ internal class NewsRemoteDataSourceImplTest {
             actual.fold(
                 onSuccess = {
                     Assert.assertEquals(22, it.size)
-                    MatcherAssert.assertThat(it[0], IsInstanceOf.instanceOf(SectionEntity::class.java))
+                    MatcherAssert.assertThat(it[0], IsInstanceOf.instanceOf(SectionData::class.java))
                 },
                 onFailure = { /* nothing expected */ }
             )
@@ -242,7 +246,7 @@ internal class NewsRemoteDataSourceImplTest {
     }
 
     @Test
-    fun `get sections when response with empty data returns success result with empty data`() {
+    fun `GIVEN response with empty data WHEN get sections THEN returns success with empty data`() {
 
         // given
         val response = MockResponse()
@@ -260,7 +264,7 @@ internal class NewsRemoteDataSourceImplTest {
             Assert.assertTrue(actual.isSuccess)
             actual.fold(
                 onSuccess = {
-                    Assert.assertEquals(it, emptyList<SectionRaw>())
+                    Assert.assertEquals(it, emptyList<SectionData>())
                 },
                 onFailure = { /* nothing expected */ }
             )
@@ -268,7 +272,7 @@ internal class NewsRemoteDataSourceImplTest {
     }
 
     @Test
-    fun `get sections when response with null data returns success result with empty data`() {
+    fun `GIVEN response with null data WHEN get sections THEN returns success with empty data`() {
 
         // given
         val response = MockResponse()
@@ -286,7 +290,7 @@ internal class NewsRemoteDataSourceImplTest {
             Assert.assertTrue(actual.isSuccess)
             actual.fold(
                 onSuccess = {
-                    Assert.assertEquals(it, emptyList<SectionRaw>())
+                    Assert.assertEquals(it, emptyList<SectionData>())
                 },
                 onFailure = { /* nothing expected */ }
             )
@@ -294,7 +298,7 @@ internal class NewsRemoteDataSourceImplTest {
     }
 
     @Test
-    fun `get sections when response with status error returns error result with a status exception`() {
+    fun `GIVEN response with status error WHEN get sections THEN returns error with a status exception`() {
 
         // given
         val response = MockResponse()
@@ -321,7 +325,7 @@ internal class NewsRemoteDataSourceImplTest {
     }
 
     @Test
-    fun `get sections when internal server error returns error result with a server exception`() {
+    fun `GIVEN internal server error WHEN get sections THEN returns error with a server exception`() {
 
         // given
         val response = MockResponse()
@@ -349,7 +353,7 @@ internal class NewsRemoteDataSourceImplTest {
     }
 
     @Test
-    fun `get sections when timeout error returns error result with a network exception`() {
+    fun `GIVEN timeout error WHEN get sections THEN returns error with a network exception`() {
 
         // given
         val response = MockResponse()

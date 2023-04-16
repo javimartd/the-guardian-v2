@@ -1,9 +1,7 @@
 package com.javimartd.theguardian.v2.data.datasources.cache
 
-import com.javimartd.theguardian.v2.data.datasources.remote.news.model.SectionRaw
-import com.javimartd.theguardian.v2.domain.model.SectionEntity
-import com.javimartd.theguardian.v2.factory.DomainFactory
-import junit.framework.TestCase
+import com.javimartd.theguardian.v2.data.repository.news.model.SectionData
+import com.javimartd.theguardian.v2.factory.RepositoryFactory
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.hamcrest.MatcherAssert
@@ -24,14 +22,14 @@ internal class NewsCacheDataSourceImplTest {
         val actual = sut.getSections()
 
         // then
-        Assert.assertEquals(actual, emptyList<SectionRaw>())
+        Assert.assertEquals(actual, emptyList<SectionData>())
     }
 
     @Test
     fun `save sections`() {
 
         // given
-        val data = DomainFactory.getSomeSections(2)
+        val data = RepositoryFactory.getSomeSections(2)
 
         runTest {
 
@@ -41,7 +39,7 @@ internal class NewsCacheDataSourceImplTest {
 
             // then
             Assert.assertEquals(2, actual.size)
-            MatcherAssert.assertThat(actual[0], IsInstanceOf.instanceOf(SectionEntity::class.java))
+            MatcherAssert.assertThat(actual[0], IsInstanceOf.instanceOf(SectionData::class.java))
         }
     }
 }

@@ -6,12 +6,11 @@ import com.javimartd.theguardian.v2.data.datasources.NewsLocalDataSource
 import com.javimartd.theguardian.v2.data.datasources.NewsRemoteDataSource
 import com.javimartd.theguardian.v2.data.repository.NewsRepositoryImpl
 import com.javimartd.theguardian.v2.domain.NewsRepository
-import com.javimartd.theguardian.v2.domain.model.NewsEntity
-import com.javimartd.theguardian.v2.domain.model.SectionEntity
-import com.javimartd.theguardian.v2.factory.DomainFactory
+import com.javimartd.theguardian.v2.domain.news.model.News
+import com.javimartd.theguardian.v2.domain.news.model.Section
+import com.javimartd.theguardian.v2.factory.RepositoryFactory
 import com.javimartd.theguardian.v2.utils.TestDefaultDispatcher
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.runTest
 import org.hamcrest.MatcherAssert
 import org.hamcrest.core.IsInstanceOf
@@ -45,11 +44,11 @@ internal class NewsRepositoryImplTest {
     }
 
     @Test
-    fun `get news when response successful returns success result with news`()
+    fun `GIVEN successful remote response WHEN get news THEN returns success with domain data model`()
     = runTest {
 
         // given
-        val data = DomainFactory.getSomeNews(2)
+        val data = RepositoryFactory.getSomeNews(2)
 
         Mockito
             .`when`(remoteDataSource.getNews("",""))
@@ -63,18 +62,18 @@ internal class NewsRepositoryImplTest {
         actual.fold(
             onSuccess = {
                 Assert.assertEquals(2, it.size)
-                MatcherAssert.assertThat(it[0], IsInstanceOf.instanceOf(NewsEntity::class.java))
+                MatcherAssert.assertThat(it[0], IsInstanceOf.instanceOf(News::class.java))
             },
             onFailure = { /* nothing expected */ }
         )
     }
 
     @Test
-    fun `get remote sections when response successful returns success result with sections`()
+    fun `GIVEN empty cache and successful remote response WHEN get remote sections THEN returns success with domain data model`()
     = runTest {
 
         // given
-        val remoteData = DomainFactory.getSomeSections(5)
+        val remoteData = RepositoryFactory.getSomeSections(5)
 
         Mockito
             .`when`(cacheDataSource.getSections())
@@ -96,18 +95,18 @@ internal class NewsRepositoryImplTest {
                     Mockito.times(1)
                 ).saveSections(remoteData)
                 Assert.assertEquals(5, it.size)
-                MatcherAssert.assertThat(it[0], IsInstanceOf.instanceOf(SectionEntity::class.java))
+                MatcherAssert.assertThat(it[0], IsInstanceOf.instanceOf(Section::class.java))
             },
             onFailure = { /* nothing expected */ }
         )
     }
 
     @Test
-    fun `get cached sections returns success result with sections`()
+    fun `GIVEN cache data WHEN get sections THEN returns success with domain data model`()
     = runTest {
 
         // given
-        val localData = DomainFactory.getSomeSections(10)
+        val localData = RepositoryFactory.getSomeSections(10)
 
         Mockito
             .`when`(cacheDataSource.getSections())
@@ -121,14 +120,14 @@ internal class NewsRepositoryImplTest {
         actual.fold(
             onSuccess = {
                 Assert.assertEquals(10, it.size)
-                MatcherAssert.assertThat(it[0], IsInstanceOf.instanceOf(SectionEntity::class.java))
+                MatcherAssert.assertThat(it[0], IsInstanceOf.instanceOf(Section::class.java))
             },
             onFailure = { /* nothing expected */ }
         )
     }
 
     @Test
-    fun `get remote sections when server error exception returns error result`()
+    fun `GIVEN empty cache and remote error response WHEN get sections THEN returns error with a server exception`()
     = runTest {
 
         // given
