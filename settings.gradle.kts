@@ -13,4 +13,4 @@ dependencyResolutionManagement {
     }
 }
 rootProject.name = "the-guardian"
-include ':app'
+include(":app")
