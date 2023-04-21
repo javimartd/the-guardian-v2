@@ -1,4 +1,3 @@
-import android.annotation.SuppressLint
 import java.util.Properties
 import java.io.FileInputStream
 
@@ -9,14 +8,14 @@ plugins {
     alias(libs.plugins.hilt.android)
 }
 
-/*fun headCommitCount() {
+/*fun headCommitCount(): Int {
     val cmd = "git rev-list HEAD --count"
-    return cmd.execute.text.toInteger()
+    return cmd.runCommand().toInt()
 }
 
-fun headCommitSha() {
+fun headCommitSha(): String {
     val sha = "git rev-parse HEAD --short"
-    return sha.execute().text.trim().take(8)
+    return sha.runCommand().trim().take(8)
 }*/
 
 val versionMajor = 1
@@ -169,21 +168,10 @@ dependencies {
     implementation(libs.coil)
 
     // android tests
-    androidTestImplementation(libs.junit)
-    androidTestImplementation(libs.compose.ui.test.junit4)
+    androidTestImplementation(libs.bundles.android.test)
     debugImplementation(libs.compose.ui.test.manifest)
-    androidTestImplementation(libs.turbine)
-    androidTestImplementation(libs.coroutines.test)
-    androidTestImplementation(libs.runner)
-    androidTestImplementation(libs.core.testing)
 
     // unit tests
-    testImplementation(libs.coroutines.test)
-    testImplementation(libs.mockito)
-    testImplementation(libs.core.testing)
-    testImplementation(libs.mockwebserver)
-    testImplementation(libs.truth)
-    testImplementation(libs.mockk)
-    testImplementation(libs.tngtech.archunit)
+    testImplementation(libs.bundles.unit.test)
 }
 

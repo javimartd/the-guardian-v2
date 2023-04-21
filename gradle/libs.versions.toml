@@ -87,21 +87,24 @@ android-library             = { id = "com.android.library", version.ref = "andro
 jetbrains-kotlin-android    = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 hilt-android                = { id = "com.google.dagger.hilt.android", version.ref = "hilt-android" }
 kotlin-kapt                 = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
-#kotlin-parcelize            = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
-#kotlin-serialization        = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
 
 [bundles]
 
-#common-test = [
-#    "test-junit",
-#    "test-kotlin",
-#    "test-kotlin-coroutines",
-#    "test-mockk",
-#    "test-turbine"
-#]
-#common-android-test = [
-#    "test-android-compose",
-#    "test-android-hilt",
-#    "test-android-runner"
-#]
+android-test = [
+    "junit",
+    "compose-ui-test-junit4",
+    "turbine",
+    "coroutines-test",
+    "runner",
+    "core-testing"
+]
+unit-test = [
+    "coroutines-test",
+    "mockito",
+    "core-testing",
+    "mockwebserver",
+    "truth",
+    "mockk",
+    "tngtech-archunit"
+]
 
