@@ -31,8 +31,6 @@ This app allows you to read the latest news in the world thanks to the API provi
 [14]: https://truth.dev/
 [15]: https://github.com/cashapp/turbine
 
-If you would like to use [RxJava][8] take a look at this other [version of the app][10] built with [Clean Architecture][9]
-
 ### Contributing
 
 Feel free to open a issue or submit a pull request for any bugs/improvements.
