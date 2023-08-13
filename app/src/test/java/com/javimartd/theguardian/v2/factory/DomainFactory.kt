@@ -7,19 +7,19 @@ import com.javimartd.theguardian.v2.utils.randomString
 object DomainFactory {
 
     fun getSomeNews(count: Int): List<News> {
-        val entities = mutableListOf<News>()
+        val domain = mutableListOf<News>()
         repeat(count) {
-            entities.add(makeNews())
+            domain.add(makeNews())
         }
-        return entities
+        return domain
     }
 
     fun getSomeSections(count: Int): List<Section> {
-        val entities = mutableListOf<Section>()
+        val domain = mutableListOf<Section>()
         repeat(count) {
-            entities.add(makeSection())
+            domain.add(makeSection())
         }
-        return entities
+        return domain
     }
 
     private fun makeNews(): News {

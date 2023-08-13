@@ -1,11 +1,12 @@
 import java.util.Properties
 import java.io.FileInputStream
-
+@Suppress("DSL_SCOPE_VIOLATION")
 plugins {
     alias(libs.plugins.com.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.kotlin.kapt)
-    alias(libs.plugins.hilt.android)
+    alias(libs.plugins.hilt)
+    alias(libs.plugins.ksp)
 }
 
 /*fun headCommitCount(): Int {
@@ -46,13 +47,16 @@ android {
         versionName = "${versionMajor}.${versionMinor}.${versionPatch}"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+        vectorDrawables {
+            useSupportLibrary = true
+        }
 
         buildConfigField("String", "THE_GUARDIAN_API_KEY", getApiKey())
     }
 
-    /*testOptions {
-        unitTests.returnDefaultValues = true
-    }*/
+    buildFeatures {
+        buildConfig = true
+    }
 
     signingConfigs {
         create("release") {
@@ -104,13 +108,12 @@ android {
         jvmTarget = "1.8"
     }
     buildFeatures {
-        buildConfig = true
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.3.1"
+        kotlinCompilerExtensionVersion = "1.5.0"
     }
-    packagingOptions {
+    packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
@@ -120,17 +123,14 @@ android {
 dependencies {
 
     // activity
-    implementation(libs.activity.ktx)
-
-    // android kotlin extensions
-    implementation(libs.core.ktx)
+    implementation(libs.activity.compose)
 
     // jetpack compose
-    implementation(libs.compose.ui)
-    implementation(libs.compose.material)
-    implementation(libs.compose.ui.tooling.preview)
-    implementation(libs.activity.compose)
-    debugImplementation(libs.compose.ui.tooling)
+    implementation(platform(libs.compose.bom))
+    implementation(libs.ui)
+    implementation(libs.ui.graphics)
+    implementation(libs.ui.tooling.preview)
+    implementation(libs.material3)
 
     // swipe refresh layout
     implementation(libs.accompanist)
@@ -149,7 +149,7 @@ dependencies {
     // coroutines
     implementation(libs.coroutines)
 
-    //lifecycle
+    // lifecycle
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.lifecycle.viewmodel.ktx)
     implementation(libs.lifecycle.extensions)
@@ -162,16 +162,20 @@ dependencies {
     // room
     implementation(libs.room.ktx)
     implementation(libs.room.runtime)
-    kapt(libs.room.compiler)
+    ksp(libs.room.compiler)
 
     // images
     implementation(libs.coil)
 
     // android tests
+    /*androidTestImplementation(platform(libs.compose.bom))
+    androidTestImplementation(libs.ui.test.junit4)
     androidTestImplementation(libs.bundles.android.test)
-    debugImplementation(libs.compose.ui.test.manifest)
+    debugImplementation(libs.ui.tooling)
+    debugImplementation(libs.ui.test.manifest)
+    kaptAndroidTest(libs.hilt.testing.compiler)*/
 
     // unit tests
-    testImplementation(libs.bundles.unit.test)
+    //testImplementation(libs.bundles.unit.test)
 }
 

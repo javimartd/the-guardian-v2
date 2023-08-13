@@ -6,6 +6,7 @@ import com.javimartd.theguardian.v2.data.repository.news.mapper.toData
 import com.javimartd.theguardian.v2.data.repository.news.mapper.toDomain
 import com.javimartd.theguardian.v2.domain.news.model.News
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.map
 import javax.inject.Inject
 

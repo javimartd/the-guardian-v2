@@ -7,11 +7,11 @@ import com.javimartd.theguardian.v2.utils.randomString
 object RemoteDataSourceFactory {
 
     fun getSomeNews(count: Int): List<NewsRaw> {
-        val data = mutableListOf<NewsRaw>()
+        val raw = mutableListOf<NewsRaw>()
         repeat(count) {
-            data.add(makeNews())
+            raw.add(makeNews())
         }
-        return data
+        return raw
     }
 
     private fun makeNews(): NewsRaw {

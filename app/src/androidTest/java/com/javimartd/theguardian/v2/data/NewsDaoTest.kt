@@ -26,7 +26,7 @@ import org.junit.runner.RunWith
 @SmallTest
 class NewsDaoTest {
 
-    val ctx = InstrumentationRegistry.getInstrumentation().context
+    private val ctx = InstrumentationRegistry.getInstrumentation().context
 
     /*@get: Rule
     val dispatcherRule = TestDispatcherRule()*/

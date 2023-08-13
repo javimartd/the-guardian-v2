@@ -11,9 +11,11 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
-import androidx.compose.material.Card
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CardElevation
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -28,14 +30,15 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.javimartd.theguardian.v2.R
 
 @Composable
 fun NewsItem(content: @Composable () -> Unit) {
     Card(
-        backgroundColor = Color.White,
-        elevation = dimensionResource(id = R.dimen.cardView_elevation),
+        modifier = Modifier.background(color = Color.White),
+        elevation = CardDefaults.cardElevation(defaultElevation = 10.dp),
         shape = RoundedCornerShape(dimensionResource(id = R.dimen.medium_margin))
     ) {
         content.invoke()
@@ -67,7 +70,7 @@ fun Title(title: String) {
             top = dimensionResource(id = R.dimen.medium_margin)
         ),
         overflow = TextOverflow.Ellipsis,
-        style = MaterialTheme.typography.h1,
+        style = MaterialTheme.typography.bodyLarge,
         text = title
     )
 }
@@ -87,13 +90,13 @@ fun Section(
                 .clip(RoundedCornerShape(dimensionResource(id = R.dimen.small_margin)))
                 .background(color = colorResource(id = R.color.blue_500))
                 .padding(horizontal = dimensionResource(id = R.dimen.small_margin)),
-            style = MaterialTheme.typography.body1
+            style = MaterialTheme.typography.bodySmall
                 .copy(color = Color.White),
             text = name
         )
         Text(
             text = date,
-            style = MaterialTheme.typography.body1,
+            style = MaterialTheme.typography.bodySmall,
         )
     }
 }
@@ -106,7 +109,7 @@ fun Body(body: String) {
             .fillMaxWidth()
             .padding(horizontal = dimensionResource(id = R.dimen.medium_margin)),
         overflow = TextOverflow.Ellipsis,
-        style = MaterialTheme.typography.body1,
+        style = MaterialTheme.typography.bodySmall,
         text = body,
         textAlign = TextAlign.Justify
     )
@@ -124,7 +127,7 @@ fun ReadMore(webUrl: String) {
                 end = dimensionResource(id = R.dimen.medium_margin)
             ),
         onClick = { context.startActivity(intent) },
-        style = MaterialTheme.typography.body1
+        style = MaterialTheme.typography.bodySmall
             .copy(
                 color = colorResource(id = R.color.blue_500),
                 textAlign = TextAlign.End

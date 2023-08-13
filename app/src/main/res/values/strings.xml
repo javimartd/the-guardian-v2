@@ -15,6 +15,9 @@
     <!--news screen-->
     <string name="news_screen_settings_icon_content_description">Settings button</string>
     <string name="news_screen_item_button">READ MORE</string>
+    <string name="news_screen_no_news_message">Attention all survivors of the zombie epidemic!
+        Humanity has come to an end. But hey, at least you\'ll never have to worry about paying
+        taxes or standing in line at the supermarket again, right? Good luck out there! 🧟</string>
 
     <!-- settings screen -->
     <string name="settings_screen_toolbar">Settings</string>

@@ -12,7 +12,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class DatabaseModule {
+class DataModule {
 
     companion object {
         private const val DATA_BASE = "the_guardian_db"

@@ -7,19 +7,19 @@ import com.javimartd.theguardian.v2.utils.randomString
 object RepositoryFactory {
 
     fun getSomeNews(count: Int): List<NewsData> {
-        val entities = mutableListOf<NewsData>()
+        val data = mutableListOf<NewsData>()
         repeat(count) {
-            entities.add(makeNews())
+            data.add(makeNews())
         }
-        return entities
+        return data
     }
 
     fun getSomeSections(count: Int): List<SectionData> {
-        val entities = mutableListOf<SectionData>()
+        val data = mutableListOf<SectionData>()
         repeat(count) {
-            entities.add(makeSection())
+            data.add(makeSection())
         }
-        return entities
+        return data
     }
 
     private fun makeNews(): NewsData {
