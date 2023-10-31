@@ -22,7 +22,7 @@ internal class GetNewsUseCaseTest {
 
     @Before
     fun setup() {
-        MockitoAnnotations.openMocks(this)
+        MockitoAnnotations.initMocks(this)
         sut = GetNewsUseCase(newsRepository)
     }
 

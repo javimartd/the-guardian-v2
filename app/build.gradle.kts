@@ -37,7 +37,7 @@ android {
 
     defaultConfig {
         applicationId = "com.javimartd.theguardian.v2"
-        minSdk = 23
+        minSdk = 26
         targetSdk = 33
         versionCode = 1
         versionName = "1.0.0"
@@ -176,6 +176,6 @@ dependencies {
     kaptAndroidTest(libs.hilt.testing.compiler)*/
 
     // unit tests
-    //testImplementation(libs.bundles.unit.test)
+    testImplementation(libs.bundles.unit.test)
 }
 

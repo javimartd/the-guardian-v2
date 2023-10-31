@@ -24,7 +24,7 @@ internal class GetSectionsUseCaseTest {
 
     @Before
     fun setup() {
-        MockitoAnnotations.openMocks(this)
+        MockitoAnnotations.initMocks(this)
         sut = GetSectionsUseCase(newsRepository)
     }
 
