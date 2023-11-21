@@ -12,7 +12,9 @@ import com.javimartd.theguardian.v2.features.news.model.NewsItemUiState
 @Composable
 fun NewsItemLandscape(uiState: NewsItemUiState) {
     NewsItem {
-        Column(verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.medium_margin))) {
+        Column(
+            verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.medium_margin))
+        ) {
             Row {
                 Thumbnail(
                     modifier = Modifier.weight(0.5f),

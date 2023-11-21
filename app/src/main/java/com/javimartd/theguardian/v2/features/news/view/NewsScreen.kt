@@ -35,6 +35,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.colorResource
@@ -63,7 +64,7 @@ fun NewsScreen(
     viewModel: NewsViewModel
 ) {
 
-    val snackbarHostState = remember { SnackbarHostState() }
+    val snackBarHostState = remember { SnackbarHostState() }
 
     val uiState = viewModel.uiState
 
@@ -80,10 +81,15 @@ fun NewsScreen(
     }
 
     Scaffold(
-        snackbarHost = { TheGuardianSnackbarHost(hostState = snackbarHostState) },
+        snackbarHost = { TheGuardianSnackbarHost(hostState = snackBarHostState) },
         topBar = {
             TopAppBar(
-                title = { Text(stringResource(R.string.app_name)) },
+                modifier = Modifier.background(color = Color.Blue),
+                title = {
+                    Text(
+                        stringResource(R.string.app_name)
+                    )
+                },
                 actions = {
                     IconButton(
                         onClick = { viewModel.onEvent(NewsUiContract.NewsUiEvent.NavigateToSettings) }
@@ -91,7 +97,7 @@ fun NewsScreen(
                         Icon(
                             contentDescription = stringResource(id = R.string.news_screen_settings_icon_content_description),
                             imageVector = Icons.Default.Settings,
-                            tint = colorResource(id = R.color.white)
+                            tint = colorResource(id = R.color.black)
                         )
                     }
                 }
@@ -111,7 +117,7 @@ fun NewsScreen(
                 news = uiState.news
             )
         }
-        ErrorContent(uiState, snackbarHostState)
+        ErrorContent(uiState, snackBarHostState)
         if (uiState.isRefreshing) {
             LoadingDialog { /* nothing to do */ }
         }
@@ -157,6 +163,7 @@ fun DropdownContent(
         DropdownMenu(
             expanded = expanded,
             modifier = Modifier
+                .background(color = Color.Red)
                 .height(dimensionResource(id = R.dimen.max_sections_dropdown_height))
                 .fillMaxWidth(),
             onDismissRequest = { expanded = false }
@@ -184,9 +191,7 @@ private fun NewsContent(
     val configuration = LocalConfiguration.current
 
     LazyColumn(
-        modifier = modifier
-            .background(color = colorResource(id = R.color.gray_200))
-            .fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         contentPadding = PaddingValues(dimensionResource(id = R.dimen.medium_margin)),
         verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.medium_margin)),
     ) {
@@ -221,19 +226,19 @@ private fun NoNewsMessage() {
 @Composable
 private fun ErrorContent(
     uiState: NewsUiState,
-    snackbarHostState: SnackbarHostState
+    snackBarHostState: SnackbarHostState
 ) {
     uiState.errorMessage?.let {
         val errorMessage = stringResource(id = it)
         val actionLabel = stringResource(id = R.string.snackbar_button)
         LaunchedEffect(uiState.errorMessage) {
-            val result = snackbarHostState.showSnackbar(
+            val result = snackBarHostState.showSnackbar(
                 message = errorMessage,
                 actionLabel = actionLabel,
                 duration = SnackbarDuration.Short
             )
             if (result == SnackbarResult.ActionPerformed) {
-                snackbarHostState.currentSnackbarData?.dismiss()
+                snackBarHostState.currentSnackbarData?.dismiss()
             }
         }
     }

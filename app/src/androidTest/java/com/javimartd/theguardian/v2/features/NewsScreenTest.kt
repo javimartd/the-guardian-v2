@@ -10,14 +10,11 @@ import com.javimartd.theguardian.v2.features.news.model.NewsUiState
 import com.javimartd.theguardian.v2.features.news.model.NewsViewModel
 import com.javimartd.theguardian.v2.ui.components.TAG_NO_NEWS_MESSAGE
 import dagger.hilt.android.testing.HiltAndroidTest
-import io.mockk.every
-import io.mockk.mockk
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
-import org.mockito.MockitoAnnotations
 
 @HiltAndroidTest
 class NewsScreenTest {
@@ -30,7 +27,8 @@ class NewsScreenTest {
     @get:Rule(order = 1)
     val composeTestRule = createComposeRule()
 
-    //@Mock lateinit var viewModel: NewsViewModel
+    @Mock
+    lateinit var viewModel: NewsViewModel
 
     @Before
     fun setup() {
@@ -39,16 +37,16 @@ class NewsScreenTest {
 
     @Test
     fun display_no_news_message() {
-        val viewModel = mockk<NewsViewModel>(relaxed = true)
+        /*val viewModel = mockk<NewsViewModel>(relaxed = true)
         every { viewModel.uiState } returns NewsUiState(
             isRefreshing = false,
             sectionSelected = "",
             sections = emptyList(),
             news = emptyList(),
             errorMessage = null
-        )
+        )*/
 
-       /*Mockito
+       Mockito
             .`when`(viewModel.uiState)
             .thenReturn(
                 NewsUiState(
@@ -58,7 +56,7 @@ class NewsScreenTest {
                     news = emptyList(),
                     errorMessage = null
                 )
-            )*/
+            )
 
         composeTestRule
             .onNodeWithTag(TAG_NO_NEWS_MESSAGE)

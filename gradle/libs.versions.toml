@@ -25,6 +25,7 @@ room                        = "2.5.2"
 # tests
 #androidx-test-ui            = "1.4.3"
 androidx-test-core          = "2.2.0"
+androidx-test-ext-junit     = "1.1.5"
 archunit                    = "1.0.1"
 core-testing                = "2.1.0"
 coroutines-test             = "1.6.4"
@@ -45,6 +46,7 @@ accompanist                 = { module = "com.google.accompanist:accompanist-swi
 activity-compose            = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
 coil                        = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 compose-bom                 = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
+
 coroutines                  = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 navigation                  = { module = "androidx.navigation:navigation-compose", version.ref = "navigation" }
 hilt-android                = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
@@ -61,15 +63,14 @@ converter-gson              = { module = "com.squareup.retrofit2:converter-gson"
 room-ktx                    = { module = "androidx.room:room-ktx", version.ref = "room" }
 room-runtime                = { module = "androidx.room:room-runtime", version.ref = "room" }
 room-compiler               = { module = "androidx.room:room-compiler", version.ref = "room" }
-ui                          = { group = "androidx.compose.ui", name = "ui" }
-ui-graphics                 = { group = "androidx.compose.ui", name = "ui-graphics" }
-ui-tooling                  = { group = "androidx.compose.ui", name = "ui-tooling" }
-ui-tooling-preview          = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+
+ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
+ui = { group = "androidx.compose.ui", name = "ui" }
+ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 
 # tests
 core-testing                = { module = "androidx.arch.core:core-testing", version.ref = "androidx-test-core" }
-#compose-ui-test-junit4      = { module = "androidx.compose.ui:ui-test-junit4", version.ref = "androidx-test-ui" }
-#compose-ui-test-manifest    = { module = "androidx.compose.ui:ui-test-manifest", version.ref = "androidx-test-ui" }
 coroutines-test             = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "coroutines-test" }
 hilt-testing                = { module = "com.google.dagger:hilt-android-testing", version.ref = "hilt-testing" }
 hilt-testing-compiler       = { module = "com.google.dagger:hilt-android-compiler", version.ref = "hilt-testing" }
@@ -83,8 +84,10 @@ runner                      = { module = "androidx.test:runner", version.ref = "
 tngtech-archunit            = { module = "com.tngtech.archunit:archunit", version.ref = "archunit" }
 turbine                     = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 truth                       = { module = "com.google.truth:truth", version.ref = "truth" }
+
 ui-test-manifest            = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 ui-test-junit4              = { group = "androidx.compose.ui", name = "ui-test-junit4" }
+androidx-test-ext-junit     = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
 
 [plugins]
 
@@ -97,16 +100,17 @@ ksp                         = { id = "com.google.devtools.ksp", version.ref = "k
 [bundles]
 
 #android-test = [
-#    "compose-ui-test-junit4",
-#    "core-testing",
-#    "coroutines-test",
-#    "hilt-testing",
-#    "junit",
-#    "mockk",
-#    "mockito-android",
-#    "runner",
-#    "turbine"
+##    "ui-test-junit4",
+##    "core-testing",
+##    "coroutines-test",
+##    "hilt-testing",
+##    "junit",
+##    "mockk",
+##    "mockito-android",
+##    "runner",
+##    "turbine"
 #]
+
 unit-test = [
     "core-testing",
     "coroutines-test",

@@ -116,6 +116,8 @@ android {
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
+            excludes += "/META-INF/LICENSE-notice.md"
+            excludes += "META-INF/LICENSE.md"
         }
     }
 }
@@ -157,6 +159,7 @@ dependencies {
     // hilt
     implementation(libs.hilt.android)
     implementation(libs.hilt.navigation.compose)
+    implementation(libs.runner)
     kapt(libs.hilt.compiler)
 
     // room
@@ -168,14 +171,16 @@ dependencies {
     implementation(libs.coil)
 
     // android tests
-    /*androidTestImplementation(platform(libs.compose.bom))
+    androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.ui.test.junit4)
-    androidTestImplementation(libs.bundles.android.test)
+    androidTestImplementation(platform(libs.compose.bom))
+    androidTestImplementation(libs.hilt.testing)
+    androidTestImplementation(libs.mockito.android)
+    androidTestImplementation(libs.turbine)
     debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
-    kaptAndroidTest(libs.hilt.testing.compiler)*/
 
     // unit tests
-    testImplementation(libs.bundles.unit.test)
+    //testImplementation(libs.bundles.unit.test)
 }
 
