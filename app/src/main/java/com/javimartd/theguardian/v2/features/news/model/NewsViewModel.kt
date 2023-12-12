@@ -13,9 +13,7 @@ import com.javimartd.theguardian.v2.features.news.NewsUiContract
 import com.javimartd.theguardian.v2.features.news.mapper.toPresentation
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.async
-import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -25,11 +23,8 @@ class NewsViewModel @Inject constructor(
     private val getSectionsUseCase: GetSectionsUseCase
 ): ViewModel() {
 
-    var uiState by mutableStateOf(NewsUiState())
+    var uiState by mutableStateOf(NewsUiContract.NewsUiState())
         private set
-
-    private val _effect = Channel<NewsUiContract.NewsUiEffect>(Channel.BUFFERED)
-    val effect = _effect.receiveAsFlow()
 
     init {
         getAll()
@@ -37,12 +32,8 @@ class NewsViewModel @Inject constructor(
 
     fun onEvent(event: NewsUiContract.NewsUiEvent) {
         when (event) {
-            is NewsUiContract.NewsUiEvent.GetNews -> getNews(event.sectionName)
-            is NewsUiContract.NewsUiEvent.ReadNews -> {}
-            is NewsUiContract.NewsUiEvent.NavigateToSettings -> {
-                viewModelScope.launch {
-                    _effect.send(NewsUiContract.NewsUiEffect.NavigateToSettings)
-                }
+            is NewsUiContract.NewsUiEvent.GetNews -> {
+                getNews(event.sectionName)
             }
         }
     }
@@ -55,28 +46,22 @@ class NewsViewModel @Inject constructor(
                 val deferredSections = async { getSectionsUseCase.invoke() }
                 val newsResponse = deferredNews.await()
                 val sectionsResponse = deferredSections.await()
-                newsResponse.fold(
-                    onSuccess = { data ->
+                newsResponse
+                    .onSuccess { data ->
                         uiState = uiState.copy(
                             isRefreshing = false,
                             news = data.map { it.toPresentation() }
                         )
-                    },
-                    onFailure = {
-                        handleError(it)
                     }
-                )
-                sectionsResponse.fold(
-                    onSuccess = { data ->
+                    .onFailure { handleError(it) }
+                sectionsResponse
+                    .onSuccess { data ->
                         uiState = uiState.copy(
                             isRefreshing = false,
                             sections = data.map { it.webTitle }
                         )
-                    },
-                    onFailure = {
-                        handleError(it)
                     }
-                )
+                    .onFailure { handleError(it) }
             }
         }
     }

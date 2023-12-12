@@ -1,10 +1,13 @@
 package com.javimartd.theguardian.v2.features.news.components
 
 import android.content.res.Configuration.UI_MODE_NIGHT_NO
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.javimartd.theguardian.v2.R
@@ -14,7 +17,10 @@ import com.javimartd.theguardian.v2.ui.theme.TheGuardianTheme
 @Composable
 fun NewsItemPortrait(uiState: NewsItemUiState) {
    NewsItem {
-       Column(verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.small_margin))) {
+       Column(
+           modifier = Modifier.background(Color.White),
+           verticalArrangement = Arrangement.spacedBy(dimensionResource(id = R.dimen.small_margin))
+       ) {
            Thumbnail(thumbnail = uiState.thumbnail)
            Title(title = uiState.title)
            Section(
@@ -33,7 +39,7 @@ fun NewsItemPortrait(uiState: NewsItemUiState) {
 )
 @Composable
 fun NewsItemPortraitPreview() {
-    TheGuardianTheme() {
+    TheGuardianTheme {
         Surface {
             NewsItemPortrait(
                 NewsItemUiState(

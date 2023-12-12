@@ -47,15 +47,12 @@ import com.javimartd.theguardian.v2.R
 import com.javimartd.theguardian.v2.features.news.NewsUiContract
 import com.javimartd.theguardian.v2.features.news.components.NewsItemLandscape
 import com.javimartd.theguardian.v2.features.news.components.NewsItemPortrait
+import com.javimartd.theguardian.v2.features.news.components.Tags
 import com.javimartd.theguardian.v2.features.news.model.NewsItemUiState
-import com.javimartd.theguardian.v2.features.news.model.NewsUiState
 import com.javimartd.theguardian.v2.features.news.model.NewsViewModel
 import com.javimartd.theguardian.v2.ui.components.LoadingDialog
-import com.javimartd.theguardian.v2.ui.components.TAG_NO_NEWS_MESSAGE
 import com.javimartd.theguardian.v2.ui.components.TheGuardianSnackbarHost
 import com.javimartd.theguardian.v2.ui.navigation.TheGuardianDestinations
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.onEach
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -68,31 +65,20 @@ fun NewsScreen(
 
     val uiState = viewModel.uiState
 
-    LaunchedEffect(Unit) {
-        viewModel.effect
-            .onEach {
-                when (it) {
-                    NewsUiContract.NewsUiEffect.NavigateToSettings -> {
-                        navController.navigate(TheGuardianDestinations.SETTINGS_ROUTE)
-                    }
-                }
-            }
-            .collect()
-    }
-
     Scaffold(
         snackbarHost = { TheGuardianSnackbarHost(hostState = snackBarHostState) },
         topBar = {
             TopAppBar(
-                modifier = Modifier.background(color = Color.Blue),
+                modifier = Modifier
+                    .background(color = Color.Blue)
+                    .testTag(Tags.TAG_NEWS_SCREEN_TOOLBAR),
                 title = {
-                    Text(
-                        stringResource(R.string.app_name)
-                    )
+                    Text(stringResource(R.string.app_name))
                 },
                 actions = {
                     IconButton(
-                        onClick = { viewModel.onEvent(NewsUiContract.NewsUiEvent.NavigateToSettings) }
+                        modifier = Modifier.testTag(Tags.TAG_NEWS_SCREEN_SETTINGS),
+                        onClick = { navController.navigate(TheGuardianDestinations.SETTINGS_ROUTE) }
                     ) {
                         Icon(
                             contentDescription = stringResource(id = R.string.news_screen_settings_icon_content_description),
@@ -103,7 +89,6 @@ fun NewsScreen(
                 }
             )
         },
-
     ) { contentPadding ->
         Column {
             DropdownContent(
@@ -117,11 +102,11 @@ fun NewsScreen(
                 news = uiState.news
             )
         }
-        ErrorContent(uiState, snackBarHostState)
+        ErrorMessage(uiState, snackBarHostState)
         if (uiState.isRefreshing) {
             LoadingDialog { /* nothing to do */ }
         }
-        if (uiState.news.isEmpty()) {
+        if (uiState.news.isEmpty() && !uiState.isRefreshing) {
             NoNewsMessage()
         }
     }
@@ -135,7 +120,7 @@ fun DropdownContent(
 ) {
 
     var expanded by remember { mutableStateOf(false) }
-    var selectedText by remember { mutableStateOf(defaultValue) }
+    var selectedText by remember { mutableStateOf("Hi") }
 
     val icon = if (expanded) {
         Icons.Filled.KeyboardArrowUp
@@ -143,13 +128,16 @@ fun DropdownContent(
         Icons.Filled.KeyboardArrowDown
     }
 
-    Column(modifier = Modifier.padding(horizontal = dimensionResource(id = R.dimen.medium_margin))) {
+    Column(
+        modifier = Modifier.padding(horizontal = dimensionResource(id = R.dimen.medium_margin))
+    ) {
         Row(
             horizontalArrangement = Arrangement.SpaceBetween,
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Text(
+                color = Color.Black,
                 maxLines = 1,
                 text = selectedText,
             )
@@ -208,15 +196,15 @@ private fun NewsContent(
 }
 
 @Composable
-private fun NoNewsMessage() {
+fun NoNewsMessage() {
     Column(
         modifier = Modifier
             .fillMaxSize()
-            .padding(dimensionResource(id = R.dimen.medium_margin))
-            .testTag(TAG_NO_NEWS_MESSAGE),
+            .padding(dimensionResource(id = R.dimen.medium_margin)),
         verticalArrangement = Arrangement.Center,
     ) {
         Text(
+            modifier = Modifier.testTag(Tags.TAG_NEWS_SCREEN_NO_NEWS_MESSAGE),
             text = stringResource(id = R.string.news_screen_no_news_message),
             fontWeight = FontWeight.Bold
         )
@@ -224,8 +212,8 @@ private fun NoNewsMessage() {
 }
 
 @Composable
-private fun ErrorContent(
-    uiState: NewsUiState,
+fun ErrorMessage(
+    uiState: NewsUiContract.NewsUiState,
     snackBarHostState: SnackbarHostState
 ) {
     uiState.errorMessage?.let {
