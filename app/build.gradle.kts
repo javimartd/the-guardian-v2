@@ -33,12 +33,12 @@ fun getApiKey(): String {
 
 android {
     namespace = "com.javimartd.theguardian.v2"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.javimartd.theguardian.v2"
         minSdk = 26
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0.0"
         versionCode = versionMajor * 1000 +
