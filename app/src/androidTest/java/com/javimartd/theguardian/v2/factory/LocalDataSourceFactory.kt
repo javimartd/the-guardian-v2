@@ -1,6 +1,7 @@
-package com.javimartd.theguardian.v2
+package com.javimartd.theguardian.v2.factory
 
 import com.javimartd.theguardian.v2.data.datasources.local.news.db.NewsEntity
+import com.javimartd.theguardian.v2.utils.randomString
 
 object LocalDataSourceFactory {
 

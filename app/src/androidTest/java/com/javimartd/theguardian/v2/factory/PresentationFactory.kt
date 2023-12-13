@@ -1,7 +1,7 @@
 package com.javimartd.theguardian.v2.factory
 
 import com.javimartd.theguardian.v2.features.news.model.NewsItemUiState
-import com.javimartd.theguardian.v2.randomString
+import com.javimartd.theguardian.v2.utils.randomString
 
 object PresentationFactory {
 

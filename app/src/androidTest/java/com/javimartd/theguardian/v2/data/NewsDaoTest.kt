@@ -7,11 +7,11 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import androidx.test.platform.app.InstrumentationRegistry
 import app.cash.turbine.test
-import com.javimartd.theguardian.v2.LocalDataSourceFactory
+import com.javimartd.theguardian.v2.factory.LocalDataSourceFactory
 import com.javimartd.theguardian.v2.data.datasources.local.AppDatabase
 import com.javimartd.theguardian.v2.data.datasources.local.news.NewsDao
 import com.javimartd.theguardian.v2.data.datasources.local.news.db.NewsEntity
-import com.javimartd.theguardian.v2.randomString
+import com.javimartd.theguardian.v2.utils.randomString
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
 import org.junit.After

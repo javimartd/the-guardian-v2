@@ -1,4 +1,4 @@
-package com.javimartd.theguardian.v2
+package com.javimartd.theguardian.v2.utils
 
 import java.util.*
 import java.util.concurrent.ThreadLocalRandom

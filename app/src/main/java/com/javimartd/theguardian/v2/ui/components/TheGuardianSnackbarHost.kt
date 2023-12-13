@@ -8,16 +8,19 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.testTag
 
 @Composable
-fun TheGuardianSnackbarHost(
+fun TheGuardianSnackBarHost(
     hostState: SnackbarHostState,
     modifier: Modifier = Modifier,
-    snackbar: @Composable (SnackbarData) -> Unit = { Snackbar(it) }
+    snackBar: @Composable (SnackbarData) -> Unit = { Snackbar(it) }
 ) {
     SnackbarHost(
         hostState = hostState,
-        modifier = modifier.wrapContentWidth(align = Alignment.Start),
-        snackbar = snackbar
+        modifier = modifier
+            .wrapContentWidth(align = Alignment.Start)
+            .testTag(Tags.TAG_SNACK_BAR),
+        snackbar = snackBar
     )
 }

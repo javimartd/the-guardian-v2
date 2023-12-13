@@ -1,4 +1,4 @@
-package com.javimartd.theguardian.v2
+package com.javimartd.theguardian.v2.utils
 
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi

@@ -22,6 +22,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
@@ -51,7 +52,7 @@ import com.javimartd.theguardian.v2.features.news.components.Tags
 import com.javimartd.theguardian.v2.features.news.model.NewsItemUiState
 import com.javimartd.theguardian.v2.features.news.model.NewsViewModel
 import com.javimartd.theguardian.v2.ui.components.LoadingDialog
-import com.javimartd.theguardian.v2.ui.components.TheGuardianSnackbarHost
+import com.javimartd.theguardian.v2.ui.components.TheGuardianSnackBarHost
 import com.javimartd.theguardian.v2.ui.navigation.TheGuardianDestinations
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -66,7 +67,7 @@ fun NewsScreen(
     val uiState = viewModel.uiState
 
     Scaffold(
-        snackbarHost = { TheGuardianSnackbarHost(hostState = snackBarHostState) },
+        snackbarHost = { TheGuardianSnackBarHost(hostState = snackBarHostState) },
         topBar = {
             TopAppBar(
                 modifier = Modifier
@@ -219,7 +220,7 @@ fun ErrorMessage(
     uiState.errorMessage?.let {
         val errorMessage = stringResource(id = it)
         val actionLabel = stringResource(id = R.string.snackbar_button)
-        LaunchedEffect(uiState.errorMessage) {
+        LaunchedEffect(it) {
             val result = snackBarHostState.showSnackbar(
                 message = errorMessage,
                 actionLabel = actionLabel,

@@ -21,7 +21,7 @@
 
     <!-- settings screen -->
     <string name="settings_screen_toolbar">Settings</string>
-    <string name="settings_screen_first_option">Random option</string>
+    <string name="settings_screen_dark_mode_option">Dark mode</string>
 
     <!-- Errors -->
     <string name="network_error_message">We are unable to provide you with the latest news at this time. Please check your internet connection.</string>

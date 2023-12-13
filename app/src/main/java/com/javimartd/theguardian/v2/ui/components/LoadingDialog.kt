@@ -13,7 +13,7 @@ fun LoadingDialog(onDismiss: () -> Unit) {
     Dialog(onDismissRequest = onDismiss) {
         CircularProgressIndicator(
             color = colorResource(id = R.color.blue_500),
-            modifier = Modifier.testTag(TAG_LOADING_DIALOG)
+            modifier = Modifier.testTag(Tags.TAG_LOADING_DIALOG)
         )
     }
 }
