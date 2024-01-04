@@ -94,6 +94,14 @@ jobs:
       - name: Checkout the code
         uses: actions/checkout@v2
 
+      - name: set up JDK 17
+        id: step_two
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+          cache: gradle
+
       - name: Access THE_GUARDIAN_API_KEY
         env:
           THE_GUARDIAN_API_KEY: ${{ secrets.THE_GUARDIAN_API_KEY }}
