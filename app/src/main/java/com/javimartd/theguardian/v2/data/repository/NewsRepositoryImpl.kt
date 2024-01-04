@@ -1,8 +1,9 @@
 package com.javimartd.theguardian.v2.data.repository
 
-import com.javimartd.theguardian.v2.data.datasources.NewsCacheDataSource
-import com.javimartd.theguardian.v2.data.datasources.NewsLocalDataSource
-import com.javimartd.theguardian.v2.data.datasources.NewsRemoteDataSource
+import com.javimartd.theguardian.v2.data.datasources.CacheDataSource
+import com.javimartd.theguardian.v2.data.datasources.DiskDataSource
+import com.javimartd.theguardian.v2.data.datasources.RemoteDataSource
+import com.javimartd.theguardian.v2.data.datasources.disk.preferences.PreferencesDataStoreDelegate
 import com.javimartd.theguardian.v2.data.repository.news.mapper.toDomain
 import com.javimartd.theguardian.v2.domain.NewsRepository
 import com.javimartd.theguardian.v2.domain.news.model.News
@@ -14,9 +15,10 @@ import javax.inject.Inject
 
 class NewsRepositoryImpl @Inject constructor(
     private val dispatchers: DispatcherProvider = DefaultDispatcherProvider(),
-    private val remoteDataSource: NewsRemoteDataSource,
-    private val cacheDataSource: NewsCacheDataSource,
-    private val localDataStore: NewsLocalDataSource
+    private val remoteDataSource: RemoteDataSource,
+    private val cacheDataSource: CacheDataSource,
+    private val diskDataStore: DiskDataSource,
+    private val dataStore: PreferencesDataStoreDelegate
 ): NewsRepository {
 
     override suspend fun getNews(

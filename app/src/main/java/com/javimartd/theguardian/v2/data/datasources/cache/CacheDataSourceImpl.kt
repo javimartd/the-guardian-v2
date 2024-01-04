@@ -1,11 +1,10 @@
 package com.javimartd.theguardian.v2.data.datasources.cache
 
-import com.javimartd.theguardian.v2.data.datasources.NewsCacheDataSource
+import com.javimartd.theguardian.v2.data.datasources.CacheDataSource
 import com.javimartd.theguardian.v2.data.repository.news.model.SectionData
-import com.javimartd.theguardian.v2.domain.news.model.Section
 import javax.inject.Inject
 
-class NewsCacheDataSourceImpl @Inject constructor(): NewsCacheDataSource {
+class CacheDataSourceImpl @Inject constructor(): CacheDataSource {
 
     private var sections = mutableListOf<SectionData>()
 

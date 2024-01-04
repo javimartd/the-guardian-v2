@@ -1,4 +1,4 @@
-package com.javimartd.theguardian.v2.data.datasources.local.news.db
+package com.javimartd.theguardian.v2.data.datasources.disk.db.news
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

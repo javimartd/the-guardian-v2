@@ -24,46 +24,47 @@ internal class GetSectionsUseCaseTest {
 
     @Before
     fun setup() {
-        MockitoAnnotations.initMocks(this)
+        MockitoAnnotations.openMocks(this)
         sut = GetSectionsUseCase(newsRepository)
     }
 
     @Test
     fun invoke() = runTest {
 
-            // when
-            sut.invoke()
+        // when
+        sut.invoke()
 
-            Mockito.verify(
-                newsRepository,
-                Mockito.times(1)
-            ).getSections()
+        // then
+        Mockito.verify(
+            newsRepository,
+            Mockito.times(1)
+        ).getSections()
     }
 
     @Test
     fun invoke2() = runTest {
 
-            // given
-            val remoteData = DomainFactory.getSomeSections(5)
+        // given
+        val remoteData = DomainFactory.getSomeSections(5)
 
-            Mockito
-                .`when`(newsRepository.getSections())
-                .thenReturn(Result.success(remoteData))
+        Mockito
+            .`when`(newsRepository.getSections())
+            .thenReturn(Result.success(remoteData))
 
-            // when
-            val actual = sut.invoke()
+        // when
+        val actual = sut.invoke()
 
-            actual.fold(
-                onSuccess = {
-                    MatcherAssert.assertThat(it[0], IsInstanceOf.instanceOf(Section::class.java))
-                },
-                onFailure = {}
-            )
+        actual.fold(
+            onSuccess = {
+                MatcherAssert.assertThat(it[0], IsInstanceOf.instanceOf(Section::class.java))
+            },
+            onFailure = {}
+        )
 
-            Mockito.verify(
-                newsRepository,
-                Mockito.times(1)
-            ).getSections()
-
+        // then
+        Mockito.verify(
+            newsRepository,
+            Mockito.times(1)
+        ).getSections()
     }
 }

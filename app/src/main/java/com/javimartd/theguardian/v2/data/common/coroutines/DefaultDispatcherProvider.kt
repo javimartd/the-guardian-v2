@@ -1,4 +1,4 @@
-package com.javimartd.theguardian.v2.data.datasources.coroutines
+package com.javimartd.theguardian.v2.data.common.coroutines
 
 import javax.inject.Inject
 

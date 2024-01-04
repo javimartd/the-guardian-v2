@@ -2,19 +2,18 @@
 
 # plugins
 agp                         = "8.1.2"
+datastore-preferences       = "1.0.0"
 kotlin                      = "1.9.0"
 ksp                         = "1.9.0-1.0.12"
 
 # app
-activity                    = "1.6.1"
 activity-compose            = "1.7.2"
 accompanist                 = "0.23.1"
 coil                        = "2.2.2"
-compose-bom                 = "2023.03.00"
+compose-bom                 = "2023.10.01"
 coroutines                  = "1.6.4"
 hilt                        = "2.47"
 hilt-navigation             = "1.0.0"
-kotlinx-coroutines-core     = "1.6.4"
 lifecycle                   = "2.5.1"
 lifecycle-extensions        = "2.2.0"
 navigation                  = "2.5.3"
@@ -23,11 +22,9 @@ retrofit                    = "2.9.0"
 room                        = "2.5.2"
 
 # tests
-#androidx-test-ui            = "1.4.3"
 androidx-test-core          = "2.2.0"
 androidx-test-ext-junit     = "1.1.5"
 archunit                    = "1.0.1"
-core-testing                = "2.1.0"
 coroutines-test             = "1.6.4"
 hilt-testing                = "2.44"
 junit                       = "1.1.5"
@@ -44,9 +41,10 @@ turbine                     = "0.12.1"
 # app
 accompanist                 = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "accompanist" }
 activity-compose            = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
+datastore          = { module = "androidx.datastore:datastore", version.ref = "datastore-preferences" }
+datastore-preferences       = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore-preferences" }
 coil                        = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 compose-bom                 = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
-
 coroutines                  = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
 navigation                  = { module = "androidx.navigation:navigation-compose", version.ref = "navigation" }
 hilt-android                = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
@@ -63,11 +61,10 @@ converter-gson              = { module = "com.squareup.retrofit2:converter-gson"
 room-ktx                    = { module = "androidx.room:room-ktx", version.ref = "room" }
 room-runtime                = { module = "androidx.room:room-runtime", version.ref = "room" }
 room-compiler               = { module = "androidx.room:room-compiler", version.ref = "room" }
-
-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
-ui-graphics = { group = "androidx.compose.ui", name = "ui-graphics" }
-ui = { group = "androidx.compose.ui", name = "ui" }
-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
+ui-tooling-preview          = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+ui-graphics                 = { group = "androidx.compose.ui", name = "ui-graphics" }
+ui                          = { group = "androidx.compose.ui", name = "ui" }
+ui-tooling                  = { group = "androidx.compose.ui", name = "ui-tooling" }
 
 # tests
 core-testing                = { module = "androidx.arch.core:core-testing", version.ref = "androidx-test-core" }

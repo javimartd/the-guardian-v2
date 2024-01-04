@@ -10,9 +10,9 @@ import org.junit.Assert
 import org.junit.Test
 
 @OptIn(ExperimentalCoroutinesApi::class)
-internal class NewsCacheDataSourceImplTest {
+internal class CacheDataSourceImplTest {
 
-    private val sut = NewsCacheDataSourceImpl()
+    private val sut = CacheDataSourceImpl()
 
     @Test
     fun `get sections`()

@@ -167,6 +167,12 @@ dependencies {
     implementation(libs.room.runtime)
     ksp(libs.room.compiler)
 
+    // preferences data store
+    implementation(libs.datastore.preferences)
+
+    // proto data store
+    implementation(libs.datastore)
+
     // images
     implementation(libs.coil)
 
@@ -181,6 +187,6 @@ dependencies {
     debugImplementation(libs.ui.test.manifest)
 
     // unit tests
-    //testImplementation(libs.bundles.unit.test)
+    testImplementation(libs.bundles.unit.test)
 }
 

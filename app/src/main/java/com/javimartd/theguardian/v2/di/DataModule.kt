@@ -2,7 +2,8 @@ package com.javimartd.theguardian.v2.di
 
 import android.content.Context
 import androidx.room.Room
-import com.javimartd.theguardian.v2.data.datasources.local.AppDatabase
+import com.javimartd.theguardian.v2.data.datasources.disk.db.AppDatabase
+import com.javimartd.theguardian.v2.data.datasources.disk.preferences.PreferencesDataStoreDelegate
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -26,5 +27,11 @@ class DataModule {
             AppDatabase::class.java,
             DATA_BASE
         ).build()
+    }
+
+    @Singleton
+    @Provides
+    fun providesDataStore(@ApplicationContext appContext: Context): PreferencesDataStoreDelegate {
+        return PreferencesDataStoreDelegate(appContext)
     }
 }

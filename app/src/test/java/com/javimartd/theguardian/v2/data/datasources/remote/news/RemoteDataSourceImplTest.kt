@@ -2,7 +2,8 @@ package com.javimartd.theguardian.v2.data.datasources.remote.news
 
 import com.javimartd.theguardian.v2.data.common.ErrorTypes
 import com.javimartd.theguardian.v2.data.datasources.ErrorHandler
-import com.javimartd.theguardian.v2.data.datasources.NewsRemoteDataSource
+import com.javimartd.theguardian.v2.data.datasources.RemoteDataSource
+import com.javimartd.theguardian.v2.data.datasources.remote.RemoteDataSourceImpl
 import com.javimartd.theguardian.v2.data.datasources.remote.common.RemoteErrorHandlerImpl
 import com.javimartd.theguardian.v2.data.datasources.remote.news.mapper.NewsRemoteMapper
 import com.javimartd.theguardian.v2.data.repository.news.model.NewsData
@@ -24,9 +25,9 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 @OptIn(ExperimentalCoroutinesApi::class)
-internal class NewsRemoteDataSourceImplTest {
+internal class RemoteDataSourceImplTest {
 
-    private lateinit var sut : NewsRemoteDataSource
+    private lateinit var sut : RemoteDataSource
     private lateinit var server: MockWebServer
 
     private val client = OkHttpClient.Builder()
@@ -42,7 +43,7 @@ internal class NewsRemoteDataSourceImplTest {
         server = MockWebServer()
         server.start()
 
-        sut = NewsRemoteDataSourceImpl(
+        sut = RemoteDataSourceImpl(
             getApiService(server),
             NewsRemoteMapper(),
             remoteErrorHandler

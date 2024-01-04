@@ -1,21 +1,21 @@
-package com.javimartd.theguardian.v2.data.datasources.remote.news
+package com.javimartd.theguardian.v2.data.datasources.remote
 
 import com.javimartd.theguardian.v2.data.common.ErrorTypes
 import com.javimartd.theguardian.v2.data.datasources.ErrorHandler
-import com.javimartd.theguardian.v2.data.datasources.NewsRemoteDataSource
-import com.javimartd.theguardian.v2.data.datasources.remote.RemoteMapper
+import com.javimartd.theguardian.v2.data.datasources.RemoteDataSource
 import com.javimartd.theguardian.v2.data.datasources.remote.common.safeApiCall
+import com.javimartd.theguardian.v2.data.datasources.remote.news.NewsApiService
 import com.javimartd.theguardian.v2.data.datasources.remote.news.model.NewsRemoteRaw
 import com.javimartd.theguardian.v2.data.datasources.remote.news.model.STATUS_OK
 import com.javimartd.theguardian.v2.data.repository.news.model.NewsData
 import com.javimartd.theguardian.v2.data.repository.news.model.SectionData
 import javax.inject.Inject
 
-class NewsRemoteDataSourceImpl @Inject constructor(
+class RemoteDataSourceImpl @Inject constructor(
     private val newsApiService: NewsApiService,
     private val mapper: RemoteMapper<NewsRemoteRaw, List<NewsData>>,
     private val errorHandler: ErrorHandler
-): NewsRemoteDataSource {
+): RemoteDataSource {
 
     override suspend fun getNews(
         showFieldsAll: String,

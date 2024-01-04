@@ -5,12 +5,11 @@ import androidx.room.Room
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
-import androidx.test.platform.app.InstrumentationRegistry
 import app.cash.turbine.test
-import com.javimartd.theguardian.v2.factory.LocalDataSourceFactory
-import com.javimartd.theguardian.v2.data.datasources.local.AppDatabase
-import com.javimartd.theguardian.v2.data.datasources.local.news.NewsDao
-import com.javimartd.theguardian.v2.data.datasources.local.news.db.NewsEntity
+import com.javimartd.theguardian.v2.data.datasources.disk.db.AppDatabase
+import com.javimartd.theguardian.v2.data.datasources.disk.db.news.NewsDao
+import com.javimartd.theguardian.v2.data.datasources.disk.db.news.NewsEntity
+import com.javimartd.theguardian.v2.factory.DiskDataSourceFactory
 import com.javimartd.theguardian.v2.utils.randomString
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.test.runTest
@@ -25,8 +24,6 @@ import org.junit.runner.RunWith
 // less than 200ms.
 @SmallTest
 class NewsDaoTest {
-
-    private val ctx = InstrumentationRegistry.getInstrumentation().context
 
     /*@get: Rule
     val dispatcherRule = TestDispatcherRule()*/
@@ -52,7 +49,7 @@ class NewsDaoTest {
     fun add_item_should_return_the_items_in_flow() = runTest {
 
         // given
-        val news = LocalDataSourceFactory.getSomeNews(3)
+        val news = DiskDataSourceFactory.getSomeNews(3)
 
         // when
         itemDao.insertAll(news)
@@ -70,7 +67,7 @@ class NewsDaoTest {
     fun replace_item_should_return_the_item_in_flow() = runTest {
 
         // given
-        val news = LocalDataSourceFactory.getSomeNews(3)
+        val news = DiskDataSourceFactory.getSomeNews(3)
 
         val item = NewsEntity(
             newsId = news[0].newsId,
@@ -100,7 +97,7 @@ class NewsDaoTest {
     fun removed_item_shouldNot_be_present_in_flow() = runTest {
 
         // given
-        val news = LocalDataSourceFactory.getSomeNews(2)
+        val news = DiskDataSourceFactory.getSomeNews(2)
 
         // when
         itemDao.insertAll(news)

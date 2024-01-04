@@ -1,6 +1,6 @@
 package com.javimartd.theguardian.v2.data.repository.news.mapper
 
-import com.javimartd.theguardian.v2.data.datasources.local.news.db.NewsEntity
+import com.javimartd.theguardian.v2.data.datasources.disk.db.news.NewsEntity
 import com.javimartd.theguardian.v2.data.repository.news.model.NewsData
 import com.javimartd.theguardian.v2.data.repository.news.model.SectionData
 import com.javimartd.theguardian.v2.domain.news.model.News

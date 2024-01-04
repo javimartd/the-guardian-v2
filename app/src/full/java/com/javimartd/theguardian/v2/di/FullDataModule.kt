@@ -1,16 +1,16 @@
 package com.javimartd.theguardian.v2.di
 
 import com.javimartd.theguardian.v2.data.datasources.ErrorHandler
-import com.javimartd.theguardian.v2.data.datasources.NewsCacheDataSource
-import com.javimartd.theguardian.v2.data.datasources.NewsLocalDataSource
-import com.javimartd.theguardian.v2.data.datasources.NewsRemoteDataSource
-import com.javimartd.theguardian.v2.data.datasources.cache.NewsCacheDataSourceImpl
-import com.javimartd.theguardian.v2.data.datasources.local.news.NewsLocalDataSourceImpl
-import com.javimartd.theguardian.v2.data.datasources.local.AppDatabase
+import com.javimartd.theguardian.v2.data.datasources.CacheDataSource
+import com.javimartd.theguardian.v2.data.datasources.DiskDataSource
+import com.javimartd.theguardian.v2.data.datasources.RemoteDataSource
+import com.javimartd.theguardian.v2.data.datasources.cache.CacheDataSourceImpl
+import com.javimartd.theguardian.v2.data.datasources.disk.db.news.DiskDataSourceImpl
+import com.javimartd.theguardian.v2.data.datasources.disk.db.AppDatabase
 import com.javimartd.theguardian.v2.data.datasources.remote.*
 import com.javimartd.theguardian.v2.data.datasources.remote.common.RemoteErrorHandlerImpl
 import com.javimartd.theguardian.v2.data.datasources.remote.news.NewsApiService
-import com.javimartd.theguardian.v2.data.datasources.remote.news.NewsRemoteDataSourceImpl
+import com.javimartd.theguardian.v2.data.datasources.remote.news.RemoteDataSourceImpl
 import com.javimartd.theguardian.v2.data.datasources.remote.news.mapper.NewsRemoteMapper
 import dagger.Module
 import dagger.Provides
@@ -28,8 +28,8 @@ class FullDataModule {
         newsApiService: NewsApiService,
         mapper: NewsRemoteMapper,
         errorHandler: ErrorHandler
-    ): NewsRemoteDataSource {
-        return NewsRemoteDataSourceImpl(
+    ): RemoteDataSource {
+        return RemoteDataSourceImpl(
             newsApiService,
             mapper,
             errorHandler
@@ -38,14 +38,14 @@ class FullDataModule {
 
     @Provides
     @Singleton
-    fun providesCacheDataSource(): NewsCacheDataSource {
-        return NewsCacheDataSourceImpl()
+    fun providesCacheDataSource(): CacheDataSource {
+        return CacheDataSourceImpl()
     }
 
     @Provides
     @Singleton
-    fun providesLocalDataSource(appDatabase: AppDatabase): NewsLocalDataSource {
-        return NewsLocalDataSourceImpl(appDatabase)
+    fun providesLocalDataSource(appDatabase: AppDatabase): DiskDataSource {
+        return DiskDataSourceImpl(appDatabase)
     }
 
     @Provides

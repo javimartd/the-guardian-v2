@@ -1,8 +1,6 @@
-package com.javimartd.theguardian.v2.data.datasources.local.news
+package com.javimartd.theguardian.v2.data.datasources.disk.db.news
 
 import androidx.room.*
-import com.javimartd.theguardian.v2.data.datasources.local.news.db.NewsEntity
-import com.javimartd.theguardian.v2.data.datasources.local.news.db.NewsUpdateEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao
