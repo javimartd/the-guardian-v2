@@ -4,6 +4,7 @@ import com.javimartd.theguardian.v2.data.common.ErrorTypes
 import com.javimartd.theguardian.v2.data.datasources.CacheDataSource
 import com.javimartd.theguardian.v2.data.datasources.DiskDataSource
 import com.javimartd.theguardian.v2.data.datasources.RemoteDataSource
+import com.javimartd.theguardian.v2.data.datasources.disk.preferences.PreferencesDataStoreDelegate
 import com.javimartd.theguardian.v2.data.repository.NewsRepositoryImpl
 import com.javimartd.theguardian.v2.domain.NewsRepository
 import com.javimartd.theguardian.v2.domain.news.model.News
@@ -30,7 +31,8 @@ internal class NewsRepositoryImplTest {
 
     @Mock private lateinit var remoteDataSource: RemoteDataSource
     @Mock private lateinit var cacheDataSource: CacheDataSource
-    @Mock private lateinit var localDataSource: DiskDataSource
+    @Mock private lateinit var diskDataSource: DiskDataSource
+    @Mock private lateinit var preferencesDataStore: PreferencesDataStoreDelegate
 
     @Before
     fun setup() {
@@ -39,7 +41,8 @@ internal class NewsRepositoryImplTest {
             TestDefaultDispatcher(),
             remoteDataSource,
             cacheDataSource,
-            localDataSource
+            diskDataSource,
+            preferencesDataStore
         )
     }
 
