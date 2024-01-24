@@ -25,5 +25,5 @@ pipeline {
 //                sh './gradlew assembleFullDebug'
 //            }
 //        }
-//    }
+    }
 }
