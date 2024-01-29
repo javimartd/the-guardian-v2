@@ -338,7 +338,6 @@ internal class RemoteDataSourceImplTest {
 
             // when
             val actual = sut.getSections()
-
             // then
             Assert.assertTrue(actual.isFailure)
             actual.fold(

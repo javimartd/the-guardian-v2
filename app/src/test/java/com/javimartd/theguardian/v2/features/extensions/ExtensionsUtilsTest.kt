@@ -8,6 +8,7 @@ import org.junit.runners.JUnit4
 @RunWith(JUnit4::class)
 class ExtensionsUtilsTest {
 
+    @Suppress
     @Test
     fun `to date`() {
         val dateLong = "2022-10-11T15:49:25Z".toLong(format = DATE_TIME_API_FORMAT)
@@ -15,6 +16,7 @@ class ExtensionsUtilsTest {
         Assert.assertEquals(dateString, "11 Oct 2022")
     }
 
+    @Suppress
     @Test
     fun `to long`() {
         val dateLong = "2022-10-11T15:49:25Z".toLong(format = DATE_TIME_API_FORMAT)

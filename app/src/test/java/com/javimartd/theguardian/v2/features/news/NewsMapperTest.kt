@@ -10,6 +10,7 @@ import org.junit.Test
 
 class NewsMapperTest {
 
+    @Suppress
     @Test
     fun newsToPresentation() {
         val domain = DomainFactory.getSomeNews(5)
