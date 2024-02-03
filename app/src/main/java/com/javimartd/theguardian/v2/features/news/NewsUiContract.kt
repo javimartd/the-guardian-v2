@@ -3,16 +3,16 @@ package com.javimartd.theguardian.v2.features.news
 import com.javimartd.theguardian.v2.features.news.model.NewsItemUiState
 
 interface NewsUiContract {
+    sealed class State {
+        data object Loading: State()
+        data class News(val news: List<NewsItemUiState>): State()
+        data object NoNews: State()
+        data class Error(val errorMessage: Int): State()
+    }
 
-    data class NewsUiState(
-        val isRefreshing: Boolean = true,
-        val sectionSelected: String = "Choose a section of interest",
-        val sections: List<String> = emptyList(),
-        val news: List<NewsItemUiState> = emptyList(),
-        val errorMessage: Int? = null
-    )
-
-    sealed class NewsUiEvent {
-        data class GetNews(val sectionName: String = ""): NewsUiEvent()
+    sealed class Intent {
+        data class SearchQueryChange(val newQuery: String): Intent()
+        data class SearchQueryClick(val sectionId: String = ""): Intent()
+        data object OnRefresh: Intent()
     }
 }

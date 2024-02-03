@@ -88,8 +88,7 @@ fun Section(
                 .clip(RoundedCornerShape(dimensionResource(id = R.dimen.small_margin)))
                 .background(color = colorResource(id = R.color.blue_500))
                 .padding(horizontal = dimensionResource(id = R.dimen.small_margin)),
-            style = MaterialTheme.typography.bodySmall
-                .copy(color = Color.White),
+            style = MaterialTheme.typography.bodySmall.copy(color = Color.White),
             text = name
         )
         Text(

@@ -19,7 +19,7 @@ import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
-class FullDataModule {
+class ProdDataModule {
 
     @Provides
     @Singleton

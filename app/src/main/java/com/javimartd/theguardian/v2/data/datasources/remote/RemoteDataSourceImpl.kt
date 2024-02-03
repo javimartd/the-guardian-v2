@@ -9,6 +9,9 @@ import com.javimartd.theguardian.v2.data.datasources.remote.news.model.NewsRemot
 import com.javimartd.theguardian.v2.data.datasources.remote.news.model.STATUS_OK
 import com.javimartd.theguardian.v2.data.repository.news.model.NewsData
 import com.javimartd.theguardian.v2.data.repository.news.model.SectionData
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
 class RemoteDataSourceImpl @Inject constructor(
@@ -41,28 +44,27 @@ class RemoteDataSourceImpl @Inject constructor(
         )
     }
 
-    override suspend fun getSections(): Result<List<SectionData>> {
+    override fun getSections(): Flow<List<SectionData>> = flow {
         val result = safeApiCall { newsApiService.getSections() }
-
-        return result.fold(
-            onSuccess = { response ->
-                if (response.sectionsResponse.status == STATUS_OK) {
-                    Result.success(
-                        response.sectionsResponse.results?.map {
-                            SectionData(
-                                id = it.id,
-                                webTitle = it.webTitle,
-                                webUrl = it.webUrl
-                            )
-                        } ?: emptyList()
-                    )
-                } else {
-                    Result.failure(ErrorTypes.RemoteErrors.ApiStatus)
-                }
-            },
-            onFailure = {
-                Result.failure(errorHandler.getError(it))
-            }
+        emit(
+            result.fold(
+                onSuccess = {
+                    if (it.sectionsResponse.status == STATUS_OK) {
+                           it.sectionsResponse.results?.map { sectionRaw ->
+                                SectionData(
+                                    id = sectionRaw.id,
+                                    webTitle = sectionRaw.webTitle,
+                                    webUrl = sectionRaw.webUrl
+                                )
+                            } ?: emptyList()
+                    } else {
+                        emptyList()
+                    }
+                },
+                onFailure = { emptyList() }
+            )
         )
+    }.catch {
+        emit(emptyList())
     }
 }

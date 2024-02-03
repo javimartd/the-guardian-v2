@@ -9,8 +9,9 @@
     <string name="sections_dropdown_icon_content_description">Expand or close the section menu</string>
     <string name="sections_dropdown_default_value">Choose a section of interest</string>
     <string name="image_content_description">Image</string>
-
-    <string name="snackbar_button">Dismiss</string>
+    <string name="search_icon_content_description">Search Icon</string>
+    <string name="close_icon_content_description">Clear search</string>
+    <string name="snackBar_button">Dismiss</string>
 
     <!--news screen-->
     <string name="news_screen_settings_icon_content_description">Settings button</string>

@@ -6,11 +6,14 @@ import com.javimartd.theguardian.v2.data.datasources.remote.news.model.NewsRemot
 import com.javimartd.theguardian.v2.data.repository.news.model.NewsData
 import com.javimartd.theguardian.v2.data.repository.news.model.SectionData
 import com.javimartd.theguardian.v2.readJsonFromAssets
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject
 
 class FakeRemoteDataSourceImpl @Inject constructor(
     private val mapper: RemoteMapper<NewsRemoteRaw, List<NewsData>>,
 ): RemoteDataSource {
+
     override suspend fun getNews(
         showFieldsAll: String,
         sectionId: String
@@ -20,7 +23,16 @@ class FakeRemoteDataSourceImpl @Inject constructor(
         return Result.success(mapper.mapFromRemote(json))
     }
 
-    override suspend fun getSections(): Result<List<SectionData>> {
-        return Result.success(emptyList())
+    override fun getSections(): Flow<List<SectionData>> {
+        return flowOf(
+            "Books",
+            "Business",
+            "Opinion",
+            "Food",
+            "Education",
+            "Money",
+            "Politics",
+            "Travel"
+        )
     }
 }
