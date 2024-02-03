@@ -7,6 +7,7 @@ plugins {
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.firebase)
 }
 
 /*fun headCommitCount(): Int {
@@ -78,10 +79,8 @@ android {
             applicationIdSuffix = ".mock"
             versionNameSuffix = "-mock"
         }
-        create("full") {
+        create("prod") {
             dimension = "mode"
-            applicationIdSuffix = ".full"
-            versionNameSuffix = "-full"
         }
     }
 
@@ -155,6 +154,10 @@ dependencies {
     implementation(libs.lifecycle.runtime.ktx)
     implementation(libs.lifecycle.viewmodel.ktx)
     implementation(libs.lifecycle.extensions)
+    implementation(libs.lifecycle.runtime.compose)
+
+    // firebase
+    implementation(platform(libs.firebase.bom))
 
     // hilt
     implementation(libs.hilt.android)

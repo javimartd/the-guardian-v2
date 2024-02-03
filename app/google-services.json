@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "786580455441",
+    "project_id": "javimartd-the-guardian",
+    "storage_bucket": "javimartd-the-guardian.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:786580455441:android:863231be3a5a04e7f431b0",
+        "android_client_info": {
+          "package_name": "com.javimartd.theguardian.v2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDj6pty_ML3sDHcmurELWGB5aFc2vw_ohA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:786580455441:android:e26357ed3090e7fef431b0",
+        "android_client_info": {
+          "package_name": "com.javimartd.theguardian.v2.debug"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDj6pty_ML3sDHcmurELWGB5aFc2vw_ohA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:786580455441:android:7d1d119bb8f5d8e5f431b0",
+        "android_client_info": {
+          "package_name": "com.javimartd.theguardian.v2.mock.debug"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDj6pty_ML3sDHcmurELWGB5aFc2vw_ohA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

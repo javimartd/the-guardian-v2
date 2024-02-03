@@ -5,6 +5,7 @@ agp                         = "8.1.2"
 datastore-preferences       = "1.0.0"
 kotlin                      = "1.9.0"
 ksp                         = "1.9.0-1.0.12"
+firebase                    = "4.4.0"
 
 # app
 activity-compose            = "1.7.2"
@@ -12,10 +13,12 @@ accompanist                 = "0.23.1"
 coil                        = "2.2.2"
 compose-bom                 = "2023.10.01"
 coroutines                  = "1.6.4"
+firebase-bom                = "32.7.1"
 hilt                        = "2.47"
 hilt-navigation             = "1.0.0"
-lifecycle                   = "2.5.1"
+lifecycle-ktx               = "2.5.1"
 lifecycle-extensions        = "2.2.0"
+lifecycle-compose           = "2.6.0"
 navigation                  = "2.5.3"
 okhttp                      = "4.10.0"
 retrofit                    = "2.9.0"
@@ -46,13 +49,15 @@ datastore-preferences       = { module = "androidx.datastore:datastore-preferenc
 coil                        = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 compose-bom                 = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
 coroutines                  = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
+firebase-bom                = { module = "com.google.firebase:firebase-bom", version.ref = "firebase-bom"}
 navigation                  = { module = "androidx.navigation:navigation-compose", version.ref = "navigation" }
 hilt-android                = { module = "com.google.dagger:hilt-android", version.ref = "hilt" }
 hilt-compiler               = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
 hilt-navigation-compose     = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hilt-navigation" }
 lifecycle-extensions        = { module = "androidx.lifecycle:lifecycle-extensions", version.ref = "lifecycle-extensions" }
-lifecycle-runtime-ktx       = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle" }
-lifecycle-viewmodel-ktx     = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle" }
+lifecycle-runtime-ktx       = { module = "androidx.lifecycle:lifecycle-runtime-ktx", version.ref = "lifecycle-ktx" }
+lifecycle-runtime-compose   = { module = "androidx.lifecycle:lifecycle-runtime-compose", version.ref = "lifecycle-compose"}
+lifecycle-viewmodel-ktx     = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycle-ktx" }
 logging-interceptor         = { module = "com.squareup.okhttp3:logging-interceptor", version.ref = "okhttp" }
 material3                   = { group = "androidx.compose.material3", name = "material3" }
 okhttp3                     = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
@@ -92,7 +97,8 @@ com-android-application     = { id = "com.android.application", version.ref = "a
 jetbrains-kotlin-android    = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 hilt                        = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kotlin-kapt                 = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
-ksp                         = { id = "com.google.devtools.ksp", version.ref = "ksp"}
+ksp                         = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+firebase                    = { id = "com.google.gms.google-services", version.ref = "firebase" }
 
 [bundles]
 
