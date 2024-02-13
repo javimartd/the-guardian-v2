@@ -25,14 +25,38 @@ class FakeRemoteDataSourceImpl @Inject constructor(
 
     override fun getSections(): Flow<List<SectionData>> {
         return flowOf(
-            "Books",
-            "Business",
-            "Opinion",
-            "Food",
-            "Education",
-            "Money",
-            "Politics",
-            "Travel"
+            listOf(
+                SectionData(
+                    id = "artanddesign",
+                    webTitle = "Art and design",
+                    webUrl = "https://www.theguardian.com/artanddesign"
+                ),
+                SectionData(
+                    id = "animals-farmed",
+                    webTitle = "Animals farmed",
+                    webUrl = "https://www.theguardian.com/animals-farmed"
+                ),
+                SectionData(
+                    id = "books",
+                    webTitle = "Books",
+                    webUrl = "https://www.theguardian.com/books"
+                ),
+                SectionData(
+                    id = "business",
+                    webTitle = "Business",
+                    webUrl = "https://www.theguardian.com/business"
+                ),
+                SectionData(
+                    id = "cities",
+                    webTitle = "Cities",
+                    webUrl = "https://www.theguardian.com/cities"
+                ),
+                SectionData(
+                    id = "culture",
+                    webTitle = "Culture",
+                    webUrl = "https://www.theguardian.com/culture"
+                )
+            )
         )
     }
 }
