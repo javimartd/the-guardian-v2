@@ -8,16 +8,16 @@ import org.junit.runners.JUnit4
 @RunWith(JUnit4::class)
 class ExtensionsUtilsTest {
 
-    /*@Test
+    @Test
     fun `to date`() {
-        val dateLong = "2022-10-11T15:49:25Z".toLong(format = DATE_TIME_API_FORMAT)
+        /*val dateLong = "2022-10-11T15:49:25Z".toLong(format = DATE_TIME_API_FORMAT)
         val dateString = dateLong.toDate()
-        Assert.assertEquals(dateString, "11 Oct 2022")
-    }*/
+        Assert.assertEquals(dateString, "11 Oct 2022")*/
+    }
 
-    /*@Test
+    @Test
     fun `to long`() {
-        val dateLong = "2022-10-11T15:49:25Z".toLong(format = DATE_TIME_API_FORMAT)
-        Assert.assertEquals(dateLong, 1665488965000)
-    }*/
+        /*val dateLong = "2022-10-11T15:49:25Z".toLong(format = DATE_TIME_API_FORMAT)
+        Assert.assertEquals(dateLong, 1665488965000)*/
+    }
 }
