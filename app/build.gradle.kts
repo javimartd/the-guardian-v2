@@ -162,10 +162,6 @@ dependencies {
     // hilt
     implementation(libs.hilt.android)
     implementation(libs.hilt.navigation.compose)
-    implementation(libs.runner)
-    implementation(libs.androidx.rules)
-    implementation(libs.androidx.espresso.idling.resource)
-    implementation(libs.androidx.espresso.core)
     kapt(libs.hilt.compiler)
 
     // room
@@ -183,13 +179,8 @@ dependencies {
     implementation(libs.coil)
 
     // android tests
-    androidTestImplementation(libs.androidx.test.ext.junit)
-    androidTestImplementation(libs.ui.test.junit4)
+    androidTestImplementation(libs.bundles.android.test)
     androidTestImplementation(platform(libs.compose.bom))
-    androidTestImplementation(libs.hilt.testing)
-    androidTestImplementation(libs.mockito.android)
-    androidTestImplementation(libs.turbine)
-    debugImplementation(libs.ui.tooling)
     debugImplementation(libs.ui.test.manifest)
 
     // unit tests

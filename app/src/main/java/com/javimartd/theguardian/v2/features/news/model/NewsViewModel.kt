@@ -77,7 +77,7 @@ class NewsViewModel @Inject constructor(
         searchQuery = newQuery
     }
 
-    private fun getNews(sectionName: String) {
+    fun getNews(sectionName: String) {
         uiState = NewsUiContract.State.Loading
         viewModelScope.launch {
             val response = getNewsUseCase(sectionName)
@@ -96,7 +96,7 @@ class NewsViewModel @Inject constructor(
         }
     }
 
-    private fun handleError(throwable: Throwable) {
+    fun handleError(throwable: Throwable) {
         val errorMessage = when (throwable as ErrorTypes) {
             is ErrorTypes.RemoteErrors.Network -> R.string.network_error_message
             is ErrorTypes.RemoteErrors.Server -> R.string.server_error_message

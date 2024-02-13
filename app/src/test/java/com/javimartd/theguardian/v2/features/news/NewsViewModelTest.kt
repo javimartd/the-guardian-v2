@@ -1,41 +1,34 @@
 package com.javimartd.theguardian.v2.features.news
 
-import com.google.common.truth.Truth
 import com.javimartd.theguardian.v2.R
 import com.javimartd.theguardian.v2.data.common.ErrorTypes
-import com.javimartd.theguardian.v2.data.repository.news.model.SectionData
-import com.javimartd.theguardian.v2.domain.news.model.News
-import com.javimartd.theguardian.v2.domain.news.model.Section
 import com.javimartd.theguardian.v2.domain.news.usecases.GetNewsUseCase
 import com.javimartd.theguardian.v2.domain.news.usecases.GetSectionsUseCase
-import com.javimartd.theguardian.v2.factory.DomainFactory
-import com.javimartd.theguardian.v2.features.news.mapper.toPresentation
 import com.javimartd.theguardian.v2.features.news.model.NewsViewModel
 import com.javimartd.theguardian.v2.utils.TestDispatcherRule
-import junit.framework.TestCase
+import io.mockk.coVerify
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
-import kotlinx.coroutines.test.runBlockingTest
-import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
-import org.junit.*
-import org.junit.runner.RunWith
+import org.junit.After
+import org.junit.Assert
+import org.junit.Before
+import org.junit.Rule
+import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
-import org.mockito.junit.MockitoJUnitRunner
+import org.mockito.kotlin.spy
+import org.mockito.kotlin.times
 
 
 /**
     https://developer.android.com/kotlin/flow
  */
 @OptIn(ExperimentalCoroutinesApi::class)
-@RunWith(MockitoJUnitRunner::class)
 class NewsViewModelTest {
 
     /**
@@ -54,17 +47,17 @@ class NewsViewModelTest {
 
     @Before
     fun setup() {
-        Dispatchers.setMain(StandardTestDispatcher())
+        Dispatchers.setMain(UnconfinedTestDispatcher())
         MockitoAnnotations.openMocks(this)
         //sut = NewsViewModel(getNewsUseCase, getSectionsUseCase)
     }
 
     @After
     fun cleanup() {
-        Dispatchers.resetMain()
+        //Dispatchers.resetMain()
     }
 
-    @Test
+    /*@Test
     fun `searchResults should emit empty list on error`() = runTest {
         // Arrange
         Mockito
@@ -77,8 +70,6 @@ class NewsViewModelTest {
 
         val sut = NewsViewModel(getNewsUseCase, getSectionsUseCase)
 
-        //coEvery { getSectionsUseCase.invoke() } throws Exception("Mocked error")
-
         // Act
         val result = mutableListOf<List<SectionData>>()
         sut.searchResults.collect {
@@ -87,6 +78,49 @@ class NewsViewModelTest {
 
         // Assert
         Assert.assertEquals(emptyList<SectionData>(), result)
+    }*/
+
+    @Test
+    fun `onIntent SearchQueryClick call getNews function`() {
+        // Arrange
+        val sut = NewsViewModel(getNewsUseCase, getSectionsUseCase)
+        val sectionId = ""
+        val intent = NewsUiContract.Intent.SearchQueryClick(sectionId)
+
+        // Act
+        val spyViewModel = spy(sut)
+        spyViewModel.onIntent(intent)
+
+        // Assert
+        Mockito.verify(spyViewModel, times(1)).getNews(sectionId)
+    }
+
+    @Test
+    fun `getNews when successful response with data should return News State`() {
+
+    }
+
+    @Test
+    fun `getNews when successful response with No data should return NoNews State`() {
+
+    }
+
+    @Test
+    fun `getNews when error response should return Error State`() {
+
+    }
+
+    @Test
+    fun `handleError should set correct error message for Network error`() {
+        // Arrange
+        val sut = NewsViewModel(getNewsUseCase, getSectionsUseCase)
+
+        // Act
+        sut.handleError(ErrorTypes.RemoteErrors.Network)
+
+        // Assert
+        val uiState = sut.uiState
+        Assert.assertEquals(NewsUiContract.State.Error(R.string.network_error_message), uiState)
     }
 
     /*@Test

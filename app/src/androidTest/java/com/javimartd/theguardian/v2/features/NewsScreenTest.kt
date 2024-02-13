@@ -13,17 +13,8 @@ class NewsScreenTest {
 
     private val ctx = InstrumentationRegistry.getInstrumentation().context
 
-    /*@get:Rule(order = 0)
-    var hiltRule = HiltAndroidRule(this)*/
-
     @get:Rule(order = 1)
     val composeTestRule = createAndroidComposeRule<MainActivity>()
-    // val composeTestRule = createComposeRule()
-
-    /*@Before
-    fun setUp() {
-        hiltRule.inject()
-    }*/
 
     @Test
     fun toolbar_should_be_displayed() {
@@ -34,22 +25,4 @@ class NewsScreenTest {
             .onNodeWithTag(Tags.TAG_NEWS_SCREEN_SETTINGS)
             .assertIsDisplayed()
     }
-
-    /*@Test
-    fun displayErrorMessage() {
-
-        val viewModel = mockk<NewsViewModel>(relaxed = true)
-        every { viewModel.uiState } returns NewsUiState(
-            errorMessage = stringResource(id = R.string.network_error_message)
-        )
-
-        composeTestRule.setContent {
-            NewsScreen(
-                navController = mockk(relaxed = true),
-                viewModel = viewModel
-            )
-        }
-
-        composeTestRule.onNodeWithText(R.string.network_error).assertIsDisplayed()
-    }*/
 }
