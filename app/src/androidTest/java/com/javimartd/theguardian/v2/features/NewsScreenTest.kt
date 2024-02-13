@@ -9,7 +9,6 @@ import com.javimartd.theguardian.v2.ui.MainActivity
 import org.junit.Rule
 import org.junit.Test
 
-//@HiltAndroidTest
 class NewsScreenTest {
 
     private val ctx = InstrumentationRegistry.getInstrumentation().context
@@ -35,32 +34,6 @@ class NewsScreenTest {
             .onNodeWithTag(Tags.TAG_NEWS_SCREEN_SETTINGS)
             .assertIsDisplayed()
     }
-
-    /*@Test
-    fun displayNewsContent() {
-        val news = PresentationFactory.getSomeNews(3)
-        val viewModel = mockk<NewsViewModel>(relaxed = true)
-        every { viewModel.uiState } returns NewsUiState(
-            isRefreshing = false,
-            sectionSelected = "Sport",
-            sections = listOf("Sport", "Politics", "Business"),
-            news = news,
-            errorMessage = null
-        )
-
-        composeTestRule.setContent {
-            NewsScreen(
-                navController = mockk(relaxed = true),
-                viewModel = viewModel
-            )
-        }
-
-        composeTestRule.onNodeWithText("Sport").assertIsDisplayed()
-        composeTestRule.onNodeWithText("Article 1").assertIsDisplayed()
-        composeTestRule.onNodeWithContentDescription("sections dropdown icon content description").performClick()
-        composeTestRule.onNodeWithText("Politics").performClick()
-        composeTestRule.onNodeWithText("Article 2").assertIsDisplayed()
-    }*/
 
     /*@Test
     fun displayErrorMessage() {

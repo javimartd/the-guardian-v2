@@ -163,6 +163,9 @@ dependencies {
     implementation(libs.hilt.android)
     implementation(libs.hilt.navigation.compose)
     implementation(libs.runner)
+    implementation(libs.androidx.rules)
+    implementation(libs.androidx.espresso.idling.resource)
+    implementation(libs.androidx.espresso.core)
     kapt(libs.hilt.compiler)
 
     // room

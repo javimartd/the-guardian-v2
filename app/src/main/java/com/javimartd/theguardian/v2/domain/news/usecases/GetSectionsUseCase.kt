@@ -4,6 +4,7 @@ import com.javimartd.theguardian.v2.domain.NewsRepository
 import com.javimartd.theguardian.v2.domain.news.model.Section
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
+import kotlin.jvm.Throws
 
 class GetSectionsUseCase @Inject constructor(private val newsRepository: NewsRepository) {
     operator fun invoke() = newsRepository.getSections()

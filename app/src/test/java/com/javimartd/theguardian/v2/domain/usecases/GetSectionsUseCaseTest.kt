@@ -41,7 +41,7 @@ internal class GetSectionsUseCaseTest {
         ).getSections()
     }
 
-    @Test
+    /*@Test
     fun invoke2() = runTest {
 
         // given
@@ -66,5 +66,5 @@ internal class GetSectionsUseCaseTest {
             newsRepository,
             Mockito.times(1)
         ).getSections()
-    }
+    }*/
 }

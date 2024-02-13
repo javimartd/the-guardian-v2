@@ -1,6 +1,5 @@
 pipeline {
 
-//    This is what Node or Jenskins slave should this run on
     agent any
 
     stages {
@@ -10,20 +9,5 @@ pipeline {
                 echo 'Starting The Guardian app'
             }
         }
-
-//        When Jenkins runs a job, it creates a folder on the system.
-//        To avoid that folder from the previous build, it's a good practice
-//        to add this clean up job
-//        stage("Clean Up") {
-//            steps {
-//                deleteDir()
-//            }
-//        }
-
-//        stage('Checkout') {
-//            steps {
-//                sh './gradlew assembleFullDebug'
-//            }
-//        }
     }
 }

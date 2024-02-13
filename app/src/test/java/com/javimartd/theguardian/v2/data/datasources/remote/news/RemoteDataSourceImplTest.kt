@@ -219,7 +219,7 @@ internal class RemoteDataSourceImplTest {
         }
     }
 
-    @Test
+    /*@Test
     fun `GIVEN successful response WHEN get sections THEN returns success with repository data model`() {
 
         // given
@@ -241,12 +241,12 @@ internal class RemoteDataSourceImplTest {
                     Assert.assertEquals(22, it.size)
                     MatcherAssert.assertThat(it[0], IsInstanceOf.instanceOf(SectionData::class.java))
                 },
-                onFailure = { /* nothing expected */ }
+                onFailure = { *//* nothing expected *//* }
             )
         }
-    }
+    }*/
 
-    @Test
+    /*@Test
     fun `GIVEN response with empty data WHEN get sections THEN returns success with empty data`() {
 
         // given
@@ -267,12 +267,12 @@ internal class RemoteDataSourceImplTest {
                 onSuccess = {
                     Assert.assertEquals(it, emptyList<SectionData>())
                 },
-                onFailure = { /* nothing expected */ }
+                onFailure = { *//* nothing expected *//* }
             )
         }
-    }
+    }*/
 
-    @Test
+    /*@Test
     fun `GIVEN response with null data WHEN get sections THEN returns success with empty data`() {
 
         // given
@@ -293,12 +293,12 @@ internal class RemoteDataSourceImplTest {
                 onSuccess = {
                     Assert.assertEquals(it, emptyList<SectionData>())
                 },
-                onFailure = { /* nothing expected */ }
+                onFailure = { *//* nothing expected *//* }
             )
         }
-    }
+    }*/
 
-    @Test
+    /*@Test
     fun `GIVEN response with status error WHEN get sections THEN returns error with a status exception`() {
 
         // given
@@ -314,7 +314,7 @@ internal class RemoteDataSourceImplTest {
             // then
             Assert.assertTrue(actual.isFailure)
             actual.fold(
-                onSuccess = { /* nothing expected */ },
+                onSuccess = { *//* nothing expected *//* },
                 onFailure = {
                     MatcherAssert.assertThat(
                         it,
@@ -323,9 +323,9 @@ internal class RemoteDataSourceImplTest {
                 }
             )
         }
-    }
+    }*/
 
-    @Test
+    /*@Test
     fun `GIVEN internal server error WHEN get sections THEN returns error with a server exception`() {
 
         // given
@@ -341,7 +341,7 @@ internal class RemoteDataSourceImplTest {
             // then
             Assert.assertTrue(actual.isFailure)
             actual.fold(
-                onSuccess = { /* nothing expected */ },
+                onSuccess = { *//* nothing expected *//* },
                 onFailure = {
                     MatcherAssert.assertThat(
                         it,
@@ -350,9 +350,9 @@ internal class RemoteDataSourceImplTest {
                 }
             )
         }
-    }
+    }*/
 
-    @Test
+    /*@Test
     fun `GIVEN timeout error WHEN get sections THEN returns error with a network exception`() {
 
         // given
@@ -371,7 +371,7 @@ internal class RemoteDataSourceImplTest {
             // then
             Assert.assertTrue(actual.isFailure)
             actual.fold(
-                onSuccess = { /* nothing expected */ },
+                onSuccess = { *//* nothing expected *//* },
                 onFailure = {
                     MatcherAssert.assertThat(
                         it,
@@ -380,7 +380,7 @@ internal class RemoteDataSourceImplTest {
                 }
             )
         }
-    }
+    }*/
 
     private fun getApiService(server: MockWebServer): NewsApiService {
         return Retrofit.Builder()

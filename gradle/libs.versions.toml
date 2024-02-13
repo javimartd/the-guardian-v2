@@ -6,6 +6,7 @@ datastore-preferences       = "1.0.0"
 kotlin                      = "1.9.0"
 ksp                         = "1.9.0-1.0.12"
 firebase                    = "4.4.0"
+paparazzi-version           = "1.3.2"
 
 # app
 activity-compose            = "1.7.2"
@@ -38,13 +39,16 @@ mockwebserver               = "4.9.2"
 runner                      = "1.5.2"
 truth                       = "1.1.3"
 turbine                     = "0.12.1"
+rules = "1.5.0"
+espresso-idling-resource = "3.5.1"
+espresso-core = "3.5.1"
 
 [libraries]
 
 # app
 accompanist                 = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "accompanist" }
 activity-compose            = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
-datastore          = { module = "androidx.datastore:datastore", version.ref = "datastore-preferences" }
+datastore                   = { module = "androidx.datastore:datastore", version.ref = "datastore-preferences" }
 datastore-preferences       = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore-preferences" }
 coil                        = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 compose-bom                 = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
@@ -86,10 +90,12 @@ runner                      = { module = "androidx.test:runner", version.ref = "
 tngtech-archunit            = { module = "com.tngtech.archunit:archunit", version.ref = "archunit" }
 turbine                     = { module = "app.cash.turbine:turbine", version.ref = "turbine" }
 truth                       = { module = "com.google.truth:truth", version.ref = "truth" }
-
 ui-test-manifest            = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 ui-test-junit4              = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-test-ext-junit     = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-test-ext-junit" }
+androidx-rules              = { group = "androidx.test", name = "rules", version.ref = "rules" }
+androidx-espresso-idling-resource = { group = "androidx.test.espresso", name = "espresso-idling-resource", version.ref = "espresso-idling-resource" }
+androidx-espresso-core      = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso-core" }
 
 [plugins]
 
@@ -99,6 +105,7 @@ hilt                        = { id = "com.google.dagger.hilt.android", version.r
 kotlin-kapt                 = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 ksp                         = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 firebase                    = { id = "com.google.gms.google-services", version.ref = "firebase" }
+
 
 [bundles]
 

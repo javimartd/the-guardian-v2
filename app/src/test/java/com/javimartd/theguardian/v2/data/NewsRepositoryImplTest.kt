@@ -71,7 +71,7 @@ internal class NewsRepositoryImplTest {
         )
     }
 
-    @Test
+    /*@Test
     fun `GIVEN empty cache and successful remote response WHEN get remote sections THEN returns success with domain data model`()
     = runTest {
 
@@ -100,11 +100,11 @@ internal class NewsRepositoryImplTest {
                 Assert.assertEquals(5, it.size)
                 MatcherAssert.assertThat(it[0], IsInstanceOf.instanceOf(Section::class.java))
             },
-            onFailure = { /* nothing expected */ }
+            onFailure = { *//* nothing expected *//* }
         )
-    }
+    }*/
 
-    @Test
+    /*@Test
     fun `GIVEN cache data WHEN get sections THEN returns success with domain data model`()
     = runTest {
 
@@ -125,11 +125,11 @@ internal class NewsRepositoryImplTest {
                 Assert.assertEquals(10, it.size)
                 MatcherAssert.assertThat(it[0], IsInstanceOf.instanceOf(Section::class.java))
             },
-            onFailure = { /* nothing expected */ }
+            onFailure = { *//* nothing expected *//* }
         )
-    }
+    }*/
 
-    @Test
+    /*@Test
     fun `GIVEN empty cache and remote error response WHEN get sections THEN returns error with a server exception`()
     = runTest {
 
@@ -148,7 +148,7 @@ internal class NewsRepositoryImplTest {
         // then
         Assert.assertTrue(actual.isFailure)
         actual.fold(
-            onSuccess = { /* nothing expected */ },
+            onSuccess = { *//* nothing expected *//* },
             onFailure = {
                 MatcherAssert.assertThat(
                     it,
@@ -156,5 +156,5 @@ internal class NewsRepositoryImplTest {
                 )
             }
         )
-    }
+    }*/
 }

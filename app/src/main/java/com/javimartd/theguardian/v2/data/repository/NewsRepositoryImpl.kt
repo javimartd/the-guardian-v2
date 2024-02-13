@@ -13,7 +13,10 @@ import com.javimartd.theguardian.v2.features.common.DefaultDispatcherProvider
 import com.javimartd.theguardian.v2.features.common.DispatcherProvider
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
@@ -42,28 +45,12 @@ class NewsRepositoryImpl @Inject constructor(
     }
 
     override fun getSections(): Flow<List<SectionData>> {
-        return remoteDataSource.getSections()
-            //.flowOn(dispatchers.io())
-    }
-
-    /*override fun getSections() = flow<List<Section>> {
-        remoteDataSource.getSections()
-    }.flowOn(dispatchers.io())*/
-
-
-    /*return withContext(dispatchers.io()) {
-        val sections = cacheDataSource.getSections()
-        if (sections.isEmpty()) {
-            val response =  remoteDataSource.getSections()
-            response.fold(
-                onSuccess = {
-                    cacheDataSource.saveSections(it)
-                    Result.success(it.map { sectionData -> sectionData.toDomain() })
-                },
-                onFailure = { Result.failure(it) }
-            )
+        return remoteDataSource.getSections().flowOn(dispatchers.io())
+        /*val sections = cacheDataSource.getSections()
+        return if (sections.isEmpty()) {
+            remoteDataSource.getSections().onEach { cacheDataSource.saveSections(it) }
         } else {
-            Result.success(sections.map { it.toDomain() })
-        }
-    }*/
+            flowOf(sections)
+        }*/
+    }
 }

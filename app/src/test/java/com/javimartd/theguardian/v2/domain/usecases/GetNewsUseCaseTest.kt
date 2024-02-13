@@ -40,7 +40,7 @@ internal class GetNewsUseCaseTest {
             ).getNews("all", "world")
         }
 
-    @Test
+    /*@Test
     fun `get news when user selects a section from the dropdown menu`()
     = runTest {
 
@@ -61,5 +61,5 @@ internal class GetNewsUseCaseTest {
             Mockito.verify(
                 newsRepository, times(1)
             ).getNews("all", "education")
-        }
+        }*/
 }

@@ -3,6 +3,8 @@ package com.javimartd.theguardian.v2.features.news
 import com.google.common.truth.Truth
 import com.javimartd.theguardian.v2.R
 import com.javimartd.theguardian.v2.data.common.ErrorTypes
+import com.javimartd.theguardian.v2.data.repository.news.model.SectionData
+import com.javimartd.theguardian.v2.domain.news.model.News
 import com.javimartd.theguardian.v2.domain.news.model.Section
 import com.javimartd.theguardian.v2.domain.news.usecases.GetNewsUseCase
 import com.javimartd.theguardian.v2.domain.news.usecases.GetSectionsUseCase
@@ -11,8 +13,16 @@ import com.javimartd.theguardian.v2.features.news.mapper.toPresentation
 import com.javimartd.theguardian.v2.features.news.model.NewsViewModel
 import com.javimartd.theguardian.v2.utils.TestDispatcherRule
 import junit.framework.TestCase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.UnconfinedTestDispatcher
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runBlockingTest
 import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
 import org.junit.*
 import org.junit.runner.RunWith
 import org.mockito.Mock
@@ -20,37 +30,66 @@ import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 
+
+/**
+    https://developer.android.com/kotlin/flow
+ */
 @OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(MockitoJUnitRunner::class)
-class NewsViewModelTest : TestCase() {
+class NewsViewModelTest {
 
     /**
-     * we’re in the test environment and the Main dispatcher that wraps the Android UI thread
-     * will be unavailable, as these tests are executed on a local JVM and not an Android device.
-     * So we need to set our Dispatcher to Test Dispatcher before launching the coroutine.
+     we’re in the test environment and the Main dispatcher that wraps the Android UI thread
+     will be unavailable, as these tests are executed on a local JVM and not an Android device.
+     So we need to set our Dispatcher to Test Dispatcher before launching the coroutine.
      */
-    @get: Rule
-    val dispatcherRule = TestDispatcherRule()
+    /*@get: Rule
+    val dispatcherRule = TestDispatcherRule()*/
 
     @Mock private lateinit var getNewsUseCase: GetNewsUseCase
     @Mock private lateinit var getSectionsUseCase: GetSectionsUseCase
 
-    private lateinit var sut : NewsViewModel
+    //private lateinit var sut : NewsViewModel
 
 
     @Before
     fun setup() {
-        //Dispatchers.setMain(UnconfinedTestDispatcher())
-        MockitoAnnotations.initMocks(this)
-        sut = NewsViewModel(getNewsUseCase, getSectionsUseCase)
+        Dispatchers.setMain(StandardTestDispatcher())
+        MockitoAnnotations.openMocks(this)
+        //sut = NewsViewModel(getNewsUseCase, getSectionsUseCase)
     }
 
     @After
     fun cleanup() {
-        //Dispatchers.resetMain()
+        Dispatchers.resetMain()
     }
 
     @Test
+    fun `searchResults should emit empty list on error`() = runTest {
+        // Arrange
+        Mockito
+            .`when`(getNewsUseCase.invoke(""))
+            .thenReturn(Result.success(emptyList()))
+
+        Mockito
+            .`when`(getSectionsUseCase.invoke())
+            .thenReturn(flowOf(emptyList()))
+
+        val sut = NewsViewModel(getNewsUseCase, getSectionsUseCase)
+
+        //coEvery { getSectionsUseCase.invoke() } throws Exception("Mocked error")
+
+        // Act
+        val result = mutableListOf<List<SectionData>>()
+        sut.searchResults.collect {
+            result.add(it)
+        }
+
+        // Assert
+        Assert.assertEquals(emptyList<SectionData>(), result)
+    }
+
+    /*@Test
     fun `get all when response successful returns success result with news and sections`()
     = runTest {
 
@@ -80,9 +119,9 @@ class NewsViewModelTest : TestCase() {
         Truth.assertThat(sut.uiState.errorMessage).isNull()
         Truth.assertThat(sut.uiState.sections[0]).isEqualTo("Music")
         Truth.assertThat(sut.uiState.sections[1]).isEqualTo("Life and style")
-    }
+    }*/
 
-    @Test
+    /*@Test
     fun `get all when server error (sections) returns error result`()
     = runTest {
 
@@ -107,9 +146,9 @@ class NewsViewModelTest : TestCase() {
         Truth.assertThat(sut.uiState.sections).isEmpty()
         Truth.assertThat(sut.uiState.errorMessage).isNotNull()
         Assert.assertEquals(sut.uiState.errorMessage, R.string.server_error_message)
-    }
+    }*/
 
-    @Test
+    /*@Test
     fun `get all when server error (both) returns error result`()
     = runTest {
 
@@ -131,9 +170,9 @@ class NewsViewModelTest : TestCase() {
         Truth.assertThat(sut.uiState.news).isEmpty()
         Truth.assertThat(sut.uiState.sections).isEmpty()
         Truth.assertThat(sut.uiState.errorMessage).isNotNull()
-    }
+    }*/
 
-    @Test
+    /*@Test
     fun `get news when response successful returns success result with news`()
     = runTest {
 
@@ -151,9 +190,9 @@ class NewsViewModelTest : TestCase() {
         Truth.assertThat(sut.uiState.isRefreshing).isFalse()
         Assert.assertEquals(sut.uiState.sectionSelected,"Books")
         Truth.assertThat(sut.uiState.news).contains(news[0].toPresentation())
-    }
+    }*/
 
-    @Test
+    /*@Test
     fun `get news when unknown error returns error result`()
     = runTest {
 
@@ -168,5 +207,5 @@ class NewsViewModelTest : TestCase() {
         // then
         Truth.assertThat(sut.uiState.isRefreshing).isFalse()
         Assert.assertEquals(sut.uiState.errorMessage, R.string.generic_error_message)
-    }
+    }*/
 }

@@ -7,7 +7,7 @@ import androidx.compose.ui.test.junit4.createAndroidComposeRule
 import androidx.compose.ui.test.onNodeWithTag
 import com.javimartd.theguardian.v2.R
 import com.javimartd.theguardian.v2.features.news.components.Tags
-import com.javimartd.theguardian.v2.features.news.view.NoNewsMessage
+import com.javimartd.theguardian.v2.features.news.view.NoNewsContent
 import com.javimartd.theguardian.v2.ui.MainActivity
 import org.junit.Rule
 import org.junit.Test
@@ -20,7 +20,7 @@ class NoNewsMessageComposableTest {
     @Test
     fun display_no_news_message() {
         rule.activity.setContent {
-            NoNewsMessage()
+            NoNewsContent()
         }
         rule
             .onNodeWithTag(Tags.TAG_NEWS_SCREEN_NO_NEWS_MESSAGE)
