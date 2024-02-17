@@ -1,4 +1,5 @@
 [![android CI](https://github.com/javimartd/the-guardian-v2/actions/workflows/android.yml/badge.svg)](https://github.com/javimartd/the-guardian-v2/actions/workflows/android.yml)
+[![Build Status](http://localhost:8080/buildStatus/icon?job=the+guardian)](http://localhost:8080/job/the%20guardian/)
 [![Mantained](https://img.shields.io/badge/Maintained%3F-yes-green.svg)]()
 
 ## The Guardian News (v2)
