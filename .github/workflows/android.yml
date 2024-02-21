@@ -43,7 +43,7 @@ jobs:
           THE_GUARDIAN_API_KEY: ${{ secrets.THE_GUARDIAN_API_KEY }}
         run: echo THE_GUARDIAN_API_KEY=\"$THE_GUARDIAN_API_KEY\" > ./local.properties
 
-      - name: starts a ${{BUILD_TYPE}} debug build
+      - name: starts a $BUILD_TYPE debug build
         run: ./gradlew assemble${BUILD_TYPE}Debug
 
       - name: Upload APK
