@@ -19,11 +19,13 @@ jobs:
       APP_NAME: the-guardian
       RUN_NUMBER: ${{github.run_number}}
       BUILD_TYPE: Prod
+      THE_GUARDIAN_API_KEY: ${{ secrets.THE_GUARDIAN_API_KEY }}
 
     steps:
       - run: echo "Job automatically triggered by a ${{ github.event_name }} event on branch ${{ github.ref }}"
 
   build:
+
     runs-on: ubuntu-latest
 
     steps:
@@ -39,11 +41,9 @@ jobs:
           cache: gradle
 
       - name: Access THE_GUARDIAN_API_KEY
-        env:
-          THE_GUARDIAN_API_KEY: ${{ secrets.THE_GUARDIAN_API_KEY }}
-        run: echo THE_GUARDIAN_API_KEY=\"$THE_GUARDIAN_API_KEY\" > ./local.properties
+        run: echo "THE_GUARDIAN_API_KEY = $THE_GUARDIAN_API_KEY"
 
-      - name: starts a ${{ env.BUILD_TYPE }} debug build
+      - name: Starts a ${{ env.BUILD_TYPE }} debug build
         run: ./gradlew assemble${{ env.BUILD_TYPE }}Debug
 
       - name: Upload APK
@@ -66,14 +66,6 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
           cache: gradle
-
-#      - name: Run connected tests
-#        uses: ReactiveCircus/android-emulator-runner@v2
-#        with:
-#          api-level: 30
-#          target: google_apis
-#          arch: x86_64
-#          script: ./gradlew connectedCheck
 
       - name: Access THE_GUARDIAN_API_KEY
         env:
