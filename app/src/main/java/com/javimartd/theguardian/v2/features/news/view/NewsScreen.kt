@@ -1,6 +1,7 @@
 package com.javimartd.theguardian.v2.features.news.view
 
 import android.content.res.Configuration
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -38,6 +39,7 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.dimensionResource
@@ -51,6 +53,7 @@ import androidx.navigation.NavHostController
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
+import com.javimartd.theguardian.v2.BuildConfig
 import com.javimartd.theguardian.v2.R
 import com.javimartd.theguardian.v2.data.repository.news.model.SectionData
 import com.javimartd.theguardian.v2.features.news.NewsUiContract
@@ -99,6 +102,7 @@ fun NewsScreen(
                 .fillMaxWidth()
                 .height(dimensionResource(id = R.dimen.medium_margin))
             )
+            Toast.makeText(LocalContext.current, BuildConfig.THE_GUARDIAN_API_KEY, Toast.LENGTH_LONG).show()
             when (uiState) {
                 is NewsUiContract.State.Loading -> LoadingDialog { /* nothing to do */ }
                 is NewsUiContract.State.News -> {

@@ -1,3 +1,4 @@
+import com.google.firebase.appdistribution.gradle.firebaseAppDistribution
 import java.util.Properties
 import java.io.FileInputStream
 @Suppress("DSL_SCOPE_VIOLATION")
@@ -7,7 +8,9 @@ plugins {
     alias(libs.plugins.kotlin.kapt)
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
-    alias(libs.plugins.firebase)
+    alias(libs.plugins.google.services)
+    alias(libs.plugins.firebase.app.distribution)
+
 }
 
 /*fun headCommitCount(): Int {
@@ -88,6 +91,12 @@ android {
         debug {
             isDebuggable = true
             applicationIdSuffix = ".debug"
+            firebaseAppDistribution {
+                artifactType = "APK"
+                serviceCredentialsFile = "the-guardian-debug-distribution.json"
+                releaseNotesFile = "release_notes.txt"
+                groups = "testers"
+            }
         }
         release {
             isMinifyEnabled = true
