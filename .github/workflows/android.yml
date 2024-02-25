@@ -24,12 +24,6 @@ jobs:
     steps:
       - run: echo "Job automatically triggered by a ${{ github.event_name }} event on branch ${{ github.ref }}"
 
-  workflow:
-
-    runs-on: ubuntu-latest
-
-    steps:
-
       - name: Checkout the code
         uses: actions/checkout@v2
 
@@ -43,7 +37,10 @@ jobs:
       - name: Access THE_GUARDIAN_API_KEY
         run: echo THE_GUARDIAN_API_KEY=\"$THE_GUARDIAN_API_KEY\" > ./local.properties
 
-      - name: Start a $BUILD_TYPE debug build
+      - name: Change wrapper permissions
+        run: chmod +x ./gradlew
+
+      - name: Start a ${{env.BUILD_TYPE}} debug build
         run: ./gradlew assemble${env.BUILD_TYPE}Debug
 
       - name: Run unit tests./gradlew assembleRelease appDistributionUploadRelease
