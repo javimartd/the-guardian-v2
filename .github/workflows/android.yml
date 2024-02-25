@@ -24,7 +24,7 @@ jobs:
     steps:
       - run: echo "Job automatically triggered by a ${{ github.event_name }} event on branch ${{ github.ref }}"
 
-  build:
+  workflow:
 
     runs-on: ubuntu-latest
 
@@ -43,36 +43,10 @@ jobs:
       - name: Access THE_GUARDIAN_API_KEY
         run: echo THE_GUARDIAN_API_KEY=\"$THE_GUARDIAN_API_KEY\" > ./local.properties
 
-      - name: Starts a ${{ env.BUILD_TYPE }} debug build
-        run: ./gradlew assemble${{ env.BUILD_TYPE }}Debug
+      - name: Start a ${{env.BUILD_TYPE}} debug build
+        run: ./gradlew assemble${env.BUILD_TYPE}Debug
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v2
-        with:
-          name: ${{ env.APP_NAME }}-debug-${{ env.RUN_NUMBER }}
-          path: app/build/outputs/apk/${BUILD_TYPE}/debug/app-prod-debug.apk
-
-  unit-tests:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout the code
-        id: step_one
-        uses: actions/checkout@v2
-
-      - name: set up JDK 17
-        id: step_two
-        uses: actions/setup-java@v2
-        with:
-          java-version: '17'
-          distribution: 'adopt'
-          cache: gradle
-
-      - name: Access THE_GUARDIAN_API_KEY
-        env:
-          THE_GUARDIAN_API_KEY: ${{ secrets.THE_GUARDIAN_API_KEY }}
-        run: echo THE_GUARDIAN_API_KEY=\"$THE_GUARDIAN_API_KEY\" > ./local.properties
-
-      - name: Run unit test
+      - name: Run unit tests./gradlew assembleRelease appDistributionUploadRelease
         run: ./gradlew testProdDebugUnitTest
 
       - name: Archive tests results
@@ -81,30 +55,13 @@ jobs:
           name: tests-report
           path: app/build/reports/tests/testProdDebugUnitTest/index.html
 
-  code-analysis-reports :
-    runs-on: ubuntu-latest
-    steps:
-      - name: List files in the repository
-        run: |
-          ls ${{ github.workspace }}
-
-      - name: Checkout the code
-        uses: actions/checkout@v2
-
-      - name: set up JDK 17
-        id: step_two
-        uses: actions/setup-java@v2
+      - name: Upload APK
+        uses: actions/upload-artifact@v2
         with:
-          java-version: '17'
-          distribution: 'adopt'
-          cache: gradle
+          name: ${{ env.APP_NAME }}-debug-${{ env.RUN_NUMBER }}
+          path: app/build/outputs/apk/${BUILD_TYPE}/debug/app-prod-debug.apk
 
-      - name: Access THE_GUARDIAN_API_KEY
-        env:
-          THE_GUARDIAN_API_KEY: ${{ secrets.THE_GUARDIAN_API_KEY }}
-        run: echo THE_GUARDIAN_API_KEY=\"$THE_GUARDIAN_API_KEY\" > ./local.properties
-
-      - name: Check Lint
+      - name: Code analysis reports (lint)
         run: ./gradlew lintProdDebug
 
       - name: Archive code coverage results
