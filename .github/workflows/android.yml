@@ -11,7 +11,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  github-action:
+  android-workflow:
 
     runs-on: ubuntu-latest
 
@@ -41,7 +41,7 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Start a ${{env.BUILD_TYPE}} debug build
-        run: ./gradlew assemble${env.BUILD_TYPE}Debug
+        run: ./gradlew assemble${{ env.BUILD_TYPE }}Debug
 
       - name: Run unit tests./gradlew assembleRelease appDistributionUploadRelease
         run: ./gradlew testProdDebugUnitTest
@@ -56,7 +56,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: ${{ env.APP_NAME }}-debug-${{ env.RUN_NUMBER }}
-          path: app/build/outputs/apk/${BUILD_TYPE}/debug/app-prod-debug.apk
+          path: app/build/outputs/apk/${{ env.BUILD_TYPE}}/debug/app-prod-debug.apk
 
       - name: Code analysis reports (lint)
         run: ./gradlew lintProdDebug
