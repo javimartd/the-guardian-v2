@@ -110,5 +110,7 @@ fabric.properties
 
 !/gradle/wrapper/gradle-wrapper.jar
 
+# Firebase distribution
+the-guardian-debug-distribution.json
 
 # End of https://www.gitignore.io/api/androidstudio
