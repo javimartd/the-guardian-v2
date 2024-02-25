@@ -5,7 +5,8 @@ agp                         = "8.1.2"
 datastore-preferences       = "1.0.0"
 kotlin                      = "1.9.0"
 ksp                         = "1.9.0-1.0.12"
-firebase                    = "4.4.0"
+google-services             = "4.4.1"
+firebase-app-distribution   = "4.1.0"
 
 # app
 activity-compose            = "1.7.2"
@@ -103,7 +104,9 @@ jetbrains-kotlin-android    = { id = "org.jetbrains.kotlin.android", version.ref
 hilt                        = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kotlin-kapt                 = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 ksp                         = { id = "com.google.devtools.ksp", version.ref = "ksp" }
-firebase                    = { id = "com.google.gms.google-services", version.ref = "firebase" }
+google-services             = { id = "com.google.gms.google-services", version.ref = "google-services" }
+firebase-app-distribution   = { id = "com.google.firebase.appdistribution", version.ref = "firebase-app-distribution"}
+
 
 [bundles]
 
