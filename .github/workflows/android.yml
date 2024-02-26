@@ -9,7 +9,7 @@ on:
     branches: [ main, develop ]
 
   schedule:
-    - cron: 'H 11 * * *'
+    - cron: '0 11 * * 1'
 
   workflow_dispatch:
 
