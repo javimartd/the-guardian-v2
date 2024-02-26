@@ -8,6 +8,9 @@ on:
   pull_request:
     branches: [ main, develop ]
 
+  schedule:
+    - cron: 'H 11 * * *'
+
   workflow_dispatch:
 
 jobs:
@@ -58,8 +61,8 @@ jobs:
           name: ${{ env.APP_NAME }}-debug-${{ env.RUN_NUMBER }}
           path: app/build/outputs/apk/${{ env.BUILD_TYPE}}/debug/app-prod-debug.apk
 
-      - name: Distribute
-        run: ./gradlew assembleProdDebug appDistributionUploadProdDebug
+#      - name: Distribute
+#        run: ./gradlew assembleProdDebug appDistributionUploadProdDebug
 
       - name: Code analysis reports (lint)
         run: ./gradlew lintProdDebug
