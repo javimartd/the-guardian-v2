@@ -45,6 +45,25 @@
     },
     {
       "client_info": {
+        "mobilesdk_app_id": "1:786580455441:android:828bc5ae5256fc5af431b0",
+        "android_client_info": {
+          "package_name": "com.javimartd.theguardian.v2.mock"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDj6pty_ML3sDHcmurELWGB5aFc2vw_ohA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:786580455441:android:7d1d119bb8f5d8e5f431b0",
         "android_client_info": {
           "package_name": "com.javimartd.theguardian.v2.mock.debug"
