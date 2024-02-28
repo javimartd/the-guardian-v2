@@ -68,7 +68,7 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v2
         with:
-          path: app/build/outputs/apk/${{ env.PATH }}/debug/the-guardian-${{ env.BUILD_TYPE}}-debug.apk
+          path: app/build/outputs/apk/prod/debug/the-guardian-${{ env.BUILD_TYPE}}-debug.apk
           retention-days: ${{ env.RETENTION_DAYS }}
 
       - name: Code analysis reports (lint)
