@@ -91,12 +91,12 @@ android {
         debug {
             isDebuggable = true
             applicationIdSuffix = ".debug"
-            firebaseAppDistribution {
+            /*firebaseAppDistribution {
                 artifactType = "APK"
-                serviceCredentialsFile = "the-guardian-debug-distribution.json"
+                serviceCredentialsFile = System.getenv("GOOGLE_APPLICATION_CREDENTIALS") as String
                 releaseNotesFile = "release_notes.txt"
                 groups = "testers"
-            }
+            }*/
         }
         release {
             isMinifyEnabled = true
