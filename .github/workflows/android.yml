@@ -47,6 +47,7 @@ jobs:
       - name: Assemble Prod debug build
         run: ./gradlew assembleProdDebug
 
+
       - name: Distribute
         run: ./gradlew appDistributionUploadProdDebug
 
