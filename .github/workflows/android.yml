@@ -53,7 +53,7 @@ jobs:
         run: ./gradlew assembleProdDebug
 
       - name: Distribute
-        run: ./gradlew appDistributionUploadProdDebug --release_notes="This is an example"
+        run: ./gradlew appDistributionUploadProdDebug --releaseNotes="This is an example"
 
 #      - name: Assemble Mock debug build
 #        run: ./gradlew assembleMockDebug
