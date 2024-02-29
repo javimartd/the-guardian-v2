@@ -93,7 +93,7 @@ android {
             applicationIdSuffix = ".debug"
             firebaseAppDistribution {
                 artifactType = "APK"
-                serviceCredentialsFile = "the-guardian-debug-distribution.json"
+                serviceCredentialsFile = System.getenv("GOOGLE_APPLICATION_CREDENTIALS")
                 releaseNotesFile = "release_notes.txt"
                 groups = "testers"
             }
