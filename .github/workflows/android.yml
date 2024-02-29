@@ -31,7 +31,6 @@ jobs:
       APP_NAME: the-guardian
       RUN_NUMBER: ${{github.run_number}}
       BUILD_TYPE: Prod
-      PATH: prod
       THE_GUARDIAN_API_KEY: ${{ secrets.THE_GUARDIAN_API_KEY }}
       RETENTION_DAYS: 10
 
@@ -62,14 +61,14 @@ jobs:
       - name: Archive tests results
         uses: actions/upload-artifact@v2
         with:
-          path: app/build/reports/tests/test${{ env.BUILD_TYPE}}DebugUnitTest/index.html
+          path: app/build/reports/tests/testProdDebugUnitTest/index.html
           retention-days: ${{ env.RETENTION_DAYS }}
 
       - name: Upload APK
         uses: actions/upload-artifact@v2
         with:
           name: ${{ env.APP_NAME }}-debug-${{ env.RUN_NUMBER }}
-          path: app/build/outputs/apk/prod/debug/app-${{ env.BUILD_TYPE}}-debug.apk
+          path: app/build/outputs/apk/prod/debug/app-prod-debug.apk
           retention-days: ${{ env.RETENTION_DAYS }}
 
       - name: Code analysis report (Lint)
