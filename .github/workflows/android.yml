@@ -52,8 +52,11 @@ jobs:
       - name: Assemble Prod debug build
         run: ./gradlew assembleProdDebug
 
-      - name: Distribute
-        run: ./gradlew appDistributionUploadProdDebug --releaseNotesFile=release_notes.txt
+      - name: Firebase App Distribution
+        run: |
+          ./gradlew appDistributionUploadProdDebug 
+            --releaseNotesFile=release_notes.txt
+            --testers=testers
 
 #      - name: Assemble Mock debug build
 #        run: ./gradlew assembleMockDebug
