@@ -76,4 +76,4 @@ jobs:
 #          retention-days: ${{ env.RETENTION_DAYS }}
 
       - name: Distribute
-        run: ./gradlew appDistributionUploadProdDebug #--serviceCredentialsFile="${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}"
+        run: ./gradlew appDistributionUploadProdDebug --serviceCredentialsFile="${{ env.GOOGLE_APPLICATION_CREDENTIALS }}"
