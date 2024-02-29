@@ -13,16 +13,6 @@ on:
 
 jobs:
 
-  github-info:
-    runs-on: ubuntu-latest
-
-    steps:
-
-      - run: echo "Job automatically triggered by a ${{ github.event_name }} event on branch ${{ github.ref }}"
-
-      - name: Output Github context
-        run: echo "${{ toJSON(github) }}"
-
   android-workflow:
 
     runs-on: ubuntu-latest
@@ -35,6 +25,8 @@ jobs:
       RETENTION_DAYS: 10
 
     steps:
+
+      - run: echo "Job automatically triggered by a ${{ github.event_name }} event on branch ${{ github.ref }}"
 
       - name: Checkout the code
         uses: actions/checkout@v2
@@ -84,3 +76,7 @@ jobs:
 
       - name: Distribute
         run: ./gradlew assembleProdDebug appDistributionUploadProdDebug
+        env:
+          FAD_SERVICE_CREDENTIALS: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
+          FAD_GROUPS: 'testers'
+          FAD_RELEASE_NOTES_FILE: release-notes.txt
