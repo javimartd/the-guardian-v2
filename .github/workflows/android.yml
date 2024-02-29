@@ -75,8 +75,4 @@ jobs:
 #          retention-days: ${{ env.RETENTION_DAYS }}
 
       - name: Distribute
-        run: ./gradlew appDistributionUploadProdDebug
-        env:
-          FAD_SERVICE_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
-          FAD_GROUPS: 'testers'
-          FAD_RELEASE_NOTES_FILE: release-notes.txt
+        run: ./gradlew appDistributionUploadProdDebug --serviceCredentialsFile="${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}"
