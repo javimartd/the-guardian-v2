@@ -23,6 +23,7 @@ jobs:
       PRODUCT_FLAVOR: Prod
       THE_GUARDIAN_API_KEY: ${{ secrets.THE_GUARDIAN_API_KEY }}
       RETENTION_DAYS: 10
+      GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
 
     steps:
 
@@ -75,4 +76,4 @@ jobs:
 #          retention-days: ${{ env.RETENTION_DAYS }}
 
       - name: Distribute
-        run: ./gradlew appDistributionUploadProdDebug --serviceCredentialsFile="${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}"
+        run: ./gradlew appDistributionUploadProdDebug #--serviceCredentialsFile="${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}"
