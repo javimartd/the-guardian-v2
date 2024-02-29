@@ -1,3 +1,2 @@
 Release notes:
-- Introducing MVi pattern
-- Removing unused code
+- New MVI demo
