@@ -30,7 +30,7 @@ jobs:
     env:
       APP_NAME: the-guardian
       RUN_NUMBER: ${{github.run_number}}
-      BUILD_TYPE: Prod
+      PRODUCT_FLAVOR: Prod
       THE_GUARDIAN_API_KEY: ${{ secrets.THE_GUARDIAN_API_KEY }}
       RETENTION_DAYS: 10
 
@@ -52,15 +52,16 @@ jobs:
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
 
-      - name: Start a ${{env.BUILD_TYPE}} debug build
-        run: ./gradlew assemble${{ env.BUILD_TYPE }}Debug
+      - name: Assemble ${{env.BUILD_TYPE}} debug build
+        run: ./gradlew assemble${{ env.PRODUCT_FLAVOR }}Debug
 
       - name: Run unit tests
-        run: ./gradlew test${{ env.BUILD_TYPE}}DebugUnitTest
+        run: ./gradlew test${{ env.PRODUCT_FLAVOR}}DebugUnitTest
 
-      - name: Archive tests results
+      - name: Upload unit tests results
         uses: actions/upload-artifact@v2
         with:
+          name: unit-tests-results
           path: app/build/reports/tests/testProdDebugUnitTest/index.html
           retention-days: ${{ env.RETENTION_DAYS }}
 
@@ -71,13 +72,13 @@ jobs:
           path: app/build/outputs/apk/prod/debug/app-prod-debug.apk
           retention-days: ${{ env.RETENTION_DAYS }}
 
-      - name: Code analysis report (Lint)
-        run: ./gradlew lint${{ env.BUILD_TYPE}}Debug
+      - name: Run analysis results (Lint)
+        run: ./gradlew lint${{ env.PRODUCT_FLAVOR}}Debug
 
-      - name: Archive code analysis report
+      - name: Upload code analysis results
         uses: actions/upload-artifact@v2
         with:
-          name: Code analysis report
+          name: lint-results
           path: app/build/reports/lint-results-prodDebug.html
           retention-days: ${{ env.RETENTION_DAYS }}
 
