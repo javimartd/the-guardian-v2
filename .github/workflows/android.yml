@@ -77,6 +77,6 @@ jobs:
       - name: Distribute
         run: ./gradlew appDistributionUploadProdDebug
         env:
-          FAD_SERVICE_CREDENTIALS: ${{ secrets.CREDENTIAL_FILE_CONTENT }}
+          FAD_SERVICE_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
           FAD_GROUPS: 'testers'
           FAD_RELEASE_NOTES_FILE: release-notes.txt
