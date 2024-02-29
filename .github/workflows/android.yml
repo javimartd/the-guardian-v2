@@ -37,7 +37,7 @@ jobs:
     steps:
 
       - name: Checkout the code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
 
       - name: set up JDK 17
         uses: actions/setup-java@v2
@@ -82,5 +82,5 @@ jobs:
           path: app/build/reports/lint-results-prodDebug.html
           retention-days: ${{ env.RETENTION_DAYS }}
 
-#      - name: Distribute
-#        run: ./gradlew assembleProdDebug appDistributionUploadProdDebug
+      - name: Distribute
+        run: ./gradlew assembleProdDebug appDistributionUploadProdDebug
