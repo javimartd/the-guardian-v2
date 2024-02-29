@@ -20,10 +20,8 @@ jobs:
     env:
       APP_NAME: the-guardian
       RUN_NUMBER: ${{github.run_number}}
-      PRODUCT_FLAVOR: Prod
       THE_GUARDIAN_API_KEY: ${{ secrets.THE_GUARDIAN_API_KEY }}
       RETENTION_DAYS: 10
-      GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
 
     steps:
 
@@ -45,35 +43,35 @@ jobs:
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
 
-      - name: Assemble ${{env.BUILD_TYPE}} debug build
-        run: ./gradlew assemble${{ env.PRODUCT_FLAVOR }}Debug
+      - name: Assemble Prod debug build
+        run: ./gradlew assembleProdDebug
 
-#      - name: Run unit tests
-#        run: ./gradlew test${{ env.PRODUCT_FLAVOR}}DebugUnitTest
+      - name: Assemble Mock debug build
+        run: ./gradlew assembleMockDebug
 
-#      - name: Upload unit tests results
-#        uses: actions/upload-artifact@v2
-#        with:
-#          name: unit-tests-results
-#          path: app/build/reports/tests/testProdDebugUnitTest/index.html
-#          retention-days: ${{ env.RETENTION_DAYS }}
+      - name: Run unit tests
+        run: ./gradlew testProdDebugUnitTest
 
-#      - name: Upload APK
-#        uses: actions/upload-artifact@v2
-#        with:
-#          name: ${{ env.APP_NAME }}-debug-${{ env.RUN_NUMBER }}
-#          path: app/build/outputs/apk/prod/debug/app-prod-debug.apk
-#          retention-days: ${{ env.RETENTION_DAYS }}
+      - name: Upload unit tests results
+        uses: actions/upload-artifact@v2
+        with:
+          name: unit-tests-results
+          path: app/build/reports/tests/testProdDebugUnitTest/index.html
+          retention-days: ${{ env.RETENTION_DAYS }}
 
-#      - name: Run code analysis (Lint)
-#        run: ./gradlew lint${{ env.PRODUCT_FLAVOR}}Debug
+      - name: Upload .apk
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.APP_NAME }}-debug-${{ env.RUN_NUMBER }}
+          path: app/build/outputs/apk/prod/debug/app-prod-debug.apk
+          retention-days: ${{ env.RETENTION_DAYS }}
 
-#      - name: Upload code analysis results
-#        uses: actions/upload-artifact@v2
-#        with:
-#          name: lint-results
-#          path: app/build/reports/lint-results-prodDebug.html
-#          retention-days: ${{ env.RETENTION_DAYS }}
+      - name: Run code analysis (Lint)
+        run: ./gradlew lintProdDebug
 
-      - name: Distribute
-        run: ./gradlew appDistributionUploadProdDebug --serviceCredentialsFile="${{ env.GOOGLE_APPLICATION_CREDENTIALS }}"
+      - name: Upload code analysis results
+        uses: actions/upload-artifact@v2
+        with:
+          name: lint-results
+          path: app/build/reports/lint-results-prodDebug.html
+          retention-days: ${{ env.RETENTION_DAYS }}
