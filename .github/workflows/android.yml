@@ -13,7 +13,7 @@ on:
 
 jobs:
 
-  info:
+  github-info:
     runs-on: ubuntu-latest
 
     steps:
@@ -68,15 +68,17 @@ jobs:
       - name: Upload APK
         uses: actions/upload-artifact@v2
         with:
-          path: app/build/outputs/apk/prod/debug/the-guardian-${{ env.BUILD_TYPE}}-debug.apk
+          name: ${{ env.APP_NAME }}-debug-${{ env.RUN_NUMBER }}
+          path: app/build/outputs/apk/prod/debug/app-${{ env.BUILD_TYPE}}-debug.apk
           retention-days: ${{ env.RETENTION_DAYS }}
 
-      - name: Code analysis reports (lint)
+      - name: Code analysis report (Lint)
         run: ./gradlew lint${{ env.BUILD_TYPE}}Debug
 
-      - name: Archive code coverage results
+      - name: Archive code analysis report
         uses: actions/upload-artifact@v2
         with:
+          name: Code analysis report
           path: app/build/reports/lint-results-prodDebug.html
           retention-days: ${{ env.RETENTION_DAYS }}
 
