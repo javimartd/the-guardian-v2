@@ -47,8 +47,7 @@ jobs:
       - name: Assemble Prod debug build
         run: ./gradlew assembleProdDebug
 
-      - name: Auth
-        uses: google-github-actions/auth@v2
+      - uses: 'google-github-actions/auth@v2'
         with:
           credentials_json: '${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
 
