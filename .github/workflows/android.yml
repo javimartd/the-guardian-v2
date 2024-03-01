@@ -53,35 +53,35 @@ jobs:
       - name: Assemble Prod debug build
         run: ./gradlew assembleProdDebug
 
+      - name: Assemble Mock debug build
+        run: ./gradlew assembleMockDebug
+
+      - name: Run unit tests
+        run: ./gradlew testProdDebugUnitTest
+
+      - name: Upload unit tests results
+        uses: actions/upload-artifact@v2
+        with:
+          name: unit-tests-results
+          path: app/build/reports/tests/testProdDebugUnitTest/index.html
+          retention-days: ${{ env.RETENTION_DAYS }}
+
+      - name: Upload .apk
+        uses: actions/upload-artifact@v2
+        with:
+          name: ${{ env.APP_NAME }}-debug-${{ env.RUN_NUMBER }}
+          path: app/build/outputs/apk/prod/debug/app-prod-debug.apk
+          retention-days: ${{ env.RETENTION_DAYS }}
+
       - name: Firebase App Distribution
         run: ./gradlew appDistributionUploadProdDebug --releaseNotesFile=release_notes.txt --groups=testers
 
-#      - name: Assemble Mock debug build
-#        run: ./gradlew assembleMockDebug
+      - name: Run code analysis (Lint)
+        run: ./gradlew lintProdDebug
 
-#      - name: Run unit tests
-#        run: ./gradlew testProdDebugUnitTest
-
-#      - name: Upload unit tests results
-#        uses: actions/upload-artifact@v2
-#        with:
-#          name: unit-tests-results
-#          path: app/build/reports/tests/testProdDebugUnitTest/index.html
-#          retention-days: ${{ env.RETENTION_DAYS }}
-
-#      - name: Upload .apk
-#        uses: actions/upload-artifact@v2
-#        with:
-#          name: ${{ env.APP_NAME }}-debug-${{ env.RUN_NUMBER }}
-#          path: app/build/outputs/apk/prod/debug/app-prod-debug.apk
-#          retention-days: ${{ env.RETENTION_DAYS }}
-
-#      - name: Run code analysis (Lint)
-#        run: ./gradlew lintProdDebug
-
-#      - name: Upload code analysis results
-#        uses: actions/upload-artifact@v2
-#        with:
-#          name: lint-results
-#          path: app/build/reports/lint-results-prodDebug.html
-#          retention-days: ${{ env.RETENTION_DAYS }}
+      - name: Upload code analysis results
+        uses: actions/upload-artifact@v2
+        with:
+          name: lint-results
+          path: app/build/reports/lint-results-prodDebug.html
+          retention-days: ${{ env.RETENTION_DAYS }}
