@@ -74,7 +74,7 @@ jobs:
           retention-days: ${{ env.RETENTION_DAYS }}
 
       - name: Firebase App Distribution
-        run: ./gradlew appDistributionUploadProdDebug --releaseNotesFile=release_notes.txt --groups=testers
+        run: ./gradlew assembleProdDebug appDistributionUploadProdDebug --releaseNotesFile=release_notes.txt --groups=testers
 
       - name: Run code analysis (Lint)
         run: ./gradlew lintProdDebug
