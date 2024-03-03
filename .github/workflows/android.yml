@@ -6,6 +6,8 @@ on:
     tags:
       - 'v*'
   pull_request:
+    types:
+      - opened
     branches: [ main, develop ]
   schedule:
     - cron: '0 11 * * 1'
@@ -56,8 +58,8 @@ jobs:
       - name: Assemble Mock debug build
         run: ./gradlew assembleMockDebug
 
-#      - name: Run unit tests
-#        run: ./gradlew testProdDebugUnitTest
+      - name: Run unit tests
+        run: ./gradlew testProdDebugUnitTest
 
 #      - name: Upload unit tests results
 #        uses: actions/upload-artifact@v2
