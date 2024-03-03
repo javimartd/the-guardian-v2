@@ -82,8 +82,8 @@ jobs:
           path: app/build/outputs/apk/prod/debug/app-prod-debug.apk
           retention-days: ${{ env.RETENTION_DAYS }}
 
-#      - name: Run code analysis (Lint)
-#        run: ./gradlew lintProdDebug
+      - name: Run code analysis (Lint)
+        run: ./gradlew lintProdDebug
 
 #      - name: Upload code analysis results
 #        uses: actions/upload-artifact@v2
