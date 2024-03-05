@@ -1,5 +1,6 @@
 name: android CI
 
+# when this workflow should be executed.
 on:
   push:
     branches:
@@ -15,12 +16,14 @@ on:
       - reopened
   schedule:
     - cron: '0 11 * * 1'
+  # this event makes sure that the user can manually trigger this workflow.
   workflow_dispatch:
 
 jobs:
 
   android-workflow:
 
+    # runner on which the job will execute different steps (environment).
     runs-on: ubuntu-latest
 
     env:
@@ -32,10 +35,13 @@ jobs:
 
     steps:
 
+      # run defines the command that should be executed in the command line.
       - run: echo "Job automatically triggered by a ${{ github.event_name }} event on branch ${{ github.ref }}"
 
+      # step name
       - name: Checkout the code
-        uses: actions/checkout@v4
+        # uses is a keyword to use an action.
+        uses: actions/checkout@v4 # https://github.com/marketplace/actions/checkout
 
       # https://github.com/marketplace/actions/authenticate-to-google-cloud
       - name: Authenticate to Google Cloud
@@ -44,7 +50,8 @@ jobs:
           credentials_json: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
 
       - name: set up JDK 17
-        uses: actions/setup-java@v2
+        uses: actions/setup-java@v2 # https://github.com/marketplace/actions/setup-java-jdk
+        # with is a keyword to take various keys that configure the action.
         with:
           java-version: '17'
           distribution: 'adopt'
@@ -69,7 +76,7 @@ jobs:
         run: ./gradlew assembleProdDebug appDistributionUploadProdDebug --releaseNotesFile=release_notes.txt --groups=testers
 
       - name: Upload unit tests results
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v2 # https://github.com/marketplace/actions/upload-a-build-artifact
         with:
           name: unit-tests-results
           path: app/build/reports/tests/testProdDebugUnitTest/index.html
