@@ -102,8 +102,6 @@ jobs:
       - name: Get build artifacts
         uses: actions/download-artifact@v3
         with:
-          name: |
-            unit-tests-results
-            lint-results
+          name: lint-results
       - name: Output content
-        run: ls
+        run: ls # list the content of the folder we are currently in
