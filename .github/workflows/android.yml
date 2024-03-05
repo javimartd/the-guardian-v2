@@ -31,12 +31,11 @@ jobs:
       RUN_NUMBER: ${{github.run_number}}
       THE_GUARDIAN_API_KEY: ${{ secrets.THE_GUARDIAN_API_KEY }}
       RETENTION_DAYS: 10
-      GOOGLE_APPLICATION_CREDENTIALS: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
 
     steps:
 
       # run defines the command that should be executed in the command line.
-      - run: echo "Job automatically triggered by a ${{ github.event_name }} event on branch ${{ github.ref }}"
+      - run: echo "Job automatically triggered by a $github.event_name event on branch $github.ref"
 
       # step name
       - name: Get the code
@@ -85,9 +84,9 @@ jobs:
       - name: Upload .apk artifact
         uses: actions/upload-artifact@v2
         with:
-          name: ${{ env.APP_NAME }}-debug-${{ env.RUN_NUMBER }}
+          name: $APP_NAME-debug-$RUN_NUMBER
           path: app/build/outputs/apk/prod/debug/app-prod-debug.apk
-          retention-days: ${{ env.RETENTION_DAYS }}
+          retention-days: $RETENTION_DAYS
 
       - name: Run code analysis (Lint)
         run: ./gradlew lintProdDebug
