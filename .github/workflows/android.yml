@@ -73,16 +73,16 @@ jobs:
         run: ./gradlew testProdDebugUnitTest
 
       - name: Firebase App Distribution
-        run: ./gradlew assembleProdDebug appDistributionUploadProdDebug --releaseNotesFile=release_notes.txt --groups=testers
+        run: ./gradlew appDistributionUploadProdDebug --releaseNotesFile=release_notes.txt --groups=testers
 
-      - name: Upload unit tests results
+      - name: Upload unit tests artifact
         uses: actions/upload-artifact@v2 # https://github.com/marketplace/actions/upload-a-build-artifact
         with:
-          name: unit-tests-results
-          path: app/build/reports/tests/testProdDebugUnitTest/index.html
+          name: unit-tests-results # job artifact name
+          path: app/build/reports/tests/testProdDebugUnitTest/index.html # job artifact to upload
           retention-days: ${{ env.RETENTION_DAYS }}
 
-      - name: Upload .apk
+      - name: Upload .apk artifact
         uses: actions/upload-artifact@v2
         with:
           name: ${{ env.APP_NAME }}-debug-${{ env.RUN_NUMBER }}
@@ -92,9 +92,18 @@ jobs:
       - name: Run code analysis (Lint)
         run: ./gradlew lintProdDebug
 
-      - name: Upload code analysis results
+      - name: Upload code analysis artifact
         uses: actions/upload-artifact@v2
         with:
           name: lint-results
           path: app/build/reports/lint-results-prodDebug.html
           retention-days: ${{ env.RETENTION_DAYS }}
+
+      - name: Get build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: |
+            unit-tests-results
+            lint-results
+      - name: Output content
+        run: ls
