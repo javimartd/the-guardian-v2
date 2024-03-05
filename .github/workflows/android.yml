@@ -98,10 +98,3 @@ jobs:
           name: lint-results
           path: app/build/reports/lint-results-prodDebug.html
           retention-days: ${{ env.RETENTION_DAYS }}
-
-      - name: Get build artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: lint-results
-      - name: Output content
-        run: ls # list the content of the folder we are currently in
