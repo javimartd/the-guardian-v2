@@ -35,7 +35,8 @@ jobs:
     steps:
 
       # run defines the command that should be executed in the command line.
-      - run: echo "Job automatically triggered by a $github.event_name event on branch $github.ref"
+      - name: Starting...
+        run: echo "Job automatically triggered by a ${{ github.event_name }} event on branch ${{ github.ref }}"
 
       # step name
       - name: Get the code
@@ -63,7 +64,18 @@ jobs:
         run: ./gradlew assembleMockDebug
 
       - name: Run unit tests
+        # assign unique id to the step to reference it.
+        id: run-unit-tests
         run: ./gradlew testProdDebugUnitTest
+
+      - name: Upload unit tests artifact
+        # https://docs.github.com/en/actions/learn-github-actions/contexts#steps-context
+        if: steps.run-unit-tests.outcome == 'failure'
+        uses: actions/upload-artifact@v2 # https://github.com/marketplace/actions/upload-a-build-artifact
+        with:
+          name: unit-tests-results # job artifact name
+          path: app/build/reports/tests/testProdDebugUnitTest/index.html # job artifact to upload
+          retention-days: ${{ env.RETENTION_DAYS }}
 
       # https://github.com/marketplace/actions/authenticate-to-google-cloud
       - name: Authenticate to Google Cloud
@@ -74,19 +86,12 @@ jobs:
       - name: Firebase App Distribution
         run: ./gradlew appDistributionUploadProdDebug --releaseNotesFile=release_notes.txt --groups=testers
 
-      - name: Upload unit tests artifact
-        uses: actions/upload-artifact@v2 # https://github.com/marketplace/actions/upload-a-build-artifact
-        with:
-          name: unit-tests-results # job artifact name
-          path: app/build/reports/tests/testProdDebugUnitTest/index.html # job artifact to upload
-          retention-days: ${{ env.RETENTION_DAYS }}
-
       - name: Upload .apk artifact
         uses: actions/upload-artifact@v2
         with:
-          name: $APP_NAME-debug-$RUN_NUMBER
+          name: ${{ env.APP_NAME }}-debug-${{ env.RUN_NUMBER }}
           path: app/build/outputs/apk/prod/debug/app-prod-debug.apk
-          retention-days: $RETENTION_DAYS
+          retention-days: ${{ env.RETENTION_DAYS }}
 
       - name: Run code analysis (Lint)
         run: ./gradlew lintProdDebug
