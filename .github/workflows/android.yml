@@ -19,6 +19,11 @@ on:
   # this event makes sure that the user can manually trigger this workflow.
   workflow_dispatch:
 
+env:
+  APP_NAME: the-guardian
+  THE_GUARDIAN_API_KEY: ${{ secrets.THE_GUARDIAN_API_KEY }}
+  RETENTION_DAYS: 10
+
 jobs:
 
   android-workflow:
@@ -27,10 +32,7 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      APP_NAME: the-guardian
       RUN_NUMBER: ${{github.run_number}}
-      THE_GUARDIAN_API_KEY: ${{ secrets.THE_GUARDIAN_API_KEY }}
-      RETENTION_DAYS: 10
 
     steps:
 
@@ -70,6 +72,7 @@ jobs:
 
       - name: Upload unit tests artifact
         # https://docs.github.com/en/actions/learn-github-actions/contexts#steps-context
+        # https://docs.github.com/en/actions/learn-github-actions/expressions#status-check-functions
         if: failure() && steps.run-unit-tests.outcome == 'failure'
         uses: actions/upload-artifact@v2 # https://github.com/marketplace/actions/upload-a-build-artifact
         with:
@@ -108,6 +111,9 @@ jobs:
           java-version: '17'
           distribution: 'adopt'
           cache: gradle
+
+      - name: Access THE_GUARDIAN_API_KEY
+        run: echo THE_GUARDIAN_API_KEY=\"$THE_GUARDIAN_API_KEY\" > ./local.properties
 
       - name: Run code analysis (Lint)
         run: ./gradlew lintProdDebug
