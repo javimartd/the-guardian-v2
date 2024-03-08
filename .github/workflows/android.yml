@@ -98,6 +98,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
+      - name: set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+          cache: gradle
+
       - name: Get the code
         uses: actions/checkout@v4
 
