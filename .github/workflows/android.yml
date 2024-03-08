@@ -70,7 +70,7 @@ jobs:
 
       - name: Upload unit tests artifact
         # https://docs.github.com/en/actions/learn-github-actions/contexts#steps-context
-        if: steps.run-unit-tests.outcome == 'failure'
+        if: failure() && steps.run-unit-tests.outcome == 'failure'
         uses: actions/upload-artifact@v2 # https://github.com/marketplace/actions/upload-a-build-artifact
         with:
           name: unit-tests-results # job artifact name
@@ -93,6 +93,14 @@ jobs:
           path: app/build/outputs/apk/prod/debug/app-prod-debug.apk
           retention-days: ${{ env.RETENTION_DAYS }}
 
+  analysis-workflow:
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Get the code
+        uses: actions/checkout@v4
+
       - name: Run code analysis (Lint)
         run: ./gradlew lintProdDebug
 
@@ -102,3 +110,4 @@ jobs:
           name: lint-results
           path: app/build/reports/lint-results-prodDebug.html
           retention-days: ${{ env.RETENTION_DAYS }}
+
