@@ -1,0 +1,21 @@
+name: Common Steps
+
+on:
+  workflow_run:
+    workflows: ["android-workflow", "analysis-workflow"]
+    types:
+      - completed
+
+jobs:
+  common:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'adopt'
+          cache: gradle
