@@ -76,7 +76,7 @@ jobs:
         if: failure() && steps.run-unit-tests.outcome == 'failure'
         uses: actions/upload-artifact@v2 # https://github.com/marketplace/actions/upload-a-build-artifact
         with:
-          name: unit-tests-results # job artifact name
+          name: unit-tests-report # job artifact name
           path: app/build/reports/tests/testProdDebugUnitTest/index.html # job artifact to upload
           retention-days: ${{ env.RETENTION_DAYS }}
 
@@ -102,15 +102,8 @@ jobs:
 
     steps:
 
-      - name: Get the code
-        uses: actions/checkout@v4
-
-      - name: set up JDK 17
-        uses: actions/setup-java@v3
-        with:
-          java-version: '17'
-          distribution: 'adopt'
-          cache: gradle
+      - name: Common Steps
+        uses: ./.github/workflows/common-steps.yml#common
 
       - name: Access THE_GUARDIAN_API_KEY
         run: echo THE_GUARDIAN_API_KEY=\"$THE_GUARDIAN_API_KEY\" > ./local.properties
