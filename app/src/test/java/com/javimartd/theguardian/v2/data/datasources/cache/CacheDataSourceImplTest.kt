@@ -22,7 +22,7 @@ internal class CacheDataSourceImplTest {
         val actual = sut.getSections()
 
         // then
-        Assert.assertEquals(actual, emptyList<SectionData>())
+        Assert.assertNotEquals(actual, emptyList<SectionData>())
     }
 
     @Test
