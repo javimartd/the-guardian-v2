@@ -102,6 +102,9 @@ jobs:
 
     steps:
 
+      - name: Get the code
+        uses: actions/checkout@v4
+
       - name: Common steps
         uses: ./.github/workflows/common_steps.yml
 
