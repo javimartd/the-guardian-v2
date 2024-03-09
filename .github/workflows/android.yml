@@ -105,7 +105,7 @@ jobs:
     steps:
 
       - name: Checkout code & Set up Java 17
-        uses: ./.github/actions/common
+        uses: ./.github/actions/common/action.yml
 
       - name: Access THE_GUARDIAN_API_KEY
         run: echo THE_GUARDIAN_API_KEY=\"$THE_GUARDIAN_API_KEY\" > ./local.properties
