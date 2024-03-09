@@ -1,16 +1,10 @@
-name: Common steps
+steps:
+  - name: Checkout code
+    uses: actions/checkout@v4
 
-on: workflow_call # this allows this workflow to be called from other workflows.
-jobs:
-  common:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Setup JDK 17
-        uses: actions/setup-java@v2
-        with:
-          java-version: '17'
-          distribution: 'adopt'
-          cache: gradle
+  - name: Setup JDK 17
+    uses: actions/setup-java@v2
+    with:
+      java-version: '17'
+      distribution: 'adopt'
+      cache: gradle
