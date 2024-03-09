@@ -4,8 +4,10 @@ runs:
   using: 'composite'
   steps:
     - name: Setup JDK 17
-      uses: actions/setup-java@v2
+      uses: actions/setup-java@v4
       with:
         java-version: '17'
         distribution: 'adopt'
         cache: gradle
+    - name: Access THE_GUARDIAN_API_KEY
+      run: echo THE_GUARDIAN_API_KEY=\"$THE_GUARDIAN_API_KEY\" > ./local.properties
