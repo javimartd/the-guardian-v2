@@ -3,8 +3,6 @@ description: 'Checkout code and Set up Java 17'
 runs:
   using: 'composite'
   steps:
-    - name: Checkout code
-      uses: actions/checkout@v4
     - name: Setup JDK 17
       uses: actions/setup-java@v2
       with:
