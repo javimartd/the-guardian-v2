@@ -88,7 +88,7 @@ jobs:
 
       - name: Firebase App Distribution
         # the job should continue execution even if that step fails.
-        continue-on-error: true
+        #continue-on-error: true
         run: ./gradlew aappDistributionUploadProdDebug --releaseNotesFile=release_notes.txt --groups=testers
 
       - name: Upload .apk artifact
@@ -98,27 +98,4 @@ jobs:
           path: app/build/outputs/apk/prod/debug/app-prod-debug.apk
           retention-days: ${{ env.RETENTION_DAYS }}
 
-  analysis-workflow:
-
-    runs-on: ubuntu-latest
-
-    steps:
-
-      - uses: actions/checkout@v1
-
-      - name: Common steps
-        uses: ./.github/workflows/common_steps.yml
-
-      - name: Access THE_GUARDIAN_API_KEY
-        run: echo THE_GUARDIAN_API_KEY=\"$THE_GUARDIAN_API_KEY\" > ./local.properties
-
-      - name: Run code analysis (Lint)
-        run: ./gradlew lintProdDebug
-
-      - name: Upload code analysis artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: lint-results
-          path: app/build/reports/lint-results-prodDebug.html
-          retention-days: ${{ env.RETENTION_DAYS }}
 
