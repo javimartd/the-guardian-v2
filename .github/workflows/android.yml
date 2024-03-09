@@ -110,9 +110,6 @@ jobs:
       - name: Checkout code & Set up Java 17
         uses: ./.github/actions/common
 
-      - name: Access THE_GUARDIAN_API_KEY
-        run: echo THE_GUARDIAN_API_KEY=\"$THE_GUARDIAN_API_KEY\" > ./local.properties
-
       - name: Run code analysis (Lint)
         run: ./gradlew lintProdDebug
 
