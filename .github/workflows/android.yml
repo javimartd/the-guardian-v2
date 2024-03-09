@@ -49,6 +49,7 @@ jobs:
         uses: actions/setup-java@v2 # https://github.com/marketplace/actions/setup-java-jdk
         # with is a keyword to take various keys that configure the action.
         with:
+          using: 'node20'
           java-version: '17'
           distribution: 'adopt'
           cache: gradle
@@ -88,8 +89,8 @@ jobs:
 
       - name: Firebase App Distribution
         # the job should continue execution even if that step fails.
-        #continue-on-error: true
-        run: ./gradlew aappDistributionUploadProdDebug --releaseNotesFile=release_notes.txt --groups=testers
+        continue-on-error: true
+        run: ./gradlew appDistributionUploadProdDebug --releaseNotesFile=release_notes.txt --groups=testers
 
       - name: Upload .apk artifact
         uses: actions/upload-artifact@v2
