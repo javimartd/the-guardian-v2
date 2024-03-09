@@ -1,11 +1,6 @@
 name: Common steps
 
-on:
-  workflow_run:
-    workflows: ["android-workflow", "analysis-workflow"]
-    types:
-      - completed
-
+on: workflow_call # this allows this workflow to be called from other workflows.
 jobs:
   common:
     runs-on: ubuntu-latest
