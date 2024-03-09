@@ -98,4 +98,26 @@ jobs:
           path: app/build/outputs/apk/prod/debug/app-prod-debug.apk
           retention-days: ${{ env.RETENTION_DAYS }}
 
+  analysis-workflow:
+
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - name: Common steps
+        uses: ./.github/workflows/common_steps.yml
+
+      - name: Access THE_GUARDIAN_API_KEY
+        run: echo THE_GUARDIAN_API_KEY=\"$THE_GUARDIAN_API_KEY\" > ./local.properties
+
+      - name: Run code analysis (Lint)
+        run: ./gradlew lintProdDebug
+
+      - name: Upload code analysis artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: lint-results
+          path: app/build/reports/lint-results-prodDebug.html
+          retention-days: ${{ env.RETENTION_DAYS }}
+
 
