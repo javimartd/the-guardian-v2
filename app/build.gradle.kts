@@ -23,7 +23,7 @@ fun headCommitSha(): String {
     return sha.runCommand().trim().take(8)
 }*/
 
-val versionMajor = 12
+val versionMajor = 13
 val versionMinor = 0
 val versionPatch = 0
 //val versionBuild = headCommitCount()

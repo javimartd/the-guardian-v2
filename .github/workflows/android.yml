@@ -31,6 +31,9 @@ jobs:
     # runner on which the job will execute different steps (environment).
     runs-on: ubuntu-latest
 
+    # https://docs.github.com/en/actions/using-jobs/assigning-permissions-to-jobs
+    permissions: read-all
+
     steps:
 
       # run defines the command that should be executed in the command line.
