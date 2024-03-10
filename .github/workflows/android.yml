@@ -1,3 +1,4 @@
+# https://github.com/marketplace/actions/automated-build-android-app-with-github-action
 name: android CI
 
 # when this workflow should be executed.
@@ -93,7 +94,7 @@ jobs:
           RUN_NUMBER: ${{github.run_number}}
         with:
           name: ${{ env.APP_NAME }}-debug-${{ env.RUN_NUMBER }}
-          path: app/build/outputs/apk/prod/debug/app-prod-debug.apk
+          path: app/build/outputs/apk/prod/debug/
           retention-days: ${{ env.RETENTION_DAYS }}
 
   analysis-workflow:
