@@ -1,4 +1,5 @@
 # https://github.com/marketplace/actions/automated-build-android-app-with-github-action
+# https://github.com/jeffdcamp/android-template/blob/master/settings.gradle.kts
 name: android CI
 
 # when this workflow should be executed.
