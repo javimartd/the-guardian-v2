@@ -1,13 +1,103 @@
 pipeline {
 
-    agent any
+    agent any // any available agent
+
+    parameters {
+        choice(
+            name: "CHOICE_DEPLOY_ENV",
+            choices:["Mock", "Prod"],
+            description: "Which environment to deploy in?"
+        )
+        text(
+            name: 'TEXT_RELEASE_NOTES',
+            defaultValue: '',
+            description: 'Add release notes'
+        )
+    }
+
+    environment {
+        ANDROID_APP = "The Guardian App"
+        TO_LIST = """
+            javier.mart7@gmail.com,
+        """
+    }
 
     stages {
 
-        stage('Starting...') {
+        stage("Configuration") {
             steps {
-                echo 'Starting The Guardian app'
+                echo "Environment is set to ${params.CHOICE_DEPLOY_ENV}"
+                echo "Release notes: ${params.TEXT_RELEASE_NOTES}"
+            }
+        }
+
+        stage("Build") {
+            steps {
+                echo 'Building...'
+                sh './gradlew assembleProdDebug'
+            }
+        }
+
+        stage('Unit tests') {
+            steps {
+                echo 'Testing..'
+                sh "./gradlew test${params.CHOICE_DEPLOY_ENV}DebugUnitTest"
+            }
+        }
+
+        stage('Distribute') {
+            steps {
+                echo 'Deploying....'
+            }
+        }
+
+        stage("Completed") {
+            steps {
+                echo "Job Complete!"
             }
         }
     }
+
+    post {
+        success {
+            echo 'The current Pipeline’s or stage’s run has a "success" status'
+            sendEmail(
+                subject = "SUCCESS CI: Project name -> ${env.JOB_NAME}",
+                body = """
+                <b>Your build is successful</b>
+                <br>Project: ${env.JOB_NAME}
+                <br>Build Number: ${env.BUILD_NUMBER}
+                <br> URL de build: ${env.BUILD_URL}
+                """
+            )
+        }
+        unsuccessful {
+            echo 'The current Pipeline’s or stage’s run has not a "success" status'
+            sendEmail(
+                subject = "FAILED CI: Project name -> ${env.JOB_NAME}",
+                body = """
+                <b>Your build is failing</b>
+                <br>Project: ${env.JOB_NAME}
+                <br>Build Number: ${env.BUILD_NUMBER}
+                <br> URL de build: ${env.BUILD_URL}
+                """
+            )
+        }
+    }
+}
+
+def sendEmail(
+        String subject,
+        String body
+) {
+    mail(
+        subject: "${subject}",
+        body: "${body}",
+        to: TO_LIST,
+        cc: '',
+        bcc: '',
+        charset: 'UTF-8',
+        mimeType: 'text/html',
+        replyTo: ''
+    )
 }
