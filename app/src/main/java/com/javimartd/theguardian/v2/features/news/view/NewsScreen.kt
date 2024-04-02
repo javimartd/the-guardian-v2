@@ -23,6 +23,8 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SearchBar
+import androidx.compose.material3.SearchBarColors
+import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.SnackbarResult
@@ -42,6 +44,7 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.AnnotatedString
@@ -159,6 +162,7 @@ fun SearchContent(
     onSearchQueryChange: (String) -> Unit,
     onSearchQueryClick: (String) -> Unit
 ) {
+
     val keyboardController = LocalSoftwareKeyboardController.current
     var active by remember { mutableStateOf(false) }
 
@@ -185,6 +189,9 @@ fun SearchContent(
             )
         },
         tonalElevation = 0.dp,
+        colors = SearchBarDefaults.colors(
+            containerColor = colorResource(id = R.color.gray_200)
+        ),
         trailingIcon = {
             if (active) {
                 IconButton(

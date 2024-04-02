@@ -6,8 +6,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
-import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import com.javimartd.theguardian.v2.R
 import com.javimartd.theguardian.v2.features.news.components.Tags
@@ -21,7 +21,7 @@ fun SettingsButton(onClick: () -> Unit) {
         Icon(
             contentDescription = stringResource(id = R.string.news_screen_settings_icon_content_description),
             imageVector = Icons.Default.Settings,
-            tint = colorResource(id = R.color.black)
+            tint = Color.Black
         )
     }
 }
