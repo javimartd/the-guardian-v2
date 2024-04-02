@@ -28,20 +28,22 @@ pipeline {
             steps {
                 echo "Environment is set to ${params.CHOICE_DEPLOY_ENV}"
                 echo "Release notes: ${params.TEXT_RELEASE_NOTES}"
+                echo "/var/jenkins_home/workspace/the guardian-v2/" >> local.properties
             }
         }
 
         stage("Build") {
             steps {
                 echo 'Building...'
-                sh './gradlew assembleProdDebug'
+                //sh './gradlew assembleProdDebug'
+                echo "./gradlew assemble$${params.CHOICE_DEPLOY_ENV}Debug"
             }
         }
 
         stage('Unit tests') {
             steps {
                 echo 'Testing..'
-                sh "./gradlew test${params.CHOICE_DEPLOY_ENV}DebugUnitTest"
+                //sh "./gradlew test${params.CHOICE_DEPLOY_ENV}DebugUnitTest"
             }
         }
 

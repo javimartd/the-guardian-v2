@@ -1,8 +1,5 @@
-# https://github.com/marketplace/actions/automated-build-android-app-with-github-action
-# https://github.com/jeffdcamp/android-template/blob/master/settings.gradle.kts
 name: android CI
 
-# when this workflow should be executed.
 on:
   push:
     branches:
@@ -18,7 +15,6 @@ on:
       - reopened
   schedule:
     - cron: '0 11 * * 1'
-  # this event makes sure that the user can manually trigger this workflow.
   workflow_dispatch:
 
 env:
@@ -30,25 +26,20 @@ jobs:
 
   android-workflow:
 
-    # runner on which the job will execute different steps (environment).
     runs-on: ubuntu-latest
 
-    # https://docs.github.com/en/actions/using-jobs/assigning-permissions-to-jobs
     permissions: read-all
 
     steps:
 
-      # run defines the command that should be executed in the command line.
       - name: Starting...
         env:
           EVENT: ${{ github.event_name }}
           REFS: ${{ github.ref }}
         run: echo "Job automatically triggered by a $EVENT event on branch $REFS"
 
-      # step name
       - name: Get the code
-        # uses is a keyword to use an action.
-        uses: actions/checkout@v4 # https://github.com/marketplace/actions/checkout
+        uses: actions/checkout@v4
 
       - name: Set up Java 17 & Access Api key
         uses: ./.github/actions/common
@@ -63,29 +54,23 @@ jobs:
         run: ./gradlew assembleMockDebug
 
       - name: Run unit tests
-        # assign unique id to the step to reference it.
         id: run-unit-tests
         run: ./gradlew testProdDebugUnitTest
 
       - name: Upload unit tests artifact
-        # https://docs.github.com/en/actions/learn-github-actions/contexts#steps-context
-        # https://docs.github.com/en/actions/learn-github-actions/expressions#status-check-functions
         if: failure() && steps.run-unit-tests.outcome == 'failure'
-        uses: actions/upload-artifact@v4 # https://github.com/marketplace/actions/upload-a-build-artifact
-        # with is a keyword to take various keys that configure the action.
+        uses: actions/upload-artifact@v4
         with:
-          name: unit-tests-report # job artifact name
-          path: app/build/reports/tests/testProdDebugUnitTest/index.html # job artifact to upload
+          name: unit-tests-report
+          path: app/build/reports/tests/testProdDebugUnitTest/index.html
           retention-days: ${{ env.RETENTION_DAYS }}
 
-      # https://github.com/marketplace/actions/authenticate-to-google-cloud
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
         with:
           credentials_json: ${{ secrets.GOOGLE_APPLICATION_CREDENTIALS }}
 
       - name: Firebase App Distribution
-        # the job should continue execution even if that step fails.
         continue-on-error: true
         run: ./gradlew appDistributionUploadProdDebug --releaseNotesFile=release_notes.txt --groups=testers
 
@@ -121,5 +106,3 @@ jobs:
           name: lint-results
           path: app/build/reports/lint-results-prodDebug.html
           retention-days: ${{ env.RETENTION_DAYS }}
-
-
