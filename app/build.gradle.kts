@@ -10,7 +10,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.app.distribution)
-
+    alias(libs.plugins.protobuf)
 }
 
 /*fun headCommitCount(): Int {
@@ -183,6 +183,7 @@ dependencies {
 
     // proto data store
     implementation(libs.datastore)
+    implementation(libs.protobuf.javalite)
 
     // images
     implementation(libs.coil)
@@ -195,4 +196,20 @@ dependencies {
     // unit tests
     testImplementation(libs.bundles.unit.test)
 }
+
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.21.7"
+    }
+    generateProtoTasks {
+        ofSourceSet("main").forEach { task ->
+            task.builtins {
+                getByName("java") {
+                    option("lite")
+                }
+            }
+        }
+    }
+}
+
 
