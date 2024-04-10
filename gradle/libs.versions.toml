@@ -2,11 +2,11 @@
 
 # plugins
 agp                         = "8.1.2"
-datastore-preferences       = "1.0.0"
 kotlin                      = "1.9.0"
 ksp                         = "1.9.0-1.0.12"
 google-services             = "4.4.1"
 firebase-app-distribution   = "4.1.0"
+protobuf                    = "0.9.4"
 
 # app
 activity-compose            = "1.7.2"
@@ -14,6 +14,7 @@ accompanist                 = "0.23.1"
 coil                        = "2.2.2"
 compose-bom                 = "2024.02.02"
 coroutines                  = "1.6.4"
+datastore-preferences       = "1.0.0"
 firebase-bom                = "32.7.1"
 hilt                        = "2.47"
 hilt-navigation             = "1.0.0"
@@ -22,6 +23,7 @@ lifecycle-extensions        = "2.2.0"
 lifecycle-compose           = "2.6.0"
 navigation                  = "2.7.6"
 okhttp                      = "4.10.0"
+protobuf-javalite           = "3.21.7"
 retrofit                    = "2.9.0"
 room                        = "2.6.1"
 
@@ -48,8 +50,9 @@ espresso-core = "3.5.1"
 # app
 accompanist                 = { module = "com.google.accompanist:accompanist-swiperefresh", version.ref = "accompanist" }
 activity-compose            = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
-datastore                   = { module = "androidx.datastore:datastore", version.ref = "datastore-preferences" }
 datastore-preferences       = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore-preferences" }
+datastore                   = { module = "androidx.datastore:datastore", version.ref = "datastore-preferences" }
+protobuf-javalite           = { module = "com.google.protobuf:protobuf-javalite", version.ref = "protobuf-javalite" }
 coil                        = { module = "io.coil-kt:coil-compose", version.ref = "coil" }
 compose-bom                 = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
 coroutines                  = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core", version.ref = "coroutines" }
@@ -104,6 +107,7 @@ jetbrains-kotlin-android    = { id = "org.jetbrains.kotlin.android", version.ref
 hilt                        = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 kotlin-kapt                 = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 ksp                         = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+protobuf                    = { id = "com.google.protobuf", version.ref = "protobuf" }
 google-services             = { id = "com.google.gms.google-services", version.ref = "google-services" }
 firebase-app-distribution   = { id = "com.google.firebase.appdistribution", version.ref = "firebase-app-distribution"}
 
