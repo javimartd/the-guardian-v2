@@ -4,9 +4,9 @@ pipeline {
 
     parameters {
         choice(
-            name: "CHOICE_DEPLOY_ENV",
+            name: 'CHOICE_DEPLOY_ENV',
             choices:["Mock", "Prod"],
-            description: "Which environment to deploy in?"
+            description: 'Which environment to deploy in?'
         )
         text(
             name: 'TEXT_RELEASE_NOTES',
@@ -34,7 +34,7 @@ pipeline {
 
         stage("Build") {
             steps {
-                echo 'Building...'
+                echo "Building..."
                 //sh './gradlew assembleProdDebug'
                 echo "./gradlew assemble${params.CHOICE_DEPLOY_ENV}Debug"
             }
