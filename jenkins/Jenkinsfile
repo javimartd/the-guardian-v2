@@ -36,7 +36,7 @@ pipeline {
             steps {
                 echo 'Building...'
                 //sh './gradlew assembleProdDebug'
-                echo "./gradlew assemble$${params.CHOICE_DEPLOY_ENV}Debug"
+                echo "./gradlew assemble${params.CHOICE_DEPLOY_ENV}Debug"
             }
         }
 
