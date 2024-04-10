@@ -28,7 +28,7 @@ pipeline {
             steps {
                 echo "Environment is set to ${params.CHOICE_DEPLOY_ENV}"
                 echo "Release notes: ${params.TEXT_RELEASE_NOTES}"
-                echo "/var/jenkins_home/workspace/the guardian-v2/" >> local.properties
+                //echo "/var/jenkins_home/workspace/the guardian-v2/" >> local.properties
             }
         }
 
