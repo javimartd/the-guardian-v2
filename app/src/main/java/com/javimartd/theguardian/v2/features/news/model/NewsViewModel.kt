@@ -79,6 +79,7 @@ class NewsViewModel @Inject constructor(
 
     fun getNews(sectionName: String) {
         uiState = NewsUiContract.State.Loading
+        // viewModeScope.launch { ... } operates in the main thread by default
         viewModelScope.launch {
             val response = getNewsUseCase(sectionName)
             response.fold(
