@@ -1,3 +1,12 @@
+
+class Constants {
+    static final String MAIN_BRANCH = 'main'
+    static final String DEVELOP_BRANCH = 'develop'
+
+    static final String INTERNAL_TRACK = 'internal'
+    static final String RELEASE_TRACK = 'release'
+}
+
 pipeline {
 
     agent any // any available agent
@@ -35,7 +44,7 @@ pipeline {
         stage("Build") {
             steps {
                 echo "Building..."
-                //sh './gradlew assembleProdDebug'
+                sh './gradlew assembleProdDebug'
                 //echo "./gradlew assemble${params.CHOICE_DEPLOY_ENV}Debug"
             }
         }

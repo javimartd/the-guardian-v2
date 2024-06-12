@@ -55,7 +55,9 @@ android {
             useSupportLibrary = true
         }
 
-        buildConfigField("String", "THE_GUARDIAN_API_KEY", getApiKey())
+        val guardianApiKey = System.getenv("THE_GUARDIAN_API") ?: "default_api_key"
+        buildConfigField("String", "THE_GUARDIAN_API_KEY", "\"$guardianApiKey\"")
+
     }
 
     buildFeatures {
