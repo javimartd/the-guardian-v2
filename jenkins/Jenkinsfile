@@ -57,7 +57,7 @@ pipeline {
         stage('Distribute') {
             steps {
                 echo 'Deploying....'
-                sh "./gradlew assemble${params.CHOICE_DEPLOY_ENV}Debug appDistributionUpload${params.CHOICE_DEPLOY_ENV}Debug --releaseNote='Example'"
+                sh "./gradlew assemble${params.CHOICE_DEPLOY_ENV}Debug appDistributionUpload${params.CHOICE_DEPLOY_ENV}Debug --releaseNotes=Hi there!"
             }
         }
 
