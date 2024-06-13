@@ -29,8 +29,6 @@ pipeline {
         TO_LIST = """
             javier.mart7@gmail.com,
         """
-        ANDROID_HOME = '/opt/android-sdk'
-        PATH = "${env.PATH}:${env.ANDROID_HOME}/cmdline-tools/bin:${env.ANDROID_HOME}/platform-tools"
     }
 
     stages {
@@ -40,15 +38,6 @@ pipeline {
                 echo "Environment is set to ${params.CHOICE_DEPLOY_ENV}"
                 echo "Release notes: ${params.TEXT_RELEASE_NOTES}"
                 //echo "/var/jenkins_home/workspace/the guardian-v2/" >> local.properties
-            }
-        }
-
-        stage('Setup') {
-            steps {
-                script {
-                    def localProperties = new File('local.properties')
-                    localProperties.text = "sdk.dir=${env.ANDROID_HOME}"
-                }
             }
         }
 
