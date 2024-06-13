@@ -44,15 +44,15 @@ pipeline {
         stage("Build") {
             steps {
                 echo "Building..."
-                sh './gradlew assembleProdDebug'
-                //echo "./gradlew assemble${params.CHOICE_DEPLOY_ENV}Debug"
+                //sh './gradlew assembleProdDebug'
+                sh "./gradlew assemble${params.CHOICE_DEPLOY_ENV}Debug"
             }
         }
 
         stage('Unit tests') {
             steps {
                 echo 'Testing..'
-                //sh "./gradlew test${params.CHOICE_DEPLOY_ENV}DebugUnitTest"
+                sh "./gradlew test${params.CHOICE_DEPLOY_ENV}DebugUnitTest"
             }
         }
 
