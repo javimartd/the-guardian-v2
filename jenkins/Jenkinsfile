@@ -59,6 +59,7 @@ pipeline {
         stage('Distribute') {
             steps {
                 echo 'Deploying....'
+                sh "./gradlew assembleProdDebug appDistributionUploadProdDebug"
             }
         }
 
