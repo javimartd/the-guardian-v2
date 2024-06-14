@@ -13,13 +13,23 @@ pipeline {
 
     parameters {
         choice(
-            name: 'CHOICE_DEPLOY_ENV',
+            name: 'CHOICE_ENVIRONMENT',
             choices:["Mock", "Prod"],
             description: 'Which environment to deploy in?'
         )
+        choice(
+            name: 'CHOICE_BUILD_TYPE',
+            choices:["Debug", "Release"],
+            description: 'Which build type?'
+        )
+        booleanParam(
+            name: 'GOOGLE PLAY',
+            defaultValue: false,
+            description: 'Deploy on Google Play'
+        )
         text(
             name: 'TEXT_RELEASE_NOTES',
-            defaultValue: '',
+            defaultValue: 'Release notes:\n',
             description: 'Add release notes'
         )
     }
@@ -35,7 +45,7 @@ pipeline {
 
         stage("Configuration") {
             steps {
-                echo "Environment is set to ${params.CHOICE_DEPLOY_ENV}"
+                echo "Environment is set to ${params.CHOICE_ENVIRONMENT}"
                 echo "Release notes: ${params.TEXT_RELEASE_NOTES}"
             }
         }
@@ -43,21 +53,29 @@ pipeline {
         stage("Build") {
             steps {
                 echo "Building..."
-                sh "./gradlew assemble${params.CHOICE_DEPLOY_ENV}Debug"
+                sh "./gradlew assemble${params.CHOICE_ENVIRONMENT}Debug"
             }
         }
 
         stage('Unit tests') {
             steps {
-                echo 'Testing..'
-                sh "./gradlew test${params.CHOICE_DEPLOY_ENV}DebugUnitTest"
+                echo 'Testing...'
+                sh "./gradlew test${params.CHOICE_ENVIRONMENT}DebugUnitTest"
             }
         }
 
-        stage('Distribute') {
+        stage('Firebase Distribution') {
             steps {
-                echo 'Deploying....'
-                sh "./gradlew assemble${params.CHOICE_DEPLOY_ENV}Debug appDistributionUpload${params.CHOICE_DEPLOY_ENV}Debug --releaseNotes='${params.TEXT_RELEASE_NOTES}'"
+                echo 'Deploying...'
+                def artifactPath = "app/build/outputs/apk/${params.CHOICE_ENVIRONMENT}/debug/"
+                def releaseNotes = "--releaseNotes='${params.TEXT_RELEASE_NOTES}"
+                def action = "appDistributionUpload${params.CHOICE_ENVIRONMENT}Debug"
+                def groups = "--groups=testers"
+                def gradleCommand = "./gradlew ${action} ${releaseNotes} ${groups}"
+                echo "Executing: ${gradleCommand}"
+                sh gradleCommand
+                //sh "./gradlew appDistributionUpload${params.CHOICE_ENVIRONMENT}Debug --releaseNotes='${params.TEXT_RELEASE_NOTES}' --groups=testers"
+                //sh "./gradlew assemble${params.CHOICE_ENVIRONMENT}Debug appDistributionUpload${params.CHOICE_ENVIRONMENT}Debug --releaseNotes='${params.TEXT_RELEASE_NOTES}' --groups=testers"
             }
         }
 
@@ -97,8 +115,8 @@ pipeline {
 }
 
 def sendEmail(
-        String subject,
-        String body
+    String subject,
+    String body
 ) {
     mail(
         subject: "${subject}",
