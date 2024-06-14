@@ -67,15 +67,17 @@ pipeline {
         stage('Firebase Distribution') {
             steps {
                 echo 'Deploying...'
-                def artifactPath = "app/build/outputs/apk/${params.CHOICE_ENVIRONMENT}/debug/"
-                def releaseNotes = "--releaseNotes='${params.TEXT_RELEASE_NOTES}"
-                def action = "appDistributionUpload${params.CHOICE_ENVIRONMENT}Debug"
-                def groups = "--groups=testers"
-                def gradleCommand = "./gradlew ${action} ${releaseNotes} ${groups}"
-                echo "Executing: ${gradleCommand}"
-                sh gradleCommand
-                //sh "./gradlew appDistributionUpload${params.CHOICE_ENVIRONMENT}Debug --releaseNotes='${params.TEXT_RELEASE_NOTES}' --groups=testers"
-                //sh "./gradlew assemble${params.CHOICE_ENVIRONMENT}Debug appDistributionUpload${params.CHOICE_ENVIRONMENT}Debug --releaseNotes='${params.TEXT_RELEASE_NOTES}' --groups=testers"
+                script {
+                    def artifactPath = "app/build/outputs/apk/${params.CHOICE_ENVIRONMENT}/debug/"
+                    def releaseNotes = "--releaseNotes='${params.TEXT_RELEASE_NOTES}"
+                    def action = "appDistributionUpload${params.CHOICE_ENVIRONMENT}Debug"
+                    def groups = "--groups=testers"
+                    def gradleCommand = "./gradlew ${action} ${releaseNotes} ${groups}"
+                    echo "Executing: ${gradleCommand}"
+                    sh gradleCommand
+                    //sh "./gradlew appDistributionUpload${params.CHOICE_ENVIRONMENT}Debug --releaseNotes='${params.TEXT_RELEASE_NOTES}' --groups=testers"
+                    //sh "./gradlew assemble${params.CHOICE_ENVIRONMENT}Debug appDistributionUpload${params.CHOICE_ENVIRONMENT}Debug --releaseNotes='${params.TEXT_RELEASE_NOTES}' --groups=testers"
+                }
             }
         }
 

@@ -23,7 +23,7 @@ fun headCommitSha(): String {
     return sha.runCommand().trim().take(8)
 }*/
 
-val versionMajor = 14
+val versionMajor = 40
 val versionMinor = 0
 val versionPatch = 0
 //val versionBuild = headCommitCount()
@@ -55,8 +55,8 @@ android {
             useSupportLibrary = true
         }
 
-        val guardianApiKey = System.getenv("THE_GUARDIAN_API") ?: "default_api_key"
-        buildConfigField("String", "THE_GUARDIAN_API_KEY", "\"$guardianApiKey\"")
+        val theGuardianApiKey = System.getenv("THE_GUARDIAN_API_KEY") ?: "default_api_key"
+        buildConfigField("String", "THE_GUARDIAN_API_KEY", "\"$theGuardianApiKey\"")
 
     }
 
@@ -72,7 +72,8 @@ android {
                 keyAlias = project.property("THE_GUARDIAN_APP_KEY_ALIAS")
                 keyPassword = project.property("THE_GUARDIAN_APP_KEY_PASSWORD")*/
             } catch (e: Exception) {
-                throw InvalidUserDataException("You should define THE_GUARDIAN_STORE and THE_GUARDIAN_APP_KEY in gradle.properties. " + e.message)
+                throw InvalidUserDataException("You should define THE_GUARDIAN_STORE and " +
+                        "THE_GUARDIAN_APP_KEY in gradle.properties. " + e.message)
             }
         }
     }
