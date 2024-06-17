@@ -23,7 +23,7 @@ fun headCommitSha(): String {
     return sha.runCommand().trim().take(8)
 }*/
 
-val versionMajor = 40
+val versionMajor = 10
 val versionMinor = 0
 val versionPatch = 0
 //val versionBuild = headCommitCount()
@@ -35,10 +35,16 @@ fun getApiKey(): String {
     return properties["THE_GUARDIAN_API_KEY"] as String
 }
 
-val keystorePropertiesFile = rootProject.file("keystore.properties")
-val keystoreProperties = Properties()
-keystoreProperties.load(FileInputStream(keystorePropertiesFile))
-
+fun getKeyStorePropertiesFile(): Properties {
+    val path = System.getenv("THE_GUARDIAN_KEY_STORE_PROPERTIES")
+        ?: throw IllegalArgumentException(
+            "Environment variable 'THE_GUARDIAN_KEY_STORE_PROPERTIES' is not set."
+        )
+    val keystorePropertiesFile = file(path)
+    val keystoreProperties = Properties()
+    FileInputStream(keystorePropertiesFile).use { keystoreProperties.load(it) }
+    return keystoreProperties
+}
 
 android {
     namespace = "com.javimartd.theguardian.v2"
@@ -72,10 +78,11 @@ android {
     signingConfigs {
         create("release") {
             try {
-                storeFile = file(keystoreProperties["THE_GUARDIAN_STORE_FILE"] as String)
-                storePassword = keystoreProperties["THE_GUARDIAN_STORE_PASSWORD"] as String
-                keyAlias = keystoreProperties["THE_GUARDIAN_KEY_ALIAS"] as String
-                keyPassword = keystoreProperties["THE_GUARDIAN_KEY_PASSWORD"] as String
+                val keystoreProperties = getKeyStorePropertiesFile()
+                storeFile = file(keystoreProperties.getProperty("THE_GUARDIAN_STORE_FILE"))
+                storePassword = keystoreProperties.getProperty("THE_GUARDIAN_STORE_PASSWORD")
+                keyAlias = keystoreProperties.getProperty("THE_GUARDIAN_KEY_ALIAS")
+                keyPassword = keystoreProperties.getProperty("THE_GUARDIAN_KEY_PASSWORD")
             } catch (e: Exception) {
                 throw InvalidUserDataException("You should define THE_GUARDIAN_STORE and " +
                         "THE_GUARDIAN_APP_KEY in gradle.properties. " + e.message)
