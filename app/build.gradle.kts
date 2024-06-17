@@ -35,6 +35,11 @@ fun getApiKey(): String {
     return properties["THE_GUARDIAN_API_KEY"] as String
 }
 
+val keystorePropertiesFile = rootProject.file("keystore.properties")
+val keystoreProperties = Properties()
+keystoreProperties.load(FileInputStream(keystorePropertiesFile))
+
+
 android {
     namespace = "com.javimartd.theguardian.v2"
     compileSdk = 34
@@ -67,10 +72,10 @@ android {
     signingConfigs {
         create("release") {
             try {
-                /*storeFile = file(project.property("THE_GUARDIAN_STORE_FILE"))
-                storePassword = project.property("THE_GUARDIAN_STORE_PASSWORD")
-                keyAlias = project.property("THE_GUARDIAN_APP_KEY_ALIAS")
-                keyPassword = project.property("THE_GUARDIAN_APP_KEY_PASSWORD")*/
+                storeFile = file(keystoreProperties["THE_GUARDIAN_STORE_FILE"] as String)
+                storePassword = keystoreProperties["THE_GUARDIAN_STORE_PASSWORD"] as String
+                keyAlias = keystoreProperties["THE_GUARDIAN_KEY_ALIAS"] as String
+                keyPassword = keystoreProperties["THE_GUARDIAN_KEY_PASSWORD"] as String
             } catch (e: Exception) {
                 throw InvalidUserDataException("You should define THE_GUARDIAN_STORE and " +
                         "THE_GUARDIAN_APP_KEY in gradle.properties. " + e.message)

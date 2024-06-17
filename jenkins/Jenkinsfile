@@ -23,7 +23,7 @@ pipeline {
             description: 'Which build type?'
         )
         booleanParam(
-            name: 'GOOGLE PLAY',
+            name: 'GOOGLE_PLAY',
             defaultValue: false,
             description: 'Deploy on Google Play'
         )
@@ -45,10 +45,16 @@ pipeline {
 
         stage("Configuration") {
             steps {
-                echo "Environment is set to ${params.CHOICE_ENVIRONMENT}"
+                echo "Environment: ${params.CHOICE_ENVIRONMENT}"
+                echo "Build Type: ${params.CHOICE_BUILD_TYPE}"
+                echo "Deploy on Google Play: ${params.GOOGLE_PLAY}"
                 echo "Release notes: ${params.TEXT_RELEASE_NOTES}"
             }
         }
+
+        /* stage('Clean') {
+            sh "./gradlew clean"
+        } */
 
         stage("Build") {
             steps {
@@ -69,8 +75,8 @@ pipeline {
                 echo 'Deploying...'
                 script {
                     def artifactPath = "app/build/outputs/apk/${params.CHOICE_ENVIRONMENT}/debug/"
-                    def releaseNotes = "--releaseNotes='${params.TEXT_RELEASE_NOTES}"
                     def action = "appDistributionUpload${params.CHOICE_ENVIRONMENT}Debug"
+                    def releaseNotes = "--releaseNotes='${params.TEXT_RELEASE_NOTES}"
                     def groups = "--groups=testers"
                     def gradleCommand = "./gradlew ${action} ${releaseNotes} ${groups}"
                     echo "Executing: ${gradleCommand}"

@@ -113,4 +113,7 @@ fabric.properties
 # Firebase distribution
 the-guardian-debug-distribution.json
 
+# keystoreProperties
+keystore.properties
+
 # End of https://www.gitignore.io/api/androidstudio
