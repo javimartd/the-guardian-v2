@@ -5,6 +5,9 @@ class Constants {
 
     static final String INTERNAL_TRACK = 'internal'
     static final String RELEASE_TRACK = 'release'
+
+    static final String PROD_ENVIRONMENT = 'Prod'
+    static final String MOCK_ENVIRONMENT = 'Mock'
 }
 
 pipeline {
@@ -14,7 +17,7 @@ pipeline {
     parameters {
         choice(
             name: 'CHOICE_ENVIRONMENT',
-            choices:["Prod", "Mock"],
+            choices:[PROD_ENVIRONMENT, MOCK_ENVIRONMENT],
             description: 'Which environment to deploy in?'
         )
         choice(
@@ -46,15 +49,15 @@ pipeline {
         stage('Starting...') {
             steps {
                 echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"
+                echo "Workspace: ${env.WORKSPACE}"
                 echo "Build number: ${env.BUILD_NUMBER}"
                 echo "Build tag: ${env.BUILD_TAG}"
                 echo "Build url: ${env.BUILD_URL}"
-                echo "Workspace: ${env.WORKSPACE}"
                 echo "Job name: ${env.JOB_NAME}"
             }
         }
 
-        stage("Configuration") {
+        stage("Parameters") {
             steps {
                 echo "Project: ${ANDROID_APP}"
                 echo "Environment: ${params.CHOICE_ENVIRONMENT}"
@@ -85,16 +88,20 @@ pipeline {
         stage('Firebase Distribution') {
             steps {
                 echo 'Deploying...'
-                script {
-                    def artifactPath = "app/build/outputs/apk/${params.CHOICE_ENVIRONMENT}/debug/"
-                    def action = "appDistributionUpload${params.CHOICE_ENVIRONMENT}Debug"
-                    def releaseNotes = "--releaseNotes='${params.TEXT_RELEASE_NOTES}'"
-                    def groups = "--groups=testers"
-                    def gradleCommand = "./gradlew ${action} ${releaseNotes} ${groups}"
-                    echo "Executing: ${gradleCommand}"
-                    sh gradleCommand
-                    //sh "./gradlew appDistributionUpload${params.CHOICE_ENVIRONMENT}Debug --releaseNotes='${params.TEXT_RELEASE_NOTES}' --groups=testers"
-                    //sh "./gradlew assemble${params.CHOICE_ENVIRONMENT}Debug appDistributionUpload${params.CHOICE_ENVIRONMENT}Debug --releaseNotes='${params.TEXT_RELEASE_NOTES}' --groups=testers"
+                if (params.CHOICE_ENVIRONMENT == PROD_ENVIRONMENT) {
+                    script {
+                        def artifactPath = "app/build/outputs/apk/${params.CHOICE_ENVIRONMENT}/debug/"
+                        def action = "appDistributionUpload${params.CHOICE_ENVIRONMENT}Debug"
+                        def releaseNotes = "--releaseNotes='${params.TEXT_RELEASE_NOTES}'"
+                        def groups = "--groups=testers"
+                        def gradleCommand = "./gradlew ${action} ${releaseNotes} ${groups}"
+                        echo "Executing: ${gradleCommand}"
+                        sh gradleCommand
+                        //sh "./gradlew appDistributionUpload${params.CHOICE_ENVIRONMENT}Debug --releaseNotes='${params.TEXT_RELEASE_NOTES}' --groups=testers"
+                        //sh "./gradlew assemble${params.CHOICE_ENVIRONMENT}Debug appDistributionUpload${params.CHOICE_ENVIRONMENT}Debug --releaseNotes='${params.TEXT_RELEASE_NOTES}' --groups=testers"
+                    }
+                } else {
+                    echo 'No Firebase distribution required'
                 }
             }
         }
