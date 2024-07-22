@@ -31,7 +31,10 @@ import com.javimartd.theguardian.v2.ui.components.TheGuardianSnackBarHost
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingsScreen(navHostController: NavHostController) {
+fun SettingsScreen(
+    navController: NavHostController,
+    viewModel: SettingsViewModel
+) {
 
     var checked by remember { mutableStateOf(true) }
     val snackBarHostState = remember { SnackbarHostState() }
@@ -43,7 +46,7 @@ fun SettingsScreen(navHostController: NavHostController) {
                 title = { Text(stringResource(R.string.settings_screen_toolbar)) },
                 navigationIcon = {
                     IconButton(
-                        onClick = { navHostController.navigateUp() }
+                        onClick = { navController.navigateUp() }
                     ) {
                         Icon(
                             contentDescription = stringResource(id = R.string.news_screen_settings_icon_content_description),

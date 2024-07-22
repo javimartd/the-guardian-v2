@@ -11,4 +11,5 @@ interface NewsRepository {
         sectionId: String
     ): Result<List<News>>
     fun getSections(): Flow<List<SectionData>>
+    suspend fun longTaskInBackground(): List<String>
 }

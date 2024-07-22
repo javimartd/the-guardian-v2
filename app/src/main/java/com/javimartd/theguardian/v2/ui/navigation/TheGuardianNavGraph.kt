@@ -8,6 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import com.javimartd.theguardian.v2.features.settings.view.SettingsScreen
 import com.javimartd.theguardian.v2.features.news.view.NewsScreen
 import com.javimartd.theguardian.v2.features.news.model.NewsViewModel
+import com.javimartd.theguardian.v2.features.settings.view.SettingsViewModel
 
 @Composable
 fun TheGuardianNavGraph() {
@@ -26,7 +27,11 @@ fun TheGuardianNavGraph() {
             )
         }
         composable(TheGuardianDestinations.SETTINGS_ROUTE) {
-            SettingsScreen(navController)
+            val viewModel = hiltViewModel<SettingsViewModel>()
+            SettingsScreen(
+                navController = navController,
+                viewModel = viewModel
+            )
         }
     }
 }

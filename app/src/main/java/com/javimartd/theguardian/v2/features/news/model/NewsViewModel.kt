@@ -1,5 +1,6 @@
 package com.javimartd.theguardian.v2.features.news.model
 
+import android.util.Log
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -68,7 +69,7 @@ class NewsViewModel @Inject constructor(
                 onSearchQueryChange(intent.newQuery)
             }
             is NewsUiContract.Intent.OnRefresh -> {
-                // TODo
+                // TODO
             }
         }
     }

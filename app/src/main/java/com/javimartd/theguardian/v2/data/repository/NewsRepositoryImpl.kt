@@ -1,5 +1,6 @@
 package com.javimartd.theguardian.v2.data.repository
 
+import android.util.Log
 import com.javimartd.theguardian.v2.data.datasources.CacheDataSource
 import com.javimartd.theguardian.v2.data.datasources.DiskDataSource
 import com.javimartd.theguardian.v2.data.datasources.RemoteDataSource
@@ -11,6 +12,9 @@ import com.javimartd.theguardian.v2.domain.news.model.News
 import com.javimartd.theguardian.v2.domain.news.model.Section
 import com.javimartd.theguardian.v2.features.common.DefaultDispatcherProvider
 import com.javimartd.theguardian.v2.features.common.DispatcherProvider
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.async
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
@@ -19,9 +23,11 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
+import javax.inject.Scope
 
 class NewsRepositoryImpl @Inject constructor(
     private val dispatchers: DispatcherProvider = DefaultDispatcherProvider(),
+    private val scope: CoroutineScope,
     private val remoteDataSource: RemoteDataSource,
     private val cacheDataSource: CacheDataSource,
     private val diskDataStore: DiskDataSource,
@@ -52,5 +58,13 @@ class NewsRepositoryImpl @Inject constructor(
         } else {
             flowOf(sections)
         }*/
+    }
+
+    override suspend fun longTaskInBackground(): List<String> {
+        return scope.async {
+            delay(5000)
+            Log.i(NewsRepositoryImpl::class.java.name, "Returning string list")
+            emptyList<String>()
+        }.await()
     }
 }
