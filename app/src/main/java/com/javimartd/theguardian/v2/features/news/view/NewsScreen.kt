@@ -1,7 +1,6 @@
 package com.javimartd.theguardian.v2.features.news.view
 
 import android.content.res.Configuration
-import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,7 +22,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SearchBar
-import androidx.compose.material3.SearchBarColors
 import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHostState
@@ -41,7 +39,6 @@ import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.colorResource
@@ -52,11 +49,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavHostController
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
 import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
-import com.javimartd.theguardian.v2.BuildConfig
 import com.javimartd.theguardian.v2.R
 import com.javimartd.theguardian.v2.data.repository.news.model.SectionData
 import com.javimartd.theguardian.v2.features.news.NewsUiContract
@@ -65,15 +60,15 @@ import com.javimartd.theguardian.v2.features.news.components.NewsItemPortrait
 import com.javimartd.theguardian.v2.features.news.components.Tags
 import com.javimartd.theguardian.v2.features.news.model.NewsItemUiState
 import com.javimartd.theguardian.v2.features.news.model.NewsViewModel
+import com.javimartd.theguardian.v2.features.news.navigation.NewsNavigator
 import com.javimartd.theguardian.v2.ui.components.LoadingDialog
 import com.javimartd.theguardian.v2.ui.components.SettingsButton
 import com.javimartd.theguardian.v2.ui.components.TheGuardianSnackBarHost
-import com.javimartd.theguardian.v2.ui.navigation.TheGuardianDestinations
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun NewsScreen(
-    navController: NavHostController,
+    navigator: NewsNavigator,
     viewModel: NewsViewModel
 ) {
     val snackBarHostState = remember { SnackbarHostState() }
@@ -94,7 +89,9 @@ fun NewsScreen(
                     )
                 },
                 actions = {
-                    SettingsButton { navController.navigate(TheGuardianDestinations.SETTINGS_ROUTE) }
+                    SettingsButton {
+                        navigator.actionNavigateToSettings()
+                    }
                 }
             )
         },
@@ -105,7 +102,6 @@ fun NewsScreen(
                 .fillMaxWidth()
                 .height(dimensionResource(id = R.dimen.medium_margin))
             )
-            Toast.makeText(LocalContext.current, BuildConfig.THE_GUARDIAN_API_KEY, Toast.LENGTH_LONG).show()
             when (uiState) {
                 is NewsUiContract.State.Loading -> LoadingDialog { /* nothing to do */ }
                 is NewsUiContract.State.News -> {

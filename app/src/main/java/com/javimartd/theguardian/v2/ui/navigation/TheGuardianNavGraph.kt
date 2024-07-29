@@ -1,37 +1,29 @@
 package com.javimartd.theguardian.v2.ui.navigation
 
 import androidx.compose.runtime.Composable
-import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.javimartd.theguardian.v2.features.settings.view.SettingsScreen
-import com.javimartd.theguardian.v2.features.news.view.NewsScreen
-import com.javimartd.theguardian.v2.features.news.model.NewsViewModel
-import com.javimartd.theguardian.v2.features.settings.view.SettingsViewModel
+import com.javimartd.theguardian.v2.features.news.navigation.NewsNavigator
+import com.javimartd.theguardian.v2.features.news.navigation.newsNavigationGraph
+import com.javimartd.theguardian.v2.features.settings.navigation.SettingsNavigator
+import com.javimartd.theguardian.v2.features.settings.navigation.settingsNavigationGraph
 
 @Composable
 fun TheGuardianNavGraph() {
 
+    // NavController manages app navigation within a NavHost
     val navController = rememberNavController()
+
+    val startDestination: String = NewsNavigator.ROOT
+
+    val newsNavigator = NewsNavigator(navController)
+    val settingsNavigator = SettingsNavigator(navController)
 
     NavHost(
         navController = navController,
-        startDestination = TheGuardianDestinations.NEWS_ROUTE,
+        startDestination = startDestination // app start destination
     ) {
-        composable(TheGuardianDestinations.NEWS_ROUTE) {
-            val viewModel = hiltViewModel<NewsViewModel>()
-            NewsScreen(
-                navController = navController,
-                viewModel = viewModel
-            )
-        }
-        composable(TheGuardianDestinations.SETTINGS_ROUTE) {
-            val viewModel = hiltViewModel<SettingsViewModel>()
-            SettingsScreen(
-                navController = navController,
-                viewModel = viewModel
-            )
-        }
+        newsNavigationGraph(newsNavigator)
+        settingsNavigationGraph(settingsNavigator)
     }
 }

@@ -27,12 +27,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.navigation.NavHostController
 import com.javimartd.theguardian.v2.R
+import com.javimartd.theguardian.v2.features.settings.navigation.SettingsNavigator
 import com.javimartd.theguardian.v2.ui.components.TheGuardianSnackBarHost
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingsScreen(
-    navController: NavHostController,
+    navigator: SettingsNavigator,
     viewModel: SettingsViewModel
 ) {
 
@@ -46,7 +47,9 @@ fun SettingsScreen(
                 title = { Text(stringResource(R.string.settings_screen_toolbar)) },
                 navigationIcon = {
                     IconButton(
-                        onClick = { navController.navigateUp() }
+                        onClick = {
+                            navigator.actionNavigateUp() }
+
                     ) {
                         Icon(
                             contentDescription = stringResource(id = R.string.news_screen_settings_icon_content_description),
