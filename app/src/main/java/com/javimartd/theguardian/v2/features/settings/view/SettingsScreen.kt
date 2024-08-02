@@ -47,9 +47,7 @@ fun SettingsScreen(
                 title = { Text(stringResource(R.string.settings_screen_toolbar)) },
                 navigationIcon = {
                     IconButton(
-                        onClick = {
-                            navigator.actionNavigateUp() }
-
+                        onClick = { navigator.actionNavigateUp() }
                     ) {
                         Icon(
                             contentDescription = stringResource(id = R.string.news_screen_settings_icon_content_description),

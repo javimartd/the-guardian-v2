@@ -3,6 +3,8 @@ package com.javimartd.theguardian.v2.ui.navigation
 import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.rememberNavController
+import com.javimartd.theguardian.v2.features.categories.navigation.CategoryNavigator
+import com.javimartd.theguardian.v2.features.categories.navigation.categoryNavigationGraph
 import com.javimartd.theguardian.v2.features.news.navigation.NewsNavigator
 import com.javimartd.theguardian.v2.features.news.navigation.newsNavigationGraph
 import com.javimartd.theguardian.v2.features.settings.navigation.SettingsNavigator
@@ -18,6 +20,7 @@ fun TheGuardianNavGraph() {
 
     val newsNavigator = NewsNavigator(navController)
     val settingsNavigator = SettingsNavigator(navController)
+    val categoryNavigator = CategoryNavigator(navController)
 
     NavHost(
         navController = navController,
@@ -25,5 +28,6 @@ fun TheGuardianNavGraph() {
     ) {
         newsNavigationGraph(newsNavigator)
         settingsNavigationGraph(settingsNavigator)
+        categoryNavigationGraph(categoryNavigator)
     }
 }

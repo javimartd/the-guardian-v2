@@ -1,6 +1,7 @@
 package com.javimartd.theguardian.v2.features.news.navigation
 
 import androidx.navigation.NavHostController
+import com.javimartd.theguardian.v2.features.categories.navigation.CategoryNavigator
 import com.javimartd.theguardian.v2.features.settings.navigation.SettingsNavigator
 
 class NewsNavigator(navHostController: NavHostController) {
@@ -10,11 +11,11 @@ class NewsNavigator(navHostController: NavHostController) {
         const val START = "news_view"
     }
 
-    val actionNavigateUp: () -> Unit = {
-        navHostController.navigateUp()
-    }
-
     val actionNavigateToSettings: () -> Unit = {
         navHostController.navigate(route = SettingsNavigator.START)
+    }
+
+    val actionNavigateToCategories: () -> Unit = {
+        navHostController.navigate(route = CategoryNavigator.START)
     }
 }

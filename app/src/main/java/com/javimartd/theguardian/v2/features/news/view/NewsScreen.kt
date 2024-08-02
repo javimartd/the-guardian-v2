@@ -62,6 +62,7 @@ import com.javimartd.theguardian.v2.features.news.model.NewsItemUiState
 import com.javimartd.theguardian.v2.features.news.model.NewsViewModel
 import com.javimartd.theguardian.v2.features.news.navigation.NewsNavigator
 import com.javimartd.theguardian.v2.ui.components.LoadingDialog
+import com.javimartd.theguardian.v2.ui.components.MoreButton
 import com.javimartd.theguardian.v2.ui.components.SettingsButton
 import com.javimartd.theguardian.v2.ui.components.TheGuardianSnackBarHost
 
@@ -91,6 +92,9 @@ fun NewsScreen(
                 actions = {
                     SettingsButton {
                         navigator.actionNavigateToSettings()
+                    }
+                    MoreButton {
+                        navigator.actionNavigateToCategories()
                     }
                 }
             )
