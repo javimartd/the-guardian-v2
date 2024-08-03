@@ -1,6 +1,5 @@
 package com.javimartd.theguardian.v2.data
 
-import com.javimartd.theguardian.v2.data.common.ErrorTypes
 import com.javimartd.theguardian.v2.data.datasources.CacheDataSource
 import com.javimartd.theguardian.v2.data.datasources.DiskDataSource
 import com.javimartd.theguardian.v2.data.datasources.RemoteDataSource
@@ -8,10 +7,11 @@ import com.javimartd.theguardian.v2.data.datasources.disk.preferences.Preference
 import com.javimartd.theguardian.v2.data.repository.NewsRepositoryImpl
 import com.javimartd.theguardian.v2.domain.NewsRepository
 import com.javimartd.theguardian.v2.domain.news.model.News
-import com.javimartd.theguardian.v2.domain.news.model.Section
 import com.javimartd.theguardian.v2.factory.RepositoryFactory
 import com.javimartd.theguardian.v2.utils.TestDefaultDispatcher
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.test.runTest
 import org.hamcrest.MatcherAssert
 import org.hamcrest.core.IsInstanceOf
@@ -39,6 +39,7 @@ internal class NewsRepositoryImplTest {
         //MockitoAnnotations.openMocks(this)
         sut = NewsRepositoryImpl(
             TestDefaultDispatcher(),
+            CoroutineScope(Job()),
             remoteDataSource,
             cacheDataSource,
             diskDataSource,

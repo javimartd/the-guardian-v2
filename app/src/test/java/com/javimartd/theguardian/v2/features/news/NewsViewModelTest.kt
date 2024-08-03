@@ -2,21 +2,20 @@ package com.javimartd.theguardian.v2.features.news
 
 import com.javimartd.theguardian.v2.R
 import com.javimartd.theguardian.v2.data.common.ErrorTypes
+import com.javimartd.theguardian.v2.data.repository.news.model.SectionData
 import com.javimartd.theguardian.v2.domain.news.usecases.GetNewsUseCase
 import com.javimartd.theguardian.v2.domain.news.usecases.GetSectionsUseCase
 import com.javimartd.theguardian.v2.features.news.model.NewsViewModel
-import com.javimartd.theguardian.v2.utils.TestDispatcherRule
-import io.mockk.coVerify
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.test.UnconfinedTestDispatcher
 import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.runTest
 import kotlinx.coroutines.test.setMain
 import org.junit.After
 import org.junit.Assert
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito
@@ -26,7 +25,7 @@ import org.mockito.kotlin.times
 
 
 /**
-    https://developer.android.com/kotlin/flow
+https://developer.android.com/kotlin/flow
  */
 @OptIn(ExperimentalCoroutinesApi::class)
 class NewsViewModelTest {
@@ -42,22 +41,18 @@ class NewsViewModelTest {
     @Mock private lateinit var getNewsUseCase: GetNewsUseCase
     @Mock private lateinit var getSectionsUseCase: GetSectionsUseCase
 
-    //private lateinit var sut : NewsViewModel
-
-
     @Before
     fun setup() {
         Dispatchers.setMain(UnconfinedTestDispatcher())
         MockitoAnnotations.openMocks(this)
-        //sut = NewsViewModel(getNewsUseCase, getSectionsUseCase)
     }
 
     @After
     fun cleanup() {
-        //Dispatchers.resetMain()
+        Dispatchers.resetMain()
     }
 
-    /*@Test
+    @Test
     fun `searchResults should emit empty list on error`() = runTest {
         // Arrange
         Mockito
@@ -71,14 +66,13 @@ class NewsViewModelTest {
         val sut = NewsViewModel(getNewsUseCase, getSectionsUseCase)
 
         // Act
-        val result = mutableListOf<List<SectionData>>()
+        val result = mutableListOf<SectionData>()
         sut.searchResults.collect {
-            result.add(it)
+            //result.add(it)
+            // Assert
+            Assert.assertEquals(emptyList<SectionData>(), it)
         }
-
-        // Assert
-        Assert.assertEquals(emptyList<SectionData>(), result)
-    }*/
+    }
 
     @Test
     fun `onIntent SearchQueryClick call getNews function`() {
