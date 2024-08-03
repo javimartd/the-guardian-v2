@@ -16,6 +16,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import com.javimartd.theguardian.v2.R
 import com.javimartd.theguardian.v2.features.categories.navigation.CategoryNavigator
+import com.javimartd.theguardian.v2.features.culture.navigation.CultureNavigator
 
 @Composable
 fun CategoryFirstView(navigator: CategoryNavigator) {
@@ -25,7 +26,7 @@ fun CategoryFirstView(navigator: CategoryNavigator) {
         verticalArrangement = Arrangement.spacedBy(
             dimensionResource(id = R.dimen.medium_margin),
             Alignment.CenterVertically
-        ),
+        )
     ) {
         Text(
             fontWeight = FontWeight.Bold,
@@ -40,16 +41,16 @@ fun CategoryFirstView(navigator: CategoryNavigator) {
             Text(text = "Navigate Forward")
         }
         Button(
+            onClick = {
+                navigator.actionNavigateForwardTo(CultureNavigator.FIRST)
+            }
+        ) {
+            Text(text = "Navigate to Culture Tree")
+        }
+        Button(
             onClick = { navigator.actionNavigateUp() }
         ) {
             Text(text = "Navigate Back")
         }
-        /*Button(
-            onClick = {
-                navigator.actionNavigateForwardTo(PlayerNavigator.FIRST)
-            }
-        ) {
-            Text(text = "Navigate to Player Tree")
-        }*/
     }
 }

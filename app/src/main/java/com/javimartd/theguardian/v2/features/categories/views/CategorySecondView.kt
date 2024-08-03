@@ -28,7 +28,7 @@ fun CategorySecondView(
         verticalArrangement = Arrangement.spacedBy(
             dimensionResource(id = R.dimen.medium_margin),
             Alignment.CenterVertically
-        ),
+        )
     ) {
         Text(
             fontWeight = FontWeight.Bold,

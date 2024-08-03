@@ -1,4 +1,4 @@
-package com.javimartd.theguardian.v2.features.categories.views
+package com.javimartd.theguardian.v2.features.culture.views
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -15,14 +15,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.sp
 import com.javimartd.theguardian.v2.R
-import com.javimartd.theguardian.v2.features.categories.navigation.CategoryNavigator
+import com.javimartd.theguardian.v2.features.culture.navigation.CultureNavigator
 
 @Composable
-fun CategoryThirdView(
-    navigator: CategoryNavigator,
-    firstArg: String?,
-    secondArg: String?,
-) {
+fun CultureFirstView(playerNavigator: CultureNavigator) {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = Modifier.fillMaxSize(),
@@ -34,35 +30,17 @@ fun CategoryThirdView(
         Text(
             fontWeight = FontWeight.Bold,
             modifier = Modifier.fillMaxWidth(),
-            style = TextStyle(fontSize = 24.sp),
-            text = "Category Third View!",
-            textAlign = TextAlign.Center
+            text = "Culture First View",
+            textAlign = TextAlign.Center,
+            style = TextStyle(fontSize = 24.sp)
         )
-        firstArg?.let {
-            Text(
-                style = TextStyle(fontSize = 16.sp),
-                modifier = Modifier.fillMaxWidth(),
-                text = it,
-                textAlign = TextAlign.Center,
-            )
-        }
-        secondArg?.let {
-            Text(
-                style = TextStyle(fontSize = 16.sp),
-                modifier = Modifier.fillMaxWidth(),
-                text = it,
-                textAlign = TextAlign.Center,
-            )
-        }
         Button(
-            onClick = {
-                navigator.actionNavigateToFourthView.invoke()
-            }
+            onClick = { playerNavigator.actionNavigateForwardTo(CultureNavigator.SECOND) }
         ) {
             Text(text = "Navigate Forward")
         }
         Button(
-            onClick = { navigator.actionNavigateUp() }
+            onClick = { playerNavigator.actionNavigateUp() }
         ) {
             Text(text = "Navigate Back")
         }
