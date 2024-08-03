@@ -11,6 +11,8 @@ plugins {
     alias(libs.plugins.google.services)
     alias(libs.plugins.firebase.app.distribution)
     alias(libs.plugins.protobuf)
+    alias(libs.plugins.serialization)
+    alias(libs.plugins.parcelize)
 }
 
 /*fun headCommitCount(): Int {
@@ -192,6 +194,9 @@ dependencies {
     implementation(libs.room.ktx)
     implementation(libs.room.runtime)
     ksp(libs.room.compiler)
+
+    // serialization
+    implementation(libs.serialization)
 
     // preferences data store
     implementation(libs.datastore.preferences)

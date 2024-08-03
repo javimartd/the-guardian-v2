@@ -7,14 +7,16 @@ ksp                         = "1.9.0-1.0.12"
 google-services             = "4.4.1"
 firebase-app-distribution   = "4.1.0"
 protobuf                    = "0.9.4"
+serialization               = "1.8.10"
+parcelize                   = "1.8.10"
 
 # app
-activity-compose            = "1.7.2"
+activity-compose            = "1.9.0"
 accompanist                 = "0.23.1"
 coil                        = "2.2.2"
 compose-bom                 = "2024.02.02"
 coroutines                  = "1.6.4"
-datastore-preferences       = "1.0.0"
+datastore-preferences       = "1.1.1"
 firebase-bom                = "32.7.1"
 hilt                        = "2.47"
 hilt-navigation             = "1.0.0"
@@ -26,6 +28,7 @@ okhttp                      = "4.10.0"
 protobuf-javalite           = "3.21.7"
 retrofit                    = "2.9.0"
 room                        = "2.6.1"
+kotlinx-serialization       = "1.4.1"
 
 # tests
 androidx-test-core          = "2.2.0"
@@ -77,6 +80,7 @@ ui-tooling-preview          = { group = "androidx.compose.ui", name = "ui-toolin
 ui-graphics                 = { group = "androidx.compose.ui", name = "ui-graphics" }
 ui                          = { group = "androidx.compose.ui", name = "ui" }
 #ui-tooling                  = { group = "androidx.compose.ui", name = "ui-tooling" }
+serialization               = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "kotlinx-serialization"}
 
 # tests
 #androidx-espresso-idling-resource = { group = "androidx.test.espresso", name = "espresso-idling-resource", version.ref = "espresso-idling-resource" }
@@ -110,6 +114,8 @@ ksp                         = { id = "com.google.devtools.ksp", version.ref = "k
 protobuf                    = { id = "com.google.protobuf", version.ref = "protobuf" }
 google-services             = { id = "com.google.gms.google-services", version.ref = "google-services" }
 firebase-app-distribution   = { id = "com.google.firebase.appdistribution", version.ref = "firebase-app-distribution"}
+serialization               = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "serialization"}
+parcelize                   = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "parcelize"}
 
 
 [bundles]
