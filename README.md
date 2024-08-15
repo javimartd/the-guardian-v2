@@ -3,18 +3,23 @@
 
 ## The Guardian News (v2)
 
+This repository is created for the purpose of acting as a template project for any Android application. In addition, it is also used to test different libraries and releases in the Android ecosystem.
+
 This app allows you to read the latest news in the world thanks to the API provided by the [The Guardian](https://www.theguardian.com/uk). You can check all the information about how to use it [here](https://open-platform.theguardian.com/).
 
 <img src = "https://github.com/javimartd/the-guardian-v2/blob/main/screenshots/pixel_4a_home_I.png" width ="200" /> <img src = "https://github.com/javimartd/the-guardian-v2/blob/main/screenshots/pixel_4a_home_II.png" width ="200" />
 
 ### Summary
-- [Kotlin][1]
-- [Unidirectional Data Flow][13] pattern
-- [MVVM][2] pattern
-- [Kotlin Coroutines][4]
-- DI setup with [Hilt][3]
-- CI setup with [GitHub Actions][5]
-- Unit tests for presentation and data layers using JUnit, [Truth][14], [Turbine][15], [Hamcrest][11], [Mockito][6] and [MockWebServer][7]
+- Kotlin
+- Clean architecture
+- MVVM and MVI patterns
+- Unidirectional Data Flow pattern
+- Async programming with Kotlin Coroutines
+- Reactive programming with Kotlin Flows
+- UI design with Jetpack Compose
+- DI setup with Hilt
+- CI setup with GitHub Actions and Jenkins
+- Unit tests for presentation and data layers using JUnit, Truth, Turbine, Kotest, Hamcrest, Mockito, MockK and MockWebServer
 
 [1]: https://kotlinlang.org/docs/reference/
 [2]: https://upday.github.io/blog/model-view-viewmodel/
