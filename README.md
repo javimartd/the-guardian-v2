@@ -5,7 +5,7 @@
 
 This repository is created for the purpose of acting as a template project for any Android application. In addition, it is also used to test different libraries and releases in the Android ecosystem.
 
-This app allows you to read the latest news in the world thanks to the API provided by the [The Guardian](https://www.theguardian.com/uk). You can check all the information about how to use it [here](https://open-platform.theguardian.com/).
+This app allows you to read the latest news in the world thanks to the API provided by the [The Guardian](https://www.theguardian.com/uk). You can read how to use it [here](https://open-platform.theguardian.com/).
 
 <img src = "https://github.com/javimartd/the-guardian-v2/blob/main/screenshots/pixel8_home.png" width ="200" />
 
@@ -19,7 +19,7 @@ This app allows you to read the latest news in the world thanks to the API provi
 - UI design with Jetpack Compose
 - DI setup with Hilt
 - CI setup with GitHub Actions and Jenkins
-- Unit tests for presentation and data layers using JUnit, Truth, Turbine, Kotest, Hamcrest, Mockito, MockK and MockWebServer
+- Unit tests for presentation, business and data layers using JUnit, Truth, Turbine, Kotest, Hamcrest, Mockito, MockK and MockWebServer
 
 [1]: https://kotlinlang.org/docs/reference/
 [2]: https://upday.github.io/blog/model-view-viewmodel/
