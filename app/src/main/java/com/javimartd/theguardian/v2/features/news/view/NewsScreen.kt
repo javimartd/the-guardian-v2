@@ -86,7 +86,7 @@ fun NewsScreen(
                     Text(
                         modifier = Modifier.fillMaxWidth(),
                         text = stringResource(R.string.app_name),
-                        textAlign = TextAlign.Center
+                        textAlign = TextAlign.Left,
                     )
                 },
                 actions = {
