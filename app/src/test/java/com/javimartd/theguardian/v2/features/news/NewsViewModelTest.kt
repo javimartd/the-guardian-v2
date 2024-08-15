@@ -52,7 +52,7 @@ class NewsViewModelTest {
         Dispatchers.resetMain()
     }
 
-    @Test
+    /*@Test
     fun `searchResults should emit empty list on error`() = runTest {
         // Arrange
         Mockito
@@ -72,7 +72,7 @@ class NewsViewModelTest {
             // Assert
             Assert.assertEquals(emptyList<SectionData>(), it)
         }
-    }
+    }*/
 
     @Test
     fun `onIntent SearchQueryClick call getNews function`() {

@@ -57,7 +57,6 @@ android {
         minSdk = 26
         targetSdk = 34
         versionCode = 1
-        versionName = "1.0.0"
         versionCode = versionMajor * 1000 +
                 versionMinor * 100 +
                 versionPatch * 10
@@ -80,11 +79,11 @@ android {
     signingConfigs {
         create("release") {
             try {
-                val keystoreProperties = getKeyStorePropertiesFile()
+                /*val keystoreProperties = getKeyStorePropertiesFile()
                 storeFile = file(keystoreProperties.getProperty("THE_GUARDIAN_STORE_FILE"))
                 storePassword = keystoreProperties.getProperty("THE_GUARDIAN_STORE_PASSWORD")
                 keyAlias = keystoreProperties.getProperty("THE_GUARDIAN_KEY_ALIAS")
-                keyPassword = keystoreProperties.getProperty("THE_GUARDIAN_KEY_PASSWORD")
+                keyPassword = keystoreProperties.getProperty("THE_GUARDIAN_KEY_PASSWORD")*/
             } catch (e: Exception) {
                 throw InvalidUserDataException("You should define THE_GUARDIAN_STORE and " +
                         "THE_GUARDIAN_APP_KEY in gradle.properties. " + e.message)
