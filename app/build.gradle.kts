@@ -55,7 +55,7 @@ android {
     defaultConfig {
         applicationId = "com.javimartd.theguardian.v2"
         minSdk = 26
-        targetSdk = 34
+        targetSdk = 35
         versionCode = 1
         versionCode = versionMajor * 1000 +
                 versionMinor * 100 +
