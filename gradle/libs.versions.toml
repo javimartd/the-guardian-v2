@@ -2,7 +2,7 @@
 
 # plugins
 agp                         = "8.1.2"
-kotlin                      = "1.9.0"
+kotlin                      = "1.9.25"
 ksp                         = "1.9.0-1.0.12"
 google-services             = "4.4.1"
 firebase-app-distribution   = "4.1.0"

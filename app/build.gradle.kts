@@ -107,6 +107,7 @@ android {
         debug {
             isDebuggable = true
             applicationIdSuffix = ".debug"
+            // ./gradlew assembleProDebug appDistributionUploadProdDebug
             firebaseAppDistribution {
                 artifactType = "APK"
                 serviceCredentialsFile = System.getenv("GOOGLE_APPLICATION_CREDENTIALS")
@@ -135,7 +136,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.0"
+        kotlinCompilerExtensionVersion = "1.5.15"
     }
     packaging {
         resources {
