@@ -3,9 +3,9 @@
 
 ## The Guardian News (v2)
 
-This repository is created for the purpose of acting as a template project for any Android application. In addition, it is also used to test different libraries and releases in the Android ecosystem.
+This repository is created for the purpose of acting as a template project for any Android application. In addition, it is also used to test libraries and releases in the Android ecosystem.
 
-This app allows you to read the latest news in the world thanks to the API provided by the [The Guardian](https://www.theguardian.com/uk). You can read how to use it [here](https://open-platform.theguardian.com/).
+This app allows you to read the latest news in the world thanks to the API provided by the [The Guardian](https://www.theguardian.com/uk). Read how to use it [here](https://open-platform.theguardian.com/).
 
 <img src = "https://github.com/javimartd/the-guardian-v2/blob/main/screenshots/pixel8_home.png" width ="200" />
 
@@ -14,9 +14,11 @@ This app allows you to read the latest news in the world thanks to the API provi
 - Clean architecture
 - MVVM and MVI patterns
 - Unidirectional Data Flow pattern
-- Async programming with Kotlin Coroutines
-- Reactive programming with Kotlin Flows
 - UI design with Jetpack Compose
+- Examples of Navigation with Compose
+- Async programming with Kotlin Coroutines
+- Room db
+- Reactive programming with Kotlin Flows
 - DI setup with Hilt
 - CI setup with GitHub Actions and Jenkins
 - Unit tests for presentation, business and data layers using JUnit, Truth, Turbine, Kotest, Hamcrest, Mockito, MockK and MockWebServer
