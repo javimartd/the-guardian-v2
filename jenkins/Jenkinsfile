@@ -99,7 +99,7 @@ pipeline {
             steps {
                 script {
                     echo 'Running Android Lint...'
-                    sh './gradlew lint || true'
+                    sh "./gradlew lint${params.CHOICE_ENVIRONMENT}Debug || true"
 
                     def changedFiles = sh(
                         script: "git diff --name-only HEAD^ HEAD",
