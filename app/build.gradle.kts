@@ -76,6 +76,11 @@ android {
         buildConfig = true
     }
 
+    lint {
+        xmlReport = true
+        xmlOutput = file("${layout.buildDirectory}/reports/lint/lint-results-custom.xml")
+    }
+
     signingConfigs {
         create("release") {
             try {

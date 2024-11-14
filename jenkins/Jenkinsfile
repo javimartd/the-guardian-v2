@@ -106,7 +106,7 @@ pipeline {
                         returnStdout: true
                     ).trim().split("\n")
 
-                    def lintResults = readFile "app/build/reports/lint-result-${params.CHOICE_ENVIRONMENT}${params.CHOICE_BUILD_TYPE}.xml"
+                    def lintResults = readFile "app/build/reports/lint-result-custom.xml"
 
                     def warningsFound = false
                     for (file in changedFiles) {
