@@ -85,7 +85,7 @@ pipeline {
             }
         }
 
-        stage('Code Analysis - Android Lint') {
+        /* stage('Code Analysis - Android Lint') {
             steps {
                 script {
                     echo 'Running Android Lint...'
@@ -93,14 +93,14 @@ pipeline {
                     sh './gradlew lint || true'
                 }
             }
-        }
+        } */
 
         stage('Code Analysis - Android Lint') {
             steps {
                 script {
                     echo 'Running Android Lint...'
                     sh './gradlew lint || true'
-        
+
                     def changedFiles = sh(
                         script: "git diff --name-only HEAD^ HEAD",
                         returnStdout: true
