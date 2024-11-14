@@ -87,9 +87,9 @@ pipeline {
 
         stage('Firebase Distribution') {
             steps {
-                echo 'Deploying...'
-                if (params.CHOICE_ENVIRONMENT == PROD_ENVIRONMENT) {
-                    script {
+                script {
+                    echo 'Deploying...'
+                    if (params.CHOICE_ENVIRONMENT == PROD_ENVIRONMENT) {
                         def artifactPath = "app/build/outputs/apk/${params.CHOICE_ENVIRONMENT}/debug/"
                         def action = "appDistributionUpload${params.CHOICE_ENVIRONMENT}Debug"
                         def releaseNotes = "--releaseNotes='${params.TEXT_RELEASE_NOTES}'"
@@ -99,9 +99,9 @@ pipeline {
                         sh gradleCommand
                         //sh "./gradlew appDistributionUpload${params.CHOICE_ENVIRONMENT}Debug --releaseNotes='${params.TEXT_RELEASE_NOTES}' --groups=testers"
                         //sh "./gradlew assemble${params.CHOICE_ENVIRONMENT}Debug appDistributionUpload${params.CHOICE_ENVIRONMENT}Debug --releaseNotes='${params.TEXT_RELEASE_NOTES}' --groups=testers"
+                    } else {
+                        echo 'No Firebase distribution required'
                     }
-                } else {
-                    echo 'No Firebase distribution required'
                 }
             }
         }
