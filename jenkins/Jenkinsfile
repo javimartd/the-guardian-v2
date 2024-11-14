@@ -95,6 +95,37 @@ pipeline {
             }
         }
 
+        stage('Code Analysis - Android Lint') {
+            steps {
+                script {
+                    echo 'Running Android Lint...'
+                    sh './gradlew lint || true'
+        
+                    def changedFiles = sh(
+                        script: "git diff --name-only HEAD^ HEAD",
+                        returnStdout: true
+                    ).trim().split("\n")
+
+                    def lintResults = readFile 'app/build/reports/lint-results.xml'
+
+                    def warningsFound = false
+                    for (file in changedFiles) {
+                        if (lintResults.contains(file)) {
+                            echo "Warning found in modified file: ${file}"
+                            warningsFound = true
+                        }
+                    }
+
+                    if (warningsFound) {
+                        error "Lint warnings found in modified files!"
+                    } else {
+                        echo "No Lint warnings in modified files."
+                    }
+                }
+            }
+        }
+
+
         stage('Firebase Distribution') {
             steps {
                 script {
