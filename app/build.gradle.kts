@@ -78,7 +78,7 @@ android {
 
     lint {
         xmlReport = true
-        xmlOutput = file("${project.buildDir}/reports/lint/lint-results-custom.xml")
+        xmlOutput = file("${rootProject.layout.buildDirectory.get().asFile}/reports/lint/lint-results-custom.xml")
     }
 
     signingConfigs {
