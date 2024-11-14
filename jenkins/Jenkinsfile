@@ -85,6 +85,16 @@ pipeline {
             }
         }
 
+        stage('Code Analysis - Android Lint') {
+            steps {
+                script {
+                    echo 'Running Android Lint...'
+                    // This flag ensures that the stage continues, even if there are warnings or errors.
+                    sh './gradlew lint || true'
+                }
+            }
+        }
+
         stage('Firebase Distribution') {
             steps {
                 script {
