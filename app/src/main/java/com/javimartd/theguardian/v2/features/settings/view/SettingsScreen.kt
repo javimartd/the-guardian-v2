@@ -80,3 +80,8 @@ fun SettingsScreen(
         }
     }
 }
+
+@Composable
+fun demoFunction() {
+
+}
