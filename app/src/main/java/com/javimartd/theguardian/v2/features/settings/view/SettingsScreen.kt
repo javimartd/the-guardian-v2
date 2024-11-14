@@ -25,7 +25,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
-import androidx.navigation.NavHostController
 import com.javimartd.theguardian.v2.R
 import com.javimartd.theguardian.v2.features.settings.navigation.SettingsNavigator
 import com.javimartd.theguardian.v2.ui.components.TheGuardianSnackBarHost
@@ -79,9 +78,4 @@ fun SettingsScreen(
             )
         }
     }
-}
-
-@Composable
-fun demoFunction() {
-
 }
