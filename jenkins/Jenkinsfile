@@ -89,7 +89,7 @@ pipeline {
             steps {
                 script {
                     echo 'Deploying...'
-                    if (params.CHOICE_ENVIRONMENT == PROD_ENVIRONMENT) {
+                    if (params.CHOICE_ENVIRONMENT == Constants.PROD_ENVIRONMENT) {
                         def artifactPath = "app/build/outputs/apk/${params.CHOICE_ENVIRONMENT}/debug/"
                         def action = "appDistributionUpload${params.CHOICE_ENVIRONMENT}Debug"
                         def releaseNotes = "--releaseNotes='${params.TEXT_RELEASE_NOTES}'"
