@@ -101,18 +101,25 @@ pipeline {
                     echo 'Running Android Lint...'
                     sh './gradlew lint || true'
 
+                    def lintFiles = findFiles(glob: 'app/build/reports/lint-results-*.xml')
+                    if (lintFiles.size() == 0) {
+                        error "No lint result XML files found!"
+                    }
+
+                    def lintResultsFile = lintFiles[0].path
+                    def lintResults = readFile lintResultsFile
+
                     def changedFiles = sh(
                         script: "git diff --name-only HEAD^ HEAD",
                         returnStdout: true
                     ).trim().split("\n")
-
-                    def lintResults = readFile "app/build/reports/lint-result-custom-*.xml"
 
                     def warningsFound = false
                     for (file in changedFiles) {
                         if (lintResults.contains(file)) {
                             echo "Warning found in modified file: ${file}"
                             warningsFound = true
+                            break
                         }
                     }
 
